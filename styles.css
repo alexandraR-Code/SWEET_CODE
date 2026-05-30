@@ -1,0 +1,268 @@
+/* Variables de color (se permite cambiar todo desde aquí*/
+:root {
+    /* Colores de Fondo y Texto */
+    --bg-principal: #0f172a;
+    /* fondo general */
+    --bg-tarjetas: #1e293b;
+    /* encabezado y botones */
+    --texto-blanco: #f8fafc;
+    /* títulos y textos principales */
+    --texto-gris: #94a3b8;
+    /* textos secundarios o botones apagados */
+
+    /* Colores de Identidad */
+    --rosa-marca: #e8427c;
+    /* logotipo */
+    --celeste-tech: #38bdf8;
+    /* enfoques */
+
+    /* Fuentes y animaciones */
+    --tipografia: 'Segoe UI', Roboto, sans-serif;
+    --transicion: all 0.3s ease;
+    /* Transición fluida para efectos visuales */
+}
+
+/*Evita margenes erroneas en el navagador*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    /* Mantiene el tamaño correcto de las cajas */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-principal);
+    color: var(--texto-blanco);
+    font-family: var(--tipografia);
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+
+    /* Centrado vertical de la estructura de la página */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Encabezado */
+/* Encabezado compactado en una sola línea horizontal */
+/* Encabezado horizontal con mayor presencia y altura vertical */
+header {
+    width: 100%;
+    max-width: 1000px;
+    background-color: var(--bg-tarjetas);
+    padding: 2.2rem 2.5rem;
+    /* Incrementamos de 1.2rem a 2.2rem el espacio arriba y abajo */
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+    /* Mayor separación hacia abajo con el menú de botones */
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+
+    /* Sombra ligeramente más suave y expandida para acompañar el nuevo tamaño */
+    box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Sección de logotipo compacta con logo maximizado --- */
+header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.5rem 1.8rem;
+    /* Ajuste perfecto: marco esbelto a lo alto, amplio a lo ancho */
+    border-radius: 50px;
+    border: 1px solid rgba(232, 66, 124, 0.18);
+
+    animation: aparecerLogo 0.8s ease-out forwards;
+}
+
+header .logo img {
+    height: 68px;
+    /* Incrementado para que se vea imponente y grande */
+    width: auto;
+    display: block;
+    /* Evita espacios fantasmas debajo de la imagen */
+    object-fit: contain;
+    /* Regla de oro: garantiza que el logo jamás se deforme o se salga */
+    transition: var(--transicion);
+
+    filter: drop-shadow(0 0 15px rgba(232, 66, 124, 0.4));
+}
+
+/* Efecto al pasar el mouse sobre el logo */
+header .logo img:hover {
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 20px #e8427c60);
+    /* Resplandor unificado con tu --rosa-marca */
+}
+
+/* Título principal */
+
+header h1 {
+    font-size: 1.4rem;
+    /* Subimos de 1.25rem a 1.4rem para equilibrar el diseño */
+    font-weight: 700;
+    color: var(--texto-blanco);
+    opacity: 0.95;
+    text-align: right;
+    letter-spacing: -0.01em;
+    /* Letras sutilmente más juntas para un estilo de tipografía premium */
+}
+
+/* Adorno de programación (Punto y coma final) */
+header h1::after {
+    content: ';';
+    /* Añade el signo automáticamente al final */
+    color: var(--rosa-marca);
+    /* Color rosa distintivo */
+    font-family: monospace;
+    font-size: 1.6rem;
+    margin-left: 4px;
+}
+
+/* Menú de navegación (Cuadrícula de Botones)*/
+nav {
+    width: 100%;
+    max-width: 1000px;
+
+    /* Sistema Grid: Organiza los botones en columnas automáticas y ordenadas */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    /* Espaciado uniforme entre botones */
+}
+
+/* Diseño de botones */
+nav button {
+    background-color: var(--bg-tarjetas);
+    color: var(--texto-gris);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Borde */
+    padding: 1.2rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transicion);
+    /* Suaviza el cambio de color y tamaño */
+}
+
+/* Efecto al pasar el mouse por los botones */
+nav button:hover {
+    color: var(--texto-blanco);
+    background-color: #1e293b;
+    border-color: var(--rosa-marca);
+    /* El borde se ilumina con el rosa de la marca */
+    transform: translateY(-3px);
+    /* El botón se eleva sutilmente hacia arriba */
+    box-shadow: 0 10px 20px -8px rgba(225, 29, 72, 0.3);
+    /* Sombra rosa */
+}
+
+/* Estado de accesibilidad (Cuando se hace clic o se usa el teclado) */
+nav button:focus {
+    outline: 2px solid var(--celeste-tech);
+    /* Recuadro celeste de seguridad */
+    outline-offset: 2px;
+}
+
+/* Animaciones (Efectos de movimiento) */
+@keyframes aparecerLogo {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+        /* Comienza un poco más arriba y transparente */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        /* Baja a su posición original con nitidez */
+    }
+}
+
+/* Responsive Desig */
+
+/* Cuando la pantalla sea más pequeña que 600px de ancho (Celulares) */
+@media (max-width: 600px) {
+
+    /* 1. Reducimos el espacio interno del cuerpo para ganar pantalla */
+    body {
+        padding: 1rem 0.8rem;
+    }
+
+    /* 2. Ajustamos el contenedor del encabezado */
+    /* 2. Ajustamos el contenedor del encabezado para móviles */
+    header {
+        flex-direction: column;
+        /* En celulares vuelve a ser vertical para que no se amontone */
+        gap: 0.8rem;
+        padding: 1.5rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* 3. Optimizamos el logo para que no ocupe toda la pantalla del móvil */
+    header .logo {
+        margin-bottom: 1.2rem;
+        padding: 0.8rem 1.5rem;
+        /* Cápsula un poco más pequeña */
+    }
+
+    header .logo img {
+        height: 70px;
+        /* Bajamos de 90px a 70px para que se vea estético en móvil */
+    }
+
+    /* 4. Achicamos un poco el título para que no se parta en tantas líneas */
+    header h1 {
+        font-size: 1.2rem;
+        /* Texto más cómodo para pantallas angostas */
+    }
+
+    /* 5. Ajustamos los botones del menú para que sean fáciles de tocar con el dedo */
+    nav {
+        /* Cambiamos el mínimo a 140px para que quepan dos botones por fila en el móvil */
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.8rem;
+        /* Espacio un poquito más cerrado entre ellos */
+    }
+
+    nav button {
+        padding: 1rem 0.8rem;
+        /* Botones ligeramente menos altos */
+        font-size: 0.85rem;
+        /* Letra sutilmente más pequeña para evitar que el texto se corte */
+    }
+}
+
+/* 1. Por defecto, ocultamos TODAS las secciones que estén dentro de <main> */
+main section {
+    display: none;
+}
+
+/* 2. ¡La magia! Solo mostramos la sección que tenga la clase 'activa' */
+main section.activa {
+    display: block;
+    animation: suavizarEntrada 0.4s ease forwards;
+}
+
+/* Animación para que aparezca suave y elegante */
+@keyframes suavizarEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
