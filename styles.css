@@ -380,3 +380,18 @@ main section h2::before {
     transform: translateX(3px);
     color: var(--celeste-tech); /* Cambia a celeste al apuntarlo */
 }
+/* ==========================================================================
+   CAJA RESALTADA PARA FÓRMULAS Y CÓDIGO
+   ========================================================================== */
+.formula-tech {
+    background-color: var(--bg-principal);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    color: var(--celeste-tech);
+    font-family: monospace;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 1.8rem;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+}
