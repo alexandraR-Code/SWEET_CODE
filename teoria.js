@@ -20,6 +20,10 @@ function mostrarSeccion(id){
   if (id === "materia") {
       document.getElementById("bloque_explicacion_materia").innerHTML = explicacionMateriaPrimaHTML;
   }
+    // SI la sección que se va a mostrar es 'Costos Fijos', inyectamos su teoría
+  if(id === "fijos"){
+    document.getElementById("bloque_explicacion_fijos").innerHTML = explicacionCostosFijosHTML;
+  }
   
   // En el futuro, aquí podrás añadir más condiciones para las otras pestañas:
   // if (id === "recetas") { ... }
@@ -37,6 +41,20 @@ const explicacionMateriaPrimaHTML = `
     </ul>
 `;
 
+// Costos Fijos
+const explicacionCostosFijosHTML = `
+    <p>
+        <strong>¿Qué son los Costos Fijos?</strong> Son obligaciones que la cafetería debe pagar independientemente de cuántas tazas venda en el mes. No varían con el volumen de producción o ventas.
+    </p>
+    <ul>
+        <li><strong>No cambian a corto plazo:</strong> Se pagan igual aunque se vendan 10 o 500 tazas.</li>
+        <li><strong>Son obligatorios:</strong> La cafetería debe pagarlos para poder operar</li>
+        <li><strong>Permiten planificar:</strong> Al conocerlos, sabemos cuánto debemos vender mínimo para no perder dinero.</li>
+    <p>
+         Fórmula: <strong> CFT = F1 + F2 + F3...</strong> Se calcula sumando cada uno de los costos fijos individuales durante un periodo de tiempo determinado.
+    </p>
+    </ul>
+`;
+
 // Aquí puedes seguir ordenando tus otros bloques teóricos en el futuro...
 const explicacionRecetasHTML = `...`;
-const explicacionCostosFijosHTML = `...`;
