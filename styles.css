@@ -266,3 +266,117 @@ main section.activa {
         transform: translateY(0);
     }
 }
+/* ==========================================================================
+    ESTILOS PARA MATERIA PRIMA 
+   ========================================================================== */
+
+/* Contenedor general de la sección activa (para alinear con el header y nav) */
+main section.activa {
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 2.5rem; /* Separación elegante respecto a los botones */
+}
+
+/* Estilo para los títulos principales de cada sección (H2) */
+main section h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--texto-blanco);
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    position: relative;
+    letter-spacing: -0.01em;
+}
+
+/* Indicador visual al lado izquierdo del H2 (Toque de editor de código) */
+main section h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    width: 4px;
+    background-color: var(--celeste-tech);
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--celeste-tech);
+}
+
+/* Bloque contenedor de la teoría */
+.bloque-teoria {
+    background-color: var(--bg-tarjetas);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2.2rem;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    line-height: 1.7; /* Interlineado cómodo para leer conceptos */
+}
+
+/* Estilo para el párrafo descriptivo */
+.bloque-teoria p {
+    color: var(--texto-blanco);
+    font-size: 1.05rem;
+    margin-bottom: 1.8rem;
+    opacity: 0.95;
+}
+
+/* Resaltado general de textos importantes (strong) dentro del párrafo */
+.bloque-teoria p strong {
+    color: var(--celeste-tech);
+    font-weight: 600;
+}
+
+/* Remodelación completa de la lista (ul) */
+.bloque-teoria ul {
+    list-style: none; /* Quitamos los círculos aburridos por defecto */
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem; /* Espaciado uniforme entre los ítems */
+}
+
+/* Cada ítem de la lista (Materia Prima Directa e Indirecta) */
+.bloque-teoria ul li {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 1.2rem 1.5rem 1.2rem 2.5rem;
+    border-radius: 10px;
+    color: var(--texto-gris);
+    font-size: 0.95rem;
+    position: relative;
+    transition: var(--transicion);
+}
+
+/* Viñeta personalizada simulando una flecha de consola o prompt (>) */
+.bloque-teoria ul li::before {
+    content: '>';
+    position: absolute;
+    left: 1.2rem;
+    top: 1.2rem;
+    color: var(--rosa-marca);
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: var(--transicion);
+}
+
+/* Títulos específicos dentro de las viñetas (MPD y MPI) */
+.bloque-teoria ul li strong {
+    color: var(--rosa-marca);
+    font-size: 1.05rem;
+    display: inline-block;
+    margin-right: 0.3rem;
+}
+
+/* Efecto Hover interactivo para la lista teórica */
+.bloque-teoria ul li:hover {
+    color: var(--texto-blanco);
+    background: rgba(232, 66, 124, 0.03); /* Un sutil destello rosa de fondo */
+    border-color: rgba(232, 66, 124, 0.2);
+    transform: translateX(5px); /* Desplazamiento suave a la derecha */
+    box-shadow: -5px 0 0 var(--rosa-marca); /* Línea sólida rosa a la izquierda */
+}
+
+/* Ajuste del ícono prompt en Hover */
+.bloque-teoria ul li:hover::before {
+    transform: translateX(3px);
+    color: var(--celeste-tech); /* Cambia a celeste al apuntarlo */
+}
