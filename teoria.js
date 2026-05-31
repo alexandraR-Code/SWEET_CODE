@@ -7,7 +7,7 @@ function ocultarSecciones(){
   document.getElementById("recetas").classList.remove("activa");
   document.getElementById("ganancias").classList.remove("activa");
   document.getElementById("equilibrio").classList.remove("activa");
-  document.getElementById("personal").classList.remove("activa");
+  document.getElementById("manoDeObra").classList.remove("activa");
 }
 //funcion que muestra solo la seccion cuyo id recibe como parametro 
 function mostrarSeccion(id){
@@ -36,7 +36,18 @@ function mostrarSeccion(id){
   if (id === "equilibrio") {
       document.getElementById("bloque_explicacion_equilibrio").innerHTML = explicacionEquilibrioHTML;
   }
-  
+  // Condición para la pestaña de Costos variables
+  if(id === "variables"){
+    document.getElementById("bloque_explicacion_variables").innerHTML = explicacionCostosVariablesHTML;
+  }
+  // Condición para la pestaña de Mano de Obra
+  if(id === "manoDeObra"){
+    document.getElementById("bloque_explicacion_manoDeObra").innerHTML = explicacionManoDeObraHTML;
+  }
+  //
+  if(id === "ganancias"){
+    document.getElementById("bloque_explicacion_ganancias").innerHTML = explicacionGananciaHTML;
+  }
   // En el futuro, aquí podrás añadir más condiciones para las otras pestañas:
   // if (id === "recetas") { ... }
 }
@@ -52,19 +63,21 @@ const explicacionMateriaPrimaHTML = `
     </ul>
 `;
 
-// Costos Fijos
+// COSTOS FIJOS
 const explicacionCostosFijosHTML = `
     <p>
-        <strong>¿Qué son los Costos Fijos?</strong> Son obligaciones que la cafetería debe pagar independientemente de cuántas tazas venda en el mes. No varían con el volumen de producción o ventas.
+        <strong>¿Qué son los Costos Fijos?</strong> Son obligaciones que la cafetería debe pagar independientemente de cuántas tazas venda en el mes. No varían con el volumen de producción o ventas. Se calcula sumando cada uno de los costos fijos individuales durante un periodo de tiempo determinado.
     </p>
     <ul>
         <li><strong>No cambian a corto plazo:</strong> Se pagan igual aunque se vendan 10 o 500 tazas.</li>
         <li><strong>Son obligatorios:</strong> La cafetería debe pagarlos para poder operar</li>
         <li><strong>Permiten planificar:</strong> Al conocerlos, sabemos cuánto debemos vender mínimo para no perder dinero.</li>
-    <p>
-         Fórmula: <strong> CFT = F1 + F2 + F3...</strong> Se calcula sumando cada uno de los costos fijos individuales durante un periodo de tiempo determinado.
-    </p>
     </ul>
+
+    <p><strong>Fórmula Costos Fijos:</strong></p>
+    <div class="formula-tech">
+       CFT = F1 + F2 + F3...
+    </div>
 `;
 
 // COSTOS DIRECTOS E INDIRECTOS EN LA CAFETERÍA
@@ -96,4 +109,70 @@ const explicacionEquilibrioHTML = `
     <div class="formula-tech">
         PE = Costos Fijos / (Precio de Venta - Costo Variable Unitario)
     </div>
-    `;
+`;
+// COSTOS VARIABLES
+const explicacionCostosVariablesHTML = `
+    <p>
+        <strong>¿Qué son los Costos Variables?</strong> Son costos que cambian dependiendo de cuánto produce o vende la cafetería.
+    </p>
+    <ul> 
+        <li><strong>Aumentan con las ventas:</strong> Mientras más productos se preparen, mayor será el gasto.</li>
+        <li><strong>Dependen de la producción:</strong> Se consumen según la cantidad de bebidas vendidas.</li>
+        <li><strong>Son operativos:</strong> Incluyen servicios, limpieza y empaques adicionales.</li>
+    </ul>
+
+    <p><strong>Fórmula Costos Variables:</strong></p>
+    <div class="formula-tech">
+       Costo Variable Total (CVT) = Costo Variable Unitario (CVu) × Cantidad (Q) - CVT = CVu × Q
+    </div>
+`;
+// MANO DE OBRA
+ const explicacionManoDeObraHTML = `
+    <p>
+        <strong>¿Cómo se calcula el Costo de Mano de Obra con Horas Extras y Beneficios?</strong> Es el cálculo completo para conocer cuánto cuesta un empleado al mes en Ecuador, sumando su sueldo base, sus horas adicionales y todos los derechos de ley.
+    </p>
+    <ul>
+        <li><strong>Paso 1 (Calcular las Horas):</strong> Se divide el sueldo base para 240 horas al mes para obtener el valor de la hora normal. Las horas con el 50% de recargo se multiplican por 1.5, y las del 100% (fines de semana) se multiplican por 2.</li>
+        <li><strong>Paso 2 (Calcular el Ingreso Total):</strong> Se suma el sueldo base más el dinero ganado por todas las horas extras trabajadas en el mes.</li>
+        <li><strong>Paso 3 (Calcular los Beneficios de Ley):</strong> Sobre ese ingreso total se calculan los costos obligatorios: IESS Patronal (12.15%), Décimo Tercero (ingreso total dividido para 12), Vacaciones (ingreso total dividido para 24) y Décimo Cuarto (un valor fijo de $40.17).</li>
+    </ul>
+    <p><strong>Fórmula de las Horas:</strong></p>
+        <div class="formula-tech">
+        Hora Normal = Sueldo Base ÷ 240 | Hora 50% = Hora Normal × 1.5 | Hora 100% = Hora Normal × 2
+        </div>
+    
+    <p><strong>Fórmula del Ingreso Total (IT):</strong></p>
+        <div class="formula-tech">
+        IT = Sueldo Base + Total de Horas Extras Ganadas
+        </div>
+    
+    <p><strong>Fórmula del Costo Real Total:</strong></p>
+        <div class="formula-tech">
+        Costo Total = IT + IESS Patronal + Décimo Tercero + Décimo Cuarto + Vacaciones
+        </div>
+`;
+// GANANCIA
+const explicacionGananciaHTML = `
+    <p>
+        <strong>¿Qué es la Ganancia y cómo se calcula?</strong> Es el beneficio económico real que obtiene el negocio una vez que se han restado todos los costos y gastos (tanto los costos fijos de personal como los costos variables) de los ingresos totales por ventas.
+    </p>
+    <ul>
+        <li><strong>Ganancia Bruta:</strong> Es el resultado de restar únicamente los costos directos de producción (materia prima) de las ventas totales. Indica si el precio del producto está bien asignado.</li>
+        <li><strong>Ganancia Neta (Utilidad Real):</strong> Es el dinero final que le queda a la empresa. Se calcula restando de la ganancia bruta todos los gastos fijos, sueldos con beneficios de ley, servicios y administración.</li>
+        <li><strong>Margen de Ganancia:</strong> Es el porcentaje que representa la ganancia sobre el precio de venta. Permite medir qué tan rentable y eficiente está siendo el negocio.</li>
+    </ul>
+    <p><strong>Fórmula de Ganancia Bruta:</strong></p>
+        <div class="formula-tech"> 
+        Ganancia Bruta = Ventas Totales - Costos de Producción
+        </div>
+    
+    <p><strong>Fórmula de Ganancia Neta:</strong></p>
+        <div class="formula-tech">
+        Ganancia Neta = Ventas Totales - Total de Costos y Gastos
+        </div>
+
+    <p><strong>Fórmula del Margen de Ganancia (%):</strong></p>
+        <div class="formula-tech">
+        Margen = (Ganancia Neta ÷ Ventas Totales) × 100
+        </div>
+`;
