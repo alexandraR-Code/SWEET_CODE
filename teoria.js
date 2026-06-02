@@ -132,22 +132,6 @@ const explicacionManoDeObraHTML = `
     <p>
         <strong>¿Cómo se calcula el Costo de Mano de Obra con Horas Extras y Beneficios?</strong> Es el cálculo completo para conocer cuánto cuesta un empleado al mes en Ecuador, sumando su sueldo base, sus horas adicionales y todos los derechos de ley.
     </p>
-    <ul>
-        <li><strong>Paso 1 (Calcular las Horas):</strong> Se divide el sueldo base para 240 horas al mes para obtener el valor de la hora normal. Las horas con el 50% de recargo se multiplican por 1.5, y las del 100% (fines de semana) se multiplican por 2.</li>
-        <li><strong>Paso 2 (Calcular el Ingreso Total):</strong> Se suma el sueldo base más el dinero ganado por todas las horas extras trabajadas en el mes.</li>
-        <li><strong>Paso 3 (Calcular los Beneficios de Ley):</strong> Sobre ese ingreso total se calculan los costos obligatorios: IESS Patronal (12.15%), Décimo Tercero (ingreso total dividido para 12), Vacaciones (ingreso total dividido para 24) y Décimo Cuarto (un valor fijo de $40.17).</li>
-        <li><strong>Paso 4 (Calcular los Fondos de Reserva):</strong> Sobre ese ingreso total se calculan los fondos de reserva: (8.33%).</li>
-    </ul>
-
-    <p><strong>Fórmula de las Horas:</strong></p>
-    <div class="formula-tech">
-        Hora Normal = Sueldo Base ÷ 240 &nbsp;|&nbsp; Hora 50% = Hora Normal × 1.5 &nbsp;|&nbsp; Hora 100% = Hora Normal × 2
-    </div>
-
-    <p><strong>Fórmula del Ingreso Total (IT):</strong></p>
-    <div class="formula-tech">
-        IT = Sueldo Base + Total de Horas Extras Ganadas
-    </div>
 
     <p><strong>Fórmula del Costo Total:</strong></p>
     <div class="formula-tech">
@@ -165,7 +149,15 @@ const explicacionManoDeObraHTML = `
             </div>
             <div>
                 <label>Cargo</label>
-                <select id="inputCargo" class="input-formulario" onchange="autocompletarSueldo()"></select>
+                <select id="inputCargo" class="input-formulario" onchange="manejarCargo()"></select>
+            </div>
+            <div id="divNuevoCargo" style="display:none;">
+                <label>Nombre del nuevo cargo</label>
+                <input type="text" id="inputNuevoCargo" class="input-formulario" placeholder="Ej: Limpieza">
+            </div>
+            <div>
+                <label>Tipo de mano de obra</label>
+                <input type="text" id="inputTipo" class="input-formulario" placeholder="Directo / Indirecto" readonly>
             </div>
             <div>
                 <label>Sueldo base ($)</label>
@@ -192,6 +184,7 @@ const explicacionManoDeObraHTML = `
                     <th class="encabezado-tabla th-num">#</th>
                     <th class="encabezado-tabla th-concepto">Nombre</th>
                     <th class="encabezado-tabla th-concepto">Cargo</th>
+                    <th class="encabezado-tabla th-monto-celeste">Tipo</th>
                     <th class="encabezado-tabla th-monto-celeste">Sueldo Base ($)</th>
                     <th class="encabezado-tabla th-monto-celeste">Ingreso Total ($)</th>
                     <th class="encabezado-tabla th-monto-rosa">IESS 12.15%</th>

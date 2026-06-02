@@ -562,3 +562,27 @@ main section h2::before {
 .btn-eliminar-tabla:hover {
     background: rgba(232, 66, 124, 0.28);
 }
+
+/* ==========================================================================
+   BADGES DE TIPO DE MANO DE OBRA (Directo / Indirecto)
+   ========================================================================== */
+.badge-tipo {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.badge-directo {
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--celeste-tech);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.badge-indirecto {
+    background: rgba(232, 66, 124, 0.12);
+    color: var(--rosa-marca);
+    border: 1px solid rgba(232, 66, 124, 0.3);
+}

@@ -2,18 +2,18 @@
 // MANO DE OBRA — ARREGLO DE CARGOS PREDEFINIDOS
 // ============================================================
 let cargos = [
-    { nombre: "Barista",        sueldo: 460.00 },
-    { nombre: "Cajero",         sueldo: 460.00 },
-    { nombre: "Administrador",  sueldo: 800.00 }
+    { nombre: "Barista",        sueldo: 460.00, tipo: "Directo"   },
+    { nombre: "Cajero",         sueldo: 460.00, tipo: "Directo"   },
+    { nombre: "Administrador",  sueldo: 800.00, tipo: "Indirecto" }
 ];
 
 // ============================================================
 // ARREGLO DE EMPLEADOS — empieza con los datos del proyecto
 // ============================================================
 let listaEmpleados = [
-    { nombre: "John",  cargo: "Barista",       sueldo: 460.00, ingresoTotal: 460.00, iess: 55.89, decimoTercero: 38.33, decimoCuarto: 40.17, vacaciones: 19.17, fondosReserva: 38.32, costoTotal: 651.88 },
-    { nombre: "Juan",  cargo: "Cajero",        sueldo: 460.00, ingresoTotal: 460.00, iess: 55.89, decimoTercero: 38.33, decimoCuarto: 40.17, vacaciones: 19.17, fondosReserva: 38.32, costoTotal: 651.88 },
-    { nombre: "Danna", cargo: "Administrador", sueldo: 800.00, ingresoTotal: 800.00, iess: 97.20, decimoTercero: 66.67, decimoCuarto: 40.17, vacaciones: 33.33, fondosReserva: 66.64, costoTotal: 1104.01 }
+    { nombre: "John",  cargo: "Barista",       tipo: "Directo",   sueldo: 460.00, ingresoTotal: 460.00, iess: 55.89, decimoTercero: 38.33, decimoCuarto: 40.17, vacaciones: 19.17, fondosReserva: 38.32, costoTotal: 651.88 },
+    { nombre: "Juan",  cargo: "Cajero",        tipo: "Directo",   sueldo: 460.00, ingresoTotal: 460.00, iess: 55.89, decimoTercero: 38.33, decimoCuarto: 40.17, vacaciones: 19.17, fondosReserva: 38.32, costoTotal: 651.88 },
+    { nombre: "Danna", cargo: "Administrador", tipo: "Indirecto", sueldo: 800.00, ingresoTotal: 800.00, iess: 97.20, decimoTercero: 66.67, decimoCuarto: 40.17, vacaciones: 33.33, fondosReserva: 66.64, costoTotal: 1104.01 }
 ];
 
 // ============================================================
@@ -22,22 +22,36 @@ let listaEmpleados = [
 // ============================================================
 function cargarOpcionesCargos() {
     let selectCargo = recuperarElemento("inputCargo");
-    // Limpiamos primero para no duplicar si se llama varias veces
     selectCargo.innerHTML = "";
     for (let i = 0; i < cargos.length; i++) {
         selectCargo.innerHTML += "<option>" + cargos[i].nombre + "</option>";
     }
+    selectCargo.innerHTML += "<option value='__nuevo__'>+ Nuevo cargo...</option>";
 }
 
 // ============================================================
 // FUNCIÓN: autocompletarSueldo
 // Busca el sueldo del cargo seleccionado y lo pone en el input
 // ============================================================
-function autocompletarSueldo() {
+function manejarCargo() {
     let cargoSeleccionado = recuperarTexto("inputCargo");
-    for (let i = 0; i < cargos.length; i++) {
-        if (cargos[i].nombre === cargoSeleccionado) {
-            mostrarTextoEnCaja("inputSueldo", cargos[i].sueldo);
+    let divNuevoCargo = recuperarElemento("divNuevoCargo");
+    let inputTipo = recuperarElemento("inputTipo");
+
+    if (cargoSeleccionado === "__nuevo__") {
+        divNuevoCargo.style.display = "block";
+        mostrarTextoEnCaja("inputSueldo", "");
+        mostrarTextoEnCaja("inputTipo", "");
+        inputTipo.removeAttribute("readonly");
+    } else {
+        divNuevoCargo.style.display = "none";
+        mostrarTextoEnCaja("inputNuevoCargo", "");
+        for (let i = 0; i < cargos.length; i++) {
+            if (cargos[i].nombre === cargoSeleccionado) {
+                mostrarTextoEnCaja("inputSueldo", cargos[i].sueldo);
+                mostrarTextoEnCaja("inputTipo", cargos[i].tipo);
+                inputTipo.setAttribute("readonly", true);
+            }
         }
     }
 }
@@ -47,15 +61,26 @@ function autocompletarSueldo() {
 // Lee el formulario, calcula todos los valores y hace push
 // ============================================================
 function agregarEmpleado() {
-    let nombre   = recuperarTexto("inputNombre");
-    let cargo    = recuperarTexto("inputCargo");
-    let sueldo   = recuperarFloatSeguro("inputSueldo");
-    let horas50  = recuperarFloatSeguro("inputHoras50");
-    let horas100 = recuperarFloatSeguro("inputHoras100");
+    let nombre      = recuperarTexto("inputNombre");
+    let cargoSelect = recuperarTexto("inputCargo");
+    let nuevoCargo  = recuperarTexto("inputNuevoCargo").trim();
+    let cargo       = cargoSelect === "__nuevo__" ? nuevoCargo : cargoSelect;
+    let tipo        = recuperarTexto("inputTipo").trim();
+    let sueldo      = recuperarFloatSeguro("inputSueldo");
+    let horas50     = recuperarFloatSeguro("inputHoras50");
+    let horas100    = recuperarFloatSeguro("inputHoras100");
 
     // Validaciones
     if (nombre === "") { alert("Debe ingresar un nombre"); return; }
-    if (sueldo === 0)  { alert("Ingrese un monto");        return; }
+    if (cargo  === "") { alert("Debe ingresar el nombre del nuevo cargo"); return; }
+    if (tipo   === "") { alert("Debe ingresar el tipo: Directo o Indirecto"); return; }
+    if (sueldo === 0)  { alert("Ingrese un monto"); return; }
+
+    // Si es cargo nuevo, guardarlo para usarlo de nuevo después
+    if (cargoSelect === "__nuevo__") {
+        cargos.push({ nombre: cargo, sueldo: sueldo, tipo: tipo });
+        cargarOpcionesCargos();
+    }
 
     // Cálculos
     let horaNormal       = sueldo / 240;
@@ -69,7 +94,7 @@ function agregarEmpleado() {
     let fondosReserva = ingresoTotal * 0.0833;
     let costoTotal    = ingresoTotal + iess + decimoTercero + decimoCuarto + vacaciones + fondosReserva;
 
-    let nuevoEmpleado = { nombre, cargo, sueldo, ingresoTotal, iess, decimoTercero, decimoCuarto, vacaciones, fondosReserva, costoTotal };
+    let nuevoEmpleado = { nombre, cargo, tipo, sueldo, ingresoTotal, iess, decimoTercero, decimoCuarto, vacaciones, fondosReserva, costoTotal };
     listaEmpleados.push(nuevoEmpleado);
     mostrarTabla();
 }
@@ -102,6 +127,7 @@ function mostrarTabla() {
                 <td class="td-num">${i + 1}</td>
                 <td class="td-nombre">${e.nombre}</td>
                 <td class="td-cargo">${e.cargo}</td>
+                <td class="td-celeste">${e.tipo}</td>
                 <td class="td-celeste">${convertirMoneda(e.sueldo)}</td>
                 <td class="td-celeste">${convertirMoneda(e.ingresoTotal)}</td>
                 <td class="td-rosa">${convertirMoneda(e.iess)}</td>
