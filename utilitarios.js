@@ -1,4 +1,4 @@
-function recuperaraTexto(idComponente) {
+function recuperarTexto(idComponente) {
     let componente;
     let valorIngresado;
     componente = document.getElementById(idComponente);
@@ -14,12 +14,12 @@ function recuperaraTexto(idComponente) {
 }
 
 function recuperarInt(idComponente) {
-    let valorCaja = recuperaraTexto(idComponente);
+    let valorCaja = recuperarTexto(idComponente);
     let valorEntero = parseInt(valorCaja);
     return valorEntero;
 }
 function recuperarFloat(idComponente) {
-    let valorCaja = recuperaraTexto(idComponente);
+    let valorCaja = recuperarTexto(idComponente);
     let valorFlotante = parseFloat(valorCaja);
     return valorFlotante;
 }

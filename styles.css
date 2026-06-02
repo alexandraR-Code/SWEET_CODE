@@ -315,7 +315,7 @@ main section h2::before {
 .bloque-teoria p {
     color: var(--texto-blanco);
     font-size: 1.05rem;
-    margin-bottom: 1.8rem;
+    margin-bottom: 1rem;
     opacity: 0.95;
 }
 
@@ -385,13 +385,180 @@ main section h2::before {
    ========================================================================== */
 .formula-tech {
     background-color: var(--bg-principal);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    border: 0.5px solid rgba(56, 189, 248, 0.2);
     color: var(--celeste-tech);
     font-family: monospace;
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-align: center;
-    padding: 1.2rem;
+    padding: 0.5rem;
     border-radius: 12px;
-    margin-bottom: 1.8rem;
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+    margin-bottom: 0.5rem;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.2);
+}
+/* ==========================================================================
+   ESTILOS PARA INPUTS DEL FORMULARIO
+   ========================================================================== */
+.input-formulario {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: var(--bg-principal);
+    color: var(--texto-blanco);
+    border: 0.5px solid var(--celeste-tech);
+    font-size: 0.95rem;
+}
+
+.fila-tabla {
+    border-bottom: 1px solid var(--texto-gris); 
+    color: var(--texto-gris); /* gris*/ 
+    transition: var(--transicion); 
+}
+.encabezado-tabla {
+    background: var(--bg-principal);
+    color: var(--celeste-tech);
+    padding: 0.8rem;
+    text-align: left;
+}
+/* ==========================================================================
+   BOTÓN AGREGAR EMPLEADO
+   ========================================================================== */
+.boton-agregar {
+    background: var(--rosa-marca);
+    color: var(--texto-blanco);
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+/* ==========================================================================
+   GRID DEL FORMULARIO DE EMPLEADOS
+   ========================================================================== */
+.grid-formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+/* ==========================================================================
+   CELDAS DE LA TABLA
+   ========================================================================== */
+.fila-tabla td {
+    padding: 0.8rem;
+    text-align: center;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+/* ==============================================================================
+   Las dos primeras columnas (nombre y cargo) van alineadas a la izquierda 
+   ============================================================================*/
+.fila-tabla td:first-child,
+.fila-tabla td:nth-child(2) {
+    text-align: left;
+    font-weight: 500;
+    color: var(--texto-blanco);
+}/* ==========================================================================
+   TABLA MANO DE OBRA — Misma estructura visual que la tabla de costos variables
+   ========================================================================== */
+
+/* Número de fila — columna # */
+.th-num {
+    width: 40px;
+    text-align: center !important;
+}
+
+/* Columna Nombre / Cargo — texto blanco y negrita igual que "Concepto" */
+.th-concepto {
+    text-align: left !important;
+}
+
+/* Columnas de montos en CELESTE (Sueldo base, Ingreso Total) */
+.th-monto-celeste {
+    color: var(--celeste-tech) !important;
+    text-align: center !important;
+}
+
+/* Columnas de montos en ROSA (beneficios de ley) */
+.th-monto-rosa {
+    color: var(--rosa-marca) !important;
+    text-align: center !important;
+}
+
+/* Columna Costo Total en VERDE */
+.th-monto-verde {
+    color: #10b981 !important;
+    text-align: center !important;
+}
+
+/* Columna acciones */
+.th-acciones {
+    text-align: center !important;
+    color: var(--texto-gris) !important;
+}
+
+/* Celda # — número de fila centrado */
+.fila-tabla .td-num {
+    text-align: center;
+    color: var(--texto-gris);
+    font-size: 0.85rem;
+}
+
+/* Nombre — blanco y negrita como "Concepto" en la imagen */
+.fila-tabla .td-nombre {
+    text-align: left;
+    font-weight: 600;
+    color: var(--texto-blanco);
+    font-size: 0.9rem;
+}
+
+/* Cargo — ligeramente más gris, igual que segunda columna de la imagen */
+.fila-tabla .td-cargo {
+    text-align: left;
+    color: var(--texto-blanco);
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+/* Montos en CELESTE — sueldo base e ingreso total */
+.fila-tabla .td-celeste {
+    color: var(--celeste-tech);
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.88rem;
+}
+
+/* Montos en ROSA — todos los beneficios de ley */
+.fila-tabla .td-rosa {
+    color: var(--rosa-marca);
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.88rem;
+}
+
+/* Costo Total en VERDE */
+.fila-tabla .td-verde {
+    color: #10b981;
+    font-weight: 700;
+    text-align: center;
+    font-size: 0.88rem;
+}
+
+/* Botón eliminar dentro de la tabla */
+.btn-eliminar-tabla {
+    background: rgba(232, 66, 124, 0.12);
+    color: var(--rosa-marca);
+    border: 1px solid rgba(232, 66, 124, 0.25);
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: var(--tipografia);
+    transition: var(--transicion);
+}
+
+.btn-eliminar-tabla:hover {
+    background: rgba(232, 66, 124, 0.28);
 }
