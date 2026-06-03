@@ -395,6 +395,28 @@ main section h2::before {
     margin-bottom: 0.5rem;
     box-shadow: inset 0 1px 4px rgba(0,0,0,0.2);
 }
+.formula-tech-sm {
+    background-color: var(--bg-principal);
+    border: 0.5px solid rgba(56, 189, 248, 0.2);
+    color: var(--celeste-tech);
+    font-family: monospace;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 0.35rem 1.2rem;
+    border-radius: 8px;
+    margin: 0.4rem 0;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.2);
+    display: inline-block;
+}
+.formula-leyenda {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-family: monospace;
+    font-size: 0.82rem;
+    color: var(--texto-gris);
+    margin-bottom: 0.5rem;
+}
 /* ==========================================================================
    ESTILOS PARA INPUTS DEL FORMULARIO
    ========================================================================== */
@@ -545,6 +567,14 @@ main section h2::before {
     font-size: 0.88rem;
 }
 
+/* Columna Tipo */
+.fila-tabla .td-tipo {
+    color: var(--celeste-tech);
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.88rem;
+}
+
 /* Botón eliminar dentro de la tabla */
 .btn-eliminar-tabla {
     background: rgba(232, 66, 124, 0.12);
@@ -561,28 +591,4 @@ main section h2::before {
 
 .btn-eliminar-tabla:hover {
     background: rgba(232, 66, 124, 0.28);
-}
-
-/* ==========================================================================
-   BADGES DE TIPO DE MANO DE OBRA (Directo / Indirecto)
-   ========================================================================== */
-.badge-tipo {
-    display: inline-block;
-    padding: 0.2rem 0.7rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-}
-
-.badge-directo {
-    background: rgba(56, 189, 248, 0.12);
-    color: var(--celeste-tech);
-    border: 1px solid rgba(56, 189, 248, 0.3);
-}
-
-.badge-indirecto {
-    background: rgba(232, 66, 124, 0.12);
-    color: var(--rosa-marca);
-    border: 1px solid rgba(232, 66, 124, 0.3);
 }

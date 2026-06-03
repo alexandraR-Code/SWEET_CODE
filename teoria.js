@@ -46,11 +46,15 @@ function mostrarSeccion(id){
 /*=============================*/
 const explicacionMateriaPrimaHTML = `
     <p>
-        <strong>¿Qué es la Materia Prima?</strong> Comprende todos los recursos e insumos primarios adquiridos por la cafetería para ser sometidos a un proceso de transformación operativa o consumo directo, con el objetivo de estructurar los productos finales destinados a la venta. En la contabilidad de costos, su correcto control e inventario son fundamentales para determinar la rentabilidad real del negocio.
+        <strong>¿Qué es la Materia Prima?</strong> Son todos los insumos que la cafetería adquiere para elaborar sus productos. Su correcto control es fundamental para determinar la rentabilidad real del negocio.
     </p>
     <ul>
-        <li><strong>Materia Prima Directa (MPD):</strong> Representa los componentes esenciales que se integran de forma física, medible y principal en la elaboración de cada taza o producto terminado (Ej: Café en grano/molido, leche, agua filtrada, jarabes esenciales). Su costo es directamente asignable al producto unitario.</li>
-        <li><strong>Materia Prima Indirecta (MPI):</strong> Constituye el conjunto de materiales y suministros complementarios que, aunque no forman parte física del contenido consumible, son indispensables para la presentación, el expendio y el servicio comercial al cliente (Ej: Vasos descartables, tapas, pajillas, servilletas). Se distribuyen como costos indirectos de fabricación.</li>
+        <li><strong>Materia Prima Directa (MPD):</strong> Ingredientes que forman parte del producto terminado (Ej: café, leche, jarabes). Su costo es directamente asignable a cada unidad producida.</li>
+        <li><strong>Materia Prima Indirecta (MPI):</strong> Materiales necesarios para la presentación y servicio, pero que no forman parte del contenido (Ej: vasos, tapas, pajillas, servilletas).</li>
+        <li><strong>Costo de Materia Prima por unidad:</strong>
+            <div class="formula-tech-sm">CMPu = Costo del insumo / Unidades que rinde</div>
+        </li>
+        <li><strong>CMPu</strong> = Costo de Materia Prima unitario &nbsp;|&nbsp; <strong>Unidades que rinde</strong> = cantidad de porciones obtenidas del insumo</li>
     </ul>
 `;
 
@@ -59,17 +63,13 @@ const explicacionMateriaPrimaHTML = `
 /*=============================*/
 const explicacionCostosFijosHTML = `
     <p>
-        <strong>¿Qué son los Costos Fijos?</strong> Son obligaciones que la cafetería debe pagar independientemente de cuántas tazas venda en el mes. No varían con el volumen de producción o ventas. Se calcula sumando cada uno de los costos fijos individuales durante un periodo de tiempo determinado.
+        <strong>¿Qué son los Costos Fijos?</strong> Son obligaciones económicas que la cafetería debe cubrir independientemente del volumen de ventas o producción del mes. No varían si se venden 10 o 500 tazas, y deben pagarse para que el negocio pueda operar. Conocerlos permite planificar cuánto se necesita vender como mínimo para no generar pérdidas.
     </p>
     <ul>
-        <li><strong>No cambian a corto plazo:</strong> Se pagan igual aunque se vendan 10 o 500 tazas.</li>
-        <li><strong>Son obligatorios:</strong> La cafetería debe pagarlos para poder operar</li>
-        <li><strong>Permiten planificar:</strong> Al conocerlos, sabemos cuánto debemos vender mínimo para no perder dinero.</li>
+        <li><strong>Fórmula Costos Fijos Totales:</strong>
+            <div class="formula-tech-sm">CFT = F1 + F2 + F3...</div>
+        </li>
     </ul>
-    <p><strong>Fórmula Costos Fijos:</strong></p>
-    <div class="formula-tech">
-       CFT = F1 + F2 + F3...
-    </div>
 `;
 
 /*==============================================*/
@@ -77,11 +77,11 @@ const explicacionCostosFijosHTML = `
 /*==============================================*/
 const explicacionDirectosHTML = `
     <p>
-        <strong>¿Qué son los Costos Directos e Indirectos?</strong> En la gestión financiera de una cafetería, es fundamental clasificar los costos según su nivel de vinculación con los productos del menú. Esta división te permite identificar con precisión cuánto te cuesta producir cada taza de café y qué gastos generales debe absorber el negocio para mantenerse operativo.
+        <strong>¿Qué son los Costos Directos e Indirectos?</strong> Clasificación que permite identificar qué gastos se pueden asignar a un producto específico y cuáles corresponden al funcionamiento general del negocio.
     </p>
     <ul>
-        <li><strong>Costos Directos:</strong> Son aquellos recursos que se asocian de forma clara, inequívoca y proporcional a un producto específico. Si dejas de vender ese producto en particular, este costo desaparece (Ej: Café en grano para un espresso, leche para un Latte o el sirope de vainilla).</li>
-        <li><strong>Costos Indirectos:</strong> Son los gastos compartidos necesarios para el funcionamiento global de la cafetería, pero que no se pueden asignar fácilmente a una sola taza de café vendida (Ej: El alquiler del local comercial, la factura de energía eléctrica, el Wi-Fi gratuito para los clientes, y los sueldos del personal de administración o limpieza).</li>
+        <li><strong>Costos Directos:</strong> Se asocian directamente a un producto. Si ese producto deja de venderse, el costo desaparece (Ej: café en grano, leche, sirope de vainilla).</li>
+        <li><strong>Costos Indirectos:</strong> Gastos compartidos que no se pueden asignar a una sola unidad vendida (Ej: alquiler, energía eléctrica, sueldos administrativos).</li>
     </ul>
 `;
 
@@ -90,8 +90,14 @@ const explicacionDirectosHTML = `
 /*=============================*/
 const explicacionRecetasHTML = `
     <p>
-        <strong>¿Qué es el Costeo de Recetas?</strong> Es el proceso matemático y operativo que permite desglosar un producto del menú en sus ingredientes individuales para calcular con precisión cuánto dinero cuesta producir una sola unidad (por ejemplo, una taza de Cappuccino o una taza de Cafe con Leche). Es la herramienta clave para fijar precios de venta estratégicos y evitar pérdidas invisibles.
+        <strong>¿Qué es el Costeo de Recetas?</strong> Proceso que desglosa un producto del menú en sus ingredientes para calcular cuánto cuesta producir una sola unidad. Es la base para fijar precios de venta y evitar pérdidas.
     </p>
+    <ul>
+        <li><strong>Costo total de la receta:</strong>
+            <div class="formula-tech-sm">CTR = Σ (CMPu × cantidad usada por ingrediente)</div>
+        </li>
+        <li><strong>CTR</strong> = Costo Total de la Receta &nbsp;|&nbsp; <strong>CMPu</strong> = Costo de Materia Prima unitario &nbsp;|&nbsp; <strong>Σ</strong> = sumatoria de todos los ingredientes</li>
+    </ul>
 `;
 
 /*=============================*/
@@ -101,10 +107,12 @@ const explicacionEquilibrioHTML = `
     <p>
         <strong>¿Qué es el Punto de Equilibrio?</strong> Es el límite financiero donde los ingresos totales de tu cafetería igualan exactamente a tus costos totales. En este punto, el negocio ni gana ni pierde dinero, sirviendo como métrica base para saber cuántas unidades se deben vender como mínimo para que el negocio sea autosustentable.
     </p>
-    <p><strong>Fórmula del Punto de Equilibrio:</strong></p>
-    <div class="formula-tech">
-        PE = Costos Fijos / (Precio de Venta - Costo Variable Unitario)
-    </div>
+    <ul>
+        <li><strong>Fórmula del Punto de Equilibrio:</strong>
+            <div class="formula-tech-sm">PE = CF / (PV - CVu)</div>
+        </li>
+        <li><strong>CF</strong> = Costos Fijos &nbsp;|&nbsp; <strong>PV</strong> = Precio de Venta &nbsp;|&nbsp; <strong>CVu</strong> = Costo Variable Unitario</li>
+    </ul>
 `;
 
 /*=============================*/
@@ -112,17 +120,14 @@ const explicacionEquilibrioHTML = `
 /*=============================*/
 const explicacionCostosVariablesHTML = `
     <p>
-        <strong>¿Qué son los Costos Variables?</strong> Son costos que cambian dependiendo de cuánto produce o vende la cafetería.
+        <strong>¿Qué son los Costos Variables?</strong> Son costos que cambian directamente según el volumen de producción o ventas de la cafetería. A diferencia de los costos fijos, si no se produce ni se vende nada, estos costos no se generan. Mientras más bebidas se preparen, mayor será el gasto en materias primas, empaques y suministros operativos.
     </p>
     <ul>
-        <li><strong>Aumentan con las ventas:</strong> Mientras más productos se preparen, mayor será el gasto.</li>
-        <li><strong>Dependen de la producción:</strong> Se consumen según la cantidad de bebidas vendidas.</li>
-        <li><strong>Son operativos:</strong> Incluyen servicios, limpieza y empaques adicionales.</li>
+        <li><strong>Fórmula Costos Variables:</strong>
+            <div class="formula-tech-sm">CVT = CVu × Q</div>
+        </li>
+        <li><strong>CVT</strong> = Costo Variable Total &nbsp;|&nbsp; <strong>CVu</strong> = Costo Variable Unitario &nbsp;|&nbsp; <strong>Q</strong> = Cantidad producida</li>
     </ul>
-    <p><strong>Fórmula Costos Variables:</strong></p>
-    <div class="formula-tech">
-       Costo Variable Total (CVT) = Costo Variable Unitario (CVu) × Cantidad (Q) - CVT = CVu × Q
-    </div>
 `;
 
 /*=============================*/
@@ -133,10 +138,12 @@ const explicacionManoDeObraHTML = `
         <strong>¿Cómo se calcula el Costo de Mano de Obra con Horas Extras y Beneficios?</strong> Es el cálculo completo para conocer cuánto cuesta un empleado al mes en Ecuador, sumando su sueldo base, sus horas adicionales y todos los derechos de ley.
     </p>
 
-    <p><strong>Fórmula del Costo Total:</strong></p>
-    <div class="formula-tech">
-        Costo Total = IT + IESS Patronal + Décimo Tercero + Décimo Cuarto + Vacaciones + Fondos de Reserva
-    </div>
+    <ul>
+        <li><strong>Fórmula del Costo Total:</strong>
+            <div class="formula-tech-sm">CT = IT + IESS + D3 + D4 + Vac + FR</div>
+        </li>
+        <li><strong>IT</strong> = Ingreso Total &nbsp;|&nbsp; <strong>IESS</strong> = 12.15% &nbsp;|&nbsp; <strong>D3</strong> = Décimo Tercero &nbsp;|&nbsp; <strong>D4</strong> = Décimo Cuarto &nbsp;|&nbsp; <strong>Vac</strong> = Vacaciones &nbsp;|&nbsp; <strong>FR</strong> = Fondos de Reserva</li>
+    </ul>
 
     <!-- ===== FORMULARIO DE REGISTRO ===== -->
     <div style="margin-top: 1.8rem;">
@@ -184,7 +191,7 @@ const explicacionManoDeObraHTML = `
                     <th class="encabezado-tabla th-num">#</th>
                     <th class="encabezado-tabla th-concepto">Nombre</th>
                     <th class="encabezado-tabla th-concepto">Cargo</th>
-                    <th class="encabezado-tabla th-monto-celeste">Tipo</th>
+                    <th class="encabezado-tabla th-concepto" style="text-align:center;">Tipo</th>
                     <th class="encabezado-tabla th-monto-celeste">Sueldo Base ($)</th>
                     <th class="encabezado-tabla th-monto-celeste">Ingreso Total ($)</th>
                     <th class="encabezado-tabla th-monto-rosa">IESS 12.15%</th>
@@ -209,20 +216,14 @@ const explicacionGananciaHTML = `
         <strong>¿Qué es la Ganancia y cómo se calcula?</strong> Es el beneficio económico real que obtiene el negocio una vez que se han restado todos los costos y gastos (tanto los costos fijos de personal como los costos variables) de los ingresos totales por ventas.
     </p>
     <ul>
-        <li><strong>Ganancia Bruta:</strong> Es el resultado de restar únicamente los costos directos de producción (materia prima) de las ventas totales. Indica si el precio del producto está bien asignado.</li>
-        <li><strong>Ganancia Neta (Utilidad Real):</strong> Es el dinero final que le queda a la empresa. Se calcula restando de la ganancia bruta todos los gastos fijos, sueldos con beneficios de ley, servicios y administración.</li>
-        <li><strong>Margen de Ganancia:</strong> Es el porcentaje que representa la ganancia sobre el precio de venta. Permite medir qué tan rentable y eficiente está siendo el negocio.</li>
+        <li><strong>Ganancia Bruta:</strong> Resultado de restar los costos directos de producción a las ventas totales.
+            <div class="formula-tech-sm">GB = Ventas Totales - Costos de Producción</div>
+        </li>
+        <li><strong>Ganancia Neta:</strong> Dinero final que le queda al negocio tras descontar todos los costos y gastos.
+            <div class="formula-tech-sm">GN = Ventas Totales - Total de Costos y Gastos</div>
+        </li>
+        <li><strong>Margen de Ganancia:</strong> Porcentaje que representa la ganancia sobre el precio de venta.
+            <div class="formula-tech-sm">Margen = (GN ÷ Ventas Totales) × 100</div>
+        </li>
     </ul>
-    <p><strong>Fórmula de Ganancia Bruta:</strong></p>
-    <div class="formula-tech">
-        Ganancia Bruta = Ventas Totales - Costos de Producción
-    </div>
-    <p><strong>Fórmula de Ganancia Neta:</strong></p>
-    <div class="formula-tech">
-        Ganancia Neta = Ventas Totales - Total de Costos y Gastos
-    </div>
-    <p><strong>Fórmula del Margen de Ganancia (%):</strong></p>
-    <div class="formula-tech">
-        Margen = (Ganancia Neta ÷ Ventas Totales) × 100
-    </div>
 `;
