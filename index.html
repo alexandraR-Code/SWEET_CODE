@@ -13,7 +13,7 @@
         <div class="logo">
             <img src="sweetCode2.png">
         </div>
-        <h1>Matemática 1 — UNIDAD 2: Costos y presupuestos</h1>
+        <h1>Simulador de Costos y Presupuestos</h1>
     </header>
     <nav>
         <button onclick="mostrarSeccion('fijos')">Costos fijos</button>
@@ -27,257 +27,49 @@
     </nav>
     <main>
 
-        <!-- ===================== COSTOS FIJOS ===================== -->
-        <section id="fijos" class="pantalla activa">
+        <section id="fijos" class="pantalla">
             <h2>Costos Fijos Mensuales</h2>
-            <div id="bloque_explicacion_fijos"></div>
-            
-            <div class="formulario-contenedor">
-                <h3 id="fijo_formulario_titulo">Agregar Nuevo Costo Fijo</h3>
-                <div class="grid-formulario">
-                    <div>
-                        <label>Nombre del Costo:</label>
-                        <input type="text" id="fijo_nombre" placeholder="Ej: Arriendo, Internet..." class="campo-control">
-                    </div>
-                    <div>
-                        <label>Categoría:</label>
-                        <input type="text" id="fijo_categoria" placeholder="Ej: Infraestructura..." class="campo-control">
-                    </div>
-                    <div>
-                        <label>Valor Mensual ($):</label>
-                        <input type="number" id="fijo_valor" placeholder="Ej: 350.00" class="campo-control">
-                    </div>
-                </div>
-                <input type="hidden" id="fijo_index_editar" value="-1">
-                <button id="btn_guardar_fijo" onclick="guardarCostosFijo()" class="btn-formulario guardar">Guardar Costo Fijo</button>
-                <button id="btn_cancelar_fijo" onclick="cancelarEdicionFijo()" class="btn-formulario cancelar" style="display: none; margin-left: 0.5rem;">Cancelar Edición</button>
-            </div>
-
-            <div class="contenedor-tabla" style="margin-top: 1.5rem;">
-                <table class="tabla-tech">
-                    <thead>
-                        <tr>
-                            <th class="text-center">N°</th>
-                            <th>Descripción</th>
-                            <th>Categoría</th>
-                            <th>Frecuencia</th>
-                            <th class="text-center">Monto Mensual</th>
-                            <th class="text-center">Monto Anual</th>
-                            <th class="text-center">% del Total</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla_costos_fijos"></tbody>
-                </table>
-            </div>
-
-            <div class="total-box-contenedor">
-                <span class="total-box-titulo">Total Costos Fijos Mensuales: </span>
-                <strong id="total_fijos_calculado" class="total-box-monto">$0.00</strong>
-            </div>
+            <div id="bloque_explicacion_fijos" class="bloque-teoria"></div>
         </section>
 
-        <!-- ===================== COSTOS VARIABLES ===================== -->
-       <section id="variables" class="pantalla activa"> 
-            <h2>Costos Variables Operativos</h2> 
-            <div id="bloque_explicacion_variables" class="bloque-teoria"></div> 
-
-            <div id="contenedor_formulario_variable" class="panel-formulario"> 
-                <h3 id="variable_formulario_titulo">Agregar Nuevo Costo Variable</h3> 
-                
-                <input type="hidden" id="variable_index_editar" value="-1"> 
-
-                <div class="grid-formulario"> 
-                    <div> 
-                        <label>Concepto / Rubro:</label> 
-                        <input type="text" id="variable_nombre" placeholder="Ej. Electricidad, Envases..." class="campo-control"> 
-                    </div> 
-                    <div> 
-                        <label>Monto Mensual ($):</label> 
-                        <input type="number" id="variable_valor" step="0.01" placeholder="0.00" class="campo-control"> 
-                    </div> 
-                </div> 
-
-                <div class="botonera-formulario">
-                    <button id="btn_guardar_variable" onclick="guardarCostoVariable()" class="btn-formulario guardar">Guardar Costo Variable</button> 
-                    <button id="btn_cancelar_variable" onclick="cancelarEdicionVariable()" class="btn-formulario cancelar">Cancelar</button> 
-                </div>
-            </div> 
-
-            <div class="contenedor-tabla"> 
-                <table class="tabla-tech"> 
-                    <thead> 
-                        <tr> 
-                            <th class="th-concepto">Concepto / Rubro</th> 
-                            <th class="th-monto-rosa text-center">Monto Mensual ($)</th> 
-                            <th class="th-acciones text-center">Acciones</th> 
-                        </tr> 
-                    </thead> 
-                    <tbody id="tabla_costos_variables"> 
-                        </tbody> 
-                </table> 
-            </div> 
+        <section id="variables" class="pantalla">
+            <h2>Costos Variables Operativos</h2>
+            <div id="bloque_explicacion_variables" class="bloque-teoria"></div>
         </section>
 
-        <!-- ===================== COSTOS DIRECTOS E INDIRECTOS ===================== -->
         <section id="directos" class="pantalla">
             <h2>Costos Directos e Indirectos</h2>
             <div id="bloque_explicacion_directos" class="bloque-teoria"></div>
         </section>
 
-<!-- ===================== MATERIA PRIMA ===================== -->
         <section id="materia" class="pantalla">
             <h2>Registro de Insumos (Materia Prima)</h2>
-            
             <div id="bloque_explicacion_materia" class="bloque-teoria"></div>
-
-        <div class="grid-totales">
-            <div class="tarjeta-total mp-directa">
-                <p>Total MP Directa</p>
-                <h3 id="total_materia_directa">$0.00</h3>
-            </div>
-            <div class="tarjeta-total mp-indirecta">
-                <p>Total MP Indirecta</p>
-                <h3 id="total_materia_indirecta">$0.00</h3>
-            </div>
-            <div class="tarjeta-total mp-general">
-                <p>MATERIA PRIMA TOTAL</p>
-                <h3 id="total_materia_general">$0.00</h3>
-            </div>
-            <div class="tarjeta-total mp-merma">
-                <p>Total Merma ($)</p>
-                <h3 id="total_merma_dinero">$0.00</h3>
-            </div>
-        </div>
-
-            <div class="panel-formulario">
-                <h3 id="formulario_titulo">Agregar Nuevo Insumo</h3>
-                
-                <input type="hidden" id="mat_index_editar" value="-1">
-
-                <div class="grid-formulario">
-                    <div class="campo-grupo">
-                        <label>Nombre del Insumo:</label>
-                        <input type="text" id="mat_nombre" placeholder="Ej: Café en grano" class="campo-control">
-                    </div>
-                    <div class="campo-grupo">
-                        <label>Unidad de Medida:</label>
-                        <input type="text" id="mat_unidad" placeholder="Ej: kg, litro, paquete" class="campo-control">
-                    </div>
-                    <div class="campo-grupo">
-                        <label>Cantidad Formato:</label>
-                        <input type="number" id="mat_cantidad" step="any" placeholder="Ej: 1.00 o 100" class="campo-control">
-                    </div>
-                    <div class="campo-grupo">
-                        <label>Precio de Compra ($):</label>
-                        <input type="number" id="mat_precio" step="any" placeholder="Ej: 12.50" class="campo-control">
-                    </div>
-                    <div class="campo-grupo">
-                        <label>% Merma Estándar:</label>
-                        <input type="number" id="mat_merma" step="any" placeholder="Ej: 5.00" class="campo-control">
-                    </div>
-                    <div class="campo-grupo">
-                        <label>Clasificación Operativa:</label>
-                        <select id="mat_tipo" class="campo-control">
-                            <option value="DIRECTA">DIRECTA</option>
-                            <option value="INDIRECTA">INDIRECTA</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="botonera-formulario">
-                    <button type="button" id="btn_cancelar_edicion" onclick="cancelarEdicionMateria()" class="btn-formulario cancelar" style="display: none;">Cancelar</button>
-                    <button type="button" id="btn_guardar_materia" onclick="procesarFormularioMateria()" class="btn-formulario guardar">Guardar Insumo</button>
-                </div>
-            </div>
-
-            <div class="contenedor-tabla">
-                <table class="tabla-tech">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Insumo / Descripción</th>
-                            <th>U. Medida</th>
-                            <th>Cantidad</th>
-                            <th>Precio Compra</th>
-                            <th>% Merma</th>
-                            <th>Tipo Insumo</th>
-                            <th style="text-align: center;">Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla_materia_prima">
-                    </tbody>
-                </table>
-            </div>
         </section>
-        <!-- ===================== MANOS DE OBRA ===================== -->
+
         <section id="manoDeObra" class="pantalla">
             <h2>Mano de Obra</h2>
             <div id="bloque_explicacion_manoDeObra" class="bloque-teoria"></div>
-            
         </section>
 
-        <!-- ===================== RECETAS ===================== -->
-        
         <section id="recetas" class="pantalla">
             <h2>Estructuración de Recetas y Costos</h2>
-            <div id="bloque_explicacion_recetas"></div>
-            <div id="formulario_edicion_receta" class="formulario-contenedor" style="margin-bottom: 1.5rem; display: none;">
-                <h3 id="receta_formulario_titulo">Modificando Insumo de Receta</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
-                    <div>
-                        <label>Ingrediente (nombre):</label>
-                        <input type="text" id="receta_ingrediente_nombre" readonly
-                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--texto-gris);">
-                    </div>
-                    <div>
-                        <label>Cantidad a usar en la receta:</label>
-                        <input type="number" id="receta_ingrediente_cantidad" placeholder="Ej: 18"
-                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-principal); color: white;">
-                    </div>
-                    <div>
-                        <label>Unidad de la receta:</label>
-                        <input type="text" id="receta_ingrediente_unidad" placeholder="Ej: gramos, ml, unidad"
-                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-principal); color: white;">
-                    </div>
-                    <div>
-                        <label>Tiempo de preparación (min):</label>
-                        <input type="number" id="receta_tiempo" placeholder="Ej: 5"
-                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-principal); color: white;">
-                    </div>
-                    <div>
-                        <label>Número de porciones (tazas):</label>
-                        <input type="number" id="receta_porciones" placeholder="Ej: 1"
-                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-principal); color: white;">
-                    </div>
-                </div>
-                <!-- Campos ocultos de control -->
-                <input type="hidden" id="receta_id_editar" value="-1">
-                <input type="hidden" id="ingrediente_id_editar" value="-1">
-
-                <button onclick="guardarCambiosParametrosReceta()"
-                    style="background: #10b981; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold;">Guardar Cambios</button>
-                <button onclick="cancelarEdicionParametrosReceta()"
-                    style="background: var(--texto-gris); color: var(--bg-principal); border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold; margin-left: 0.5rem;">Cancelar</button>
-            </div>
-
-            <div id="contenedor_recetas_dinamicas"></div>
+            <div id="bloque_explicacion_recetas" class="bloque-teoria"></div>
         </section>
 
-
-        <!-- ===================== GANANCIAS ===================== -->
         <section id="ganancias" class="pantalla">
             <h2>Ganancia (o Utilidad)</h2>
             <div id="bloque_explicacion_ganancias" class="bloque-teoria"></div>
         </section>
 
-        <!-- ===================== EQUILIBRIO ===================== -->
         <section id="equilibrio" class="pantalla">
             <h2>Punto de Equilibrio Financiero</h2>
             <div id="bloque_explicacion_equilibrio" class="bloque-teoria"></div>
         </section>
-
     </main>
+    <footer>
+        <p>Desarrollado por: Alexandra Ramirez &amp; Ronald Sanchez</p>
+    </footer>
 
     <script src="teoria.js"></script>
     <script src="script.js"></script>
