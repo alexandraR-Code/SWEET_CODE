@@ -209,6 +209,15 @@ function sincronizarTotalesMateriaPrima() {
     let elDirectosMPI = document.getElementById("directos_mpi");
     if (elDirectosMPD) elDirectosMPD.innerText = convertirMoneda(mpd);
     if (elDirectosMPI) elDirectosMPI.innerText = convertirMoneda(mpi);
+   
+    // Calcular total de merma en dinero
+    let totalMerma = 0;
+    for (let i = 0; i < materiasPrimas.length; i++) {
+        totalMerma += materiasPrimas[i].precio * (materiasPrimas[i].merma / 100);
+    }
+    let elMerma = document.getElementById("total_merma_dinero");
+    if (elMerma) elMerma.innerText = convertirMoneda(totalMerma);
+
 }
 
 // ==========================================
@@ -337,4 +346,399 @@ function limpiarFormularioMateria() {
     mostrarTextoEnCaja("mat_cantidad", "");
     mostrarTextoEnCaja("mat_precio", "");
     mostrarTextoEnCaja("mat_merma", "");
+}
+
+// RECETAS Y COSTOS 
+// ==========================================
+// ESTRUCTURA BASE DE RECETAS
+// ==========================================
+let recetasBase = [
+    {
+        idReceta: 0,
+        nombreReceta: "ESPRESSO",
+        tiempoPreparacion: 3,
+        numeroPorciones: 1,
+        ingredientes: [
+            { buscarNombre: "Café molido espresso",  cantidadReceta: 7.00,  unidadReceta: "gramos",  esConversion: true  },
+            { buscarNombre: "Agua purificada",        cantidadReceta: 30.00, unidadReceta: "ml",      esConversion: true  },
+            { buscarNombre: "Vasos desechables 6 oz", cantidadReceta: 1.00,  unidadReceta: "unidad",  esConversion: false },
+            { buscarNombre: "Tapas para vasos",       cantidadReceta: 1.00,  unidadReceta: "unidad",  esConversion: false },
+            { buscarNombre: "Paletas agitadoras",     cantidadReceta: 1.00,  unidadReceta: "unidad",  esConversion: false },
+            { buscarNombre: "Servilletas",            cantidadReceta: 1.00,  unidadReceta: "unidad",  esConversion: false }
+        ]
+    },
+    {
+        idReceta: 1,
+        nombreReceta: "CAFÉ AMERICANO",
+        tiempoPreparacion: 4,
+        numeroPorciones: 1,
+        ingredientes: [
+            { buscarNombre: "Café molido espresso",  cantidadReceta: 7.00,   unidadReceta: "gramos", esConversion: true  },
+            { buscarNombre: "Agua purificada",        cantidadReceta: 150.00, unidadReceta: "ml",     esConversion: true  },
+            { buscarNombre: "Vasos desechables 6 oz", cantidadReceta: 1.00,   unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Tapas para vasos",       cantidadReceta: 1.00,   unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Paletas agitadoras",     cantidadReceta: 1.00,   unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Servilletas",            cantidadReceta: 1.00,   unidadReceta: "unidad", esConversion: false }
+        ]
+    },
+    {
+        idReceta: 2,
+        nombreReceta: "CAFÉ CON LECHE",
+        tiempoPreparacion: 5,
+        numeroPorciones: 1,
+        ingredientes: [
+            { buscarNombre: "Café molido espresso",  cantidadReceta: 7.00,   unidadReceta: "gramos", esConversion: true  },
+            { buscarNombre: "Leche entera",           cantidadReceta: 150.00, unidadReceta: "ml",     esConversion: true  },
+            { buscarNombre: "Azúcar blanca",         cantidadReceta: 10.00,  unidadReceta: "gramos", esConversion: true  },
+            { buscarNombre: "Vasos desechables 6 oz", cantidadReceta: 1.00,   unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Tapas para vasos",       cantidadReceta: 1.00,   unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Paletas agitadoras",     cantidadReceta: 1.00,   unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Servilletas",            cantidadReceta: 1.00,   unidadReceta: "unidad", esConversion: false }
+        ]
+    },
+    {
+        idReceta: 3,
+        nombreReceta: "CAPPUCCINO",
+        tiempoPreparacion: 6,
+        numeroPorciones: 1,
+        ingredientes: [
+            { buscarNombre: "Café molido espresso",        cantidadReceta: 7.00,  unidadReceta: "gramos", esConversion: true  },
+            { buscarNombre: "Leche entera",                cantidadReceta: 120.00, unidadReceta: "ml",    esConversion: true  },
+            { buscarNombre: "Crema de leche",              cantidadReceta: 30.00, unidadReceta: "ml",     esConversion: true  },
+            { buscarNombre: "Azúcar blanca",              cantidadReceta: 10.00, unidadReceta: "gramos",  esConversion: true  },
+            { buscarNombre: "Chocolate en polvo / cacao",  cantidadReceta: 2.00,  unidadReceta: "gramos", esConversion: true  },
+            { buscarNombre: "Vasos desechables 6 oz",      cantidadReceta: 1.00,  unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Tapas para vasos",            cantidadReceta: 1.00,  unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Paletas agitadoras",          cantidadReceta: 1.00,  unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Servilletas",                 cantidadReceta: 1.00,  unidadReceta: "unidad", esConversion: false }
+        ]
+    },
+    {
+        idReceta: 4,
+        nombreReceta: "MOCACHINO",
+        tiempoPreparacion: 7,
+        numeroPorciones: 1,
+        ingredientes: [
+            { buscarNombre: "Café molido espresso",  cantidadReceta: 7.00,  unidadReceta: "gramos", esConversion: true  },
+            { buscarNombre: "Leche entera",           cantidadReceta: 120.00, unidadReceta: "ml",   esConversion: true  },
+            { buscarNombre: "Sirope de chocolate",    cantidadReceta: 20.00, unidadReceta: "ml",     esConversion: true  },
+            { buscarNombre: "Crema de leche",         cantidadReceta: 30.00, unidadReceta: "ml",     esConversion: true  },
+            { buscarNombre: "Azúcar blanca",         cantidadReceta: 10.00, unidadReceta: "gramos",  esConversion: true  },
+            { buscarNombre: "Vasos desechables 6 oz", cantidadReceta: 1.00,  unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Tapas para vasos",       cantidadReceta: 1.00,  unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Paletas agitadoras",     cantidadReceta: 1.00,  unidadReceta: "unidad", esConversion: false },
+            { buscarNombre: "Servilletas",            cantidadReceta: 1.00,  unidadReceta: "unidad", esConversion: false }
+        ]
+    }
+];
+// ==========================================
+// RENDERIZADO DE LAS TABLAS DE RECETAS
+// ==========================================
+function actualizarPantallaRecetas() {
+    let contenedor = document.getElementById("contenedor_recetas_dinamicas");
+    if (!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    recetasBase.forEach(function(receta, rIndex) {
+        let tablaHTML = `
+            <div class="receta-card" style="background: var(--bg-tarjetas); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <h3 style="color: var(--rosa-marca); font-size: 1.3rem; text-transform: uppercase; margin: 0;">${receta.nombreReceta}</h3>
+                    <div style="background: rgba(56, 189, 248, 0.1); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; color: var(--celeste-tech);">
+                        <strong>Tiempo prep.:</strong> ${receta.tiempoPreparacion} min | <strong>Porciones (Tazas):</strong> ${receta.numeroPorciones}
+                    </div>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; text-align: left; margin-top: 1rem;">
+                    <thead style="background: rgba(56, 189, 248, 0.1); color: var(--celeste-tech);">
+                        <tr>
+                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 40px;">#</th>
+                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Ingrediente / Insumo Base</th>
+                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 110px; text-align: center;">Cantidad</th>
+                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 110px;">Unidad</th>
+                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 130px; text-align: right;">Costo/Ud ($)</th>
+                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 130px; text-align: right;">Subtotal ($)</th>
+                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 90px; text-align: center;">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        let totalMateriaPrimaReceta = 0;
+
+        receta.ingredientes.forEach(function(ingrediente, iIndex) {
+            let insumoEncontrado = materiasPrimas.find(function(m) {
+                return m.nombre.toLowerCase().trim() === ingrediente.buscarNombre.toLowerCase().trim();
+            });
+            let costoUnitarioCalculado = 0;
+            let subtotalCalculado = 0;
+
+            if (insumoEncontrado) {
+                let costoNetoInsumoCompleto = obtenerCostoNetoUnitarioInsumo(insumoEncontrado);
+                if (ingrediente.esConversion) {
+                    costoUnitarioCalculado = costoNetoInsumoCompleto / 1000;
+                } else {
+                    costoUnitarioCalculado = costoNetoInsumoCompleto / insumoEncontrado.cantidad;
+                }
+                subtotalCalculado = costoUnitarioCalculado * ingrediente.cantidadReceta;
+                totalMateriaPrimaReceta += subtotalCalculado;
+            }
+
+            tablaHTML += `
+                <tr>
+                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--texto-gris);">${iIndex + 1}</td>
+                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: white; font-weight: 500;">${ingrediente.buscarNombre}</td>
+                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; color: var(--celeste-tech); font-weight: bold;">${ingrediente.cantidadReceta.toFixed(2)}</td>
+                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--texto-gris); font-style: italic;">${ingrediente.unidadReceta}</td>
+                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: var(--texto-gris);">$${costoUnitarioCalculado.toFixed(4)}</td>
+                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: white; font-weight: 500;">$${subtotalCalculado.toFixed(4)}</td>
+                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center;">
+                        <button onclick="cargarIngredienteParaEditar(${rIndex}, ${iIndex})" style="background: transparent; border: 1px solid var(--rosa-marca); color: var(--rosa-marca); padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold;">Editar</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        tablaHTML += `
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: rgba(16, 185, 129, 0.05);">
+                            <td colspan="5" style="padding: 0.8rem; text-align: right; font-weight: bold; color: #10b981; text-transform: uppercase;">Total Costo por Taza:</td>
+                            <td colspan="2" style="padding: 0.8rem; text-align: left; padding-left: 2.5rem; font-weight: bold; color: #10b981; font-size: 1.1rem;">$${totalMateriaPrimaReceta.toFixed(4)}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        `;
+
+        contenedor.innerHTML += tablaHTML;
+    });
+}
+
+// ==========================================
+// EDICIÓN DE INGREDIENTE EN RECETA
+// ==========================================
+function cargarIngredienteParaEditar(recetaIndex, ingredienteIndex) {
+    let receta = recetasBase[recetaIndex];
+    let ingrediente = receta.ingredientes[ingredienteIndex];
+
+    mostrarTextoEnCaja("receta_ingrediente_nombre", ingrediente.buscarNombre);
+    mostrarTextoEnCaja("receta_ingrediente_cantidad", ingrediente.cantidadReceta);
+    mostrarTextoEnCaja("receta_ingrediente_unidad", ingrediente.unidadReceta);
+    mostrarTextoEnCaja("receta_tiempo", receta.tiempoPreparacion);
+    mostrarTextoEnCaja("receta_porciones", receta.numeroPorciones);
+
+    document.getElementById("receta_id_editar").value = recetaIndex;
+    document.getElementById("ingrediente_id_editar").value = ingredienteIndex;
+
+    document.getElementById("formulario_edicion_receta").style.display = "block";
+    document.getElementById("receta_formulario_titulo").innerText = "Modificando Insumo de la Receta: " + receta.nombreReceta;
+    document.getElementById("formulario_edicion_receta").scrollIntoView({ behavior: 'smooth' });
+}
+
+function guardarCambiosParametrosReceta() {
+    let rIndex = parseInt(document.getElementById("receta_id_editar").value);
+    let iIndex = parseInt(document.getElementById("ingrediente_id_editar").value);
+
+    let nuevaCantidad = recuperarFloat("receta_ingrediente_cantidad");
+    let nuevaUnidad = recuperarTexto("receta_ingrediente_unidad");
+    let nuevoTiempo = recuperarInt("receta_tiempo");
+    let nuevasPorciones = recuperarInt("receta_porciones");
+
+    if (isNaN(nuevaCantidad) || nuevaUnidad === "" || isNaN(nuevoTiempo) || isNaN(nuevasPorciones)) {
+        alert("Por favor, rellene todos los campos con valores válidos.");
+        return;
+    }
+
+    recetasBase[rIndex].tiempoPreparacion = nuevoTiempo;
+    recetasBase[rIndex].numeroPorciones = nuevasPorciones;
+    recetasBase[rIndex].ingredientes[iIndex].cantidadReceta = nuevaCantidad;
+    recetasBase[rIndex].ingredientes[iIndex].unidadReceta = nuevaUnidad;
+
+    cancelarEdicionParametrosReceta();
+    actualizarPantallaRecetas();
+}
+
+function cancelarEdicionParametrosReceta() {
+    document.getElementById("receta_id_editar").value = "-1";
+    document.getElementById("ingrediente_id_editar").value = "-1";
+    document.getElementById("formulario_edicion_receta").style.display = "none";
+    mostrarTextoEnCaja("receta_ingrediente_nombre", "");
+    mostrarTextoEnCaja("receta_ingrediente_cantidad", "");
+    mostrarTextoEnCaja("receta_ingrediente_unidad", "");
+    mostrarTextoEnCaja("receta_tiempo", "");
+    mostrarTextoEnCaja("receta_porciones", "");
+}
+
+// ==========================================================
+// ARREGLO DE COSTOS FIJOS (Sin la propiedad de notas)
+// ==========================================================
+let costosFijos = [
+    { concepto: "Sueldo barista",          categoria: "Personal",                frecuencia: "Mensual", montoMensual: 0.00,  inputId: "fijo_barista" },
+    { concepto: "Sueldo cajera",           categoria: "Personal",                frecuencia: "Mensual", montoMensual: 0.00,  inputId: "fijo_cajera" },
+    { concepto: "Arriendo del local",      categoria: "Infraestructura",         frecuencia: "Mensual", montoMensual: 350.00,  inputId: "fijo_arriendo" },
+    { concepto: "Sueldo administrador",    categoria: "Personal",                frecuencia: "Mensual", montoMensual: 0.00, inputId: "fijo_admin" },
+    { concepto: "Depreciación maquinaria", categoria: "Activos fijos",           frecuencia: "Mensual", montoMensual: 50.00,   inputId: "fijo_depreciacion" },
+    { concepto: "Electricidad",            categoria: "Servicios básicos",       frecuencia: "Mensual", montoMensual: 10.00,   inputId: "fijo_electricidad" },
+    { concepto: "Agua potable",            categoria: "Servicios básicos",       frecuencia: "Mensual", montoMensual: 15.00,   inputId: "fijo_agua" },
+    { concepto: "Internet y teléfono",     categoria: "Servicios básicos",       frecuencia: "Mensual", montoMensual: 35.00,   inputId: "fijo_internet" },
+    { concepto: "Honorarios contabilidad", categoria: "Servicios profesionales", frecuencia: "Mensual", montoMensual: 50.00,   inputId: "fijo_contabilidad" },
+    { concepto: "Seguros",                 categoria: "Gastos legales",          frecuencia: "Mensual", montoMensual: 30.00,   inputId: "fijo_seguro" },
+    { concepto: "Licencias y permisos",    categoria: "Gastos legales",          frecuencia: "Mensual", montoMensual: 12.00,   inputId: "fijo_licencias" },
+    { concepto: "Publicidad fija",         categoria: "Marketing",               frecuencia: "Mensual", montoMensual: 30.00,   inputId: "fijo_publicidad" }
+];
+
+// ==========================================================
+// FUNCIÓN AUXILIAR: Sumar el costo total por cargo desde Mano de Obra
+// ==========================================================
+function obtenerCostoTotalPorCargo(cargo) {
+    let total = 0;
+    for (let j = 0; j < listaEmpleados.length; j++) {
+        // Validación flexible por si se registra como "Cajero" o "Cajera"
+        if (listaEmpleados[j].cargo.toLowerCase() === cargo.toLowerCase() || 
+            (cargo.toLowerCase() === "cajera" && listaEmpleados[j].cargo.toLowerCase() === "cajero")) {
+            total += listaEmpleados[j].costoTotal;
+        }
+    }
+    return total;
+}
+
+// ==========================================================
+// RENDERIZADO TABLA COSTOS FIJOS
+// ==========================================================
+function actualizarTablaCostosFijos() {
+    let tablaBody = document.getElementById("tabla_costos_fijos");
+    if (!tablaBody) return;
+
+    let tfootViejo = tablaBody.parentElement.querySelector("tfoot");
+    if (tfootViejo) { tfootViejo.remove(); }
+
+    // DINÁMICO: Antes de calcular, actualiza los montos desde la lista de mano de obra
+    for (let i = 0; i < costosFijos.length; i++) {
+        if (costosFijos[i].inputId === "fijo_barista") {
+            costosFijos[i].montoMensual = obtenerCostoTotalPorCargo("Barista");
+        } else if (costosFijos[i].inputId === "fijo_cajera") {
+            costosFijos[i].montoMensual = obtenerCostoTotalPorCargo("Cajero");
+        } else if (costosFijos[i].inputId === "fijo_admin") {
+            costosFijos[i].montoMensual = obtenerCostoTotalPorCargo("Administrador");
+        }
+    }
+
+    let totalMensual = 0;
+    for (let i = 0; i < costosFijos.length; i++) {
+        totalMensual = totalMensual + costosFijos[i].montoMensual;
+    }
+
+    tablaBody.innerHTML = "";
+    for (let i = 0; i < costosFijos.length; i++) {
+        let item = costosFijos[i];
+        let montoAnual = item.montoMensual * 12;
+        let porcentaje = totalMensual > 0 ? (item.montoMensual / totalMensual) * 100 : 0;
+
+        // Se removió por completo el TD de las notas
+        let fila = `
+        <tr>
+            <td class="text-gris text-center">${i + 1}</td>
+            <td class="text-blanco font-semibold">${item.concepto}</td>
+            <td class="text-celeste font-semibold">${item.categoria}</td>
+            <td class="text-gris">${item.frecuencia}</td>
+            <td class="text-verde font-bold text-center">$${item.montoMensual.toFixed(2)}</td>
+            <td class="text-gris text-center">$${montoAnual.toFixed(2)}</td>
+            <td class="text-rosa font-medium text-center">${porcentaje.toFixed(2)}%</td>
+            <td class="text-center">
+                <button onclick="cargarFijoParaEditar(${i})" class="btn-editar-tech">Editar</button>
+            </td>
+        </tr>
+        `;
+        tablaBody.innerHTML += fila;
+    }
+
+    let totalAnual = totalMensual * 12;
+    let tfoot = document.createElement("tfoot");
+    // Se eliminó un TD vacío del final para equilibrar el total de columnas (ahora son 8 en total)
+    tfoot.innerHTML = `
+    <tr class="bg-total-row">
+        <td colspan="4" class="text-verde font-bold uppercase" style="padding: 1rem;">Total</td>
+        <td class="text-verde font-bold text-center">$${convertirMoneda(totalMensual)}</td>
+        <td class="text-verde font-bold text-center">$${convertirMoneda(totalAnual)}</td>
+        <td class="text-verde font-bold text-center">100%</td>
+        <td></td>
+    </tr>
+    `;
+    tablaBody.parentElement.appendChild(tfoot);
+
+    let elTotal = document.getElementById("total_fijos_calculado");
+    if (elTotal) { elTotal.innerText = convertirMoneda(totalMensual); }
+
+    sincronizarTotalesMateriaPrima();
+}
+
+// ==========================================================
+// GUARDAR / EDITAR GASTO FIJO (Sin leer ni procesar notas)
+// ==========================================================
+function guardarCostosFijo() {
+    let nombre    = recuperarTexto("fijo_nombre");
+    let categoria = recuperarTexto("fijo_categoria");
+    let valor     = recuperarFloatSeguro("fijo_valor");
+    let indexEditar = parseInt(document.getElementById("fijo_index_editar").value);
+
+    if (nombre === "" || valor <= 0) {
+        alert("Por favor ingresa un nombre y un valor mayor a cero.");
+        return;
+    }
+
+    let datosFijo = {
+        concepto: nombre,
+        categoria: categoria !== "" ? categoria : "Otros",
+        frecuencia: "Mensual",
+        montoMensual: valor,
+        inputId: indexEditar !== -1 ? costosFijos[indexEditar].inputId : ""
+    };
+
+    if (indexEditar === -1) {
+        costosFijos.push(datosFijo);
+    } else {
+        costosFijos[indexEditar] = datosFijo;
+        cancelarEdicionFijo();
+        actualizarTablaCostosFijos();
+        return;
+    }
+
+    limpiarFormularioFijo();
+    actualizarTablaCostosFijos();
+}
+
+function cargarFijoParaEditar(index) {
+    let item = costosFijos[index];
+    mostrarTextoEnCaja("fijo_nombre",    item.concepto);
+    mostrarTextoEnCaja("fijo_categoria", item.categoria);
+    mostrarTextoEnCaja("fijo_valor",     item.montoMensual);
+    
+    document.getElementById("fijo_index_editar").value = index;
+    document.getElementById("fijo_formulario_titulo").innerText = "Modificar Gasto Fijo";
+    
+    let btnGuardar = document.getElementById("btn_guardar_fijo");
+    btnGuardar.innerText = "Guardar Cambios";
+    btnGuardar.style.backgroundColor = "#10b981"; 
+    
+    document.getElementById("btn_cancelar_fijo").style.display = "inline-block";
+    document.getElementById("fijo_formulario_titulo").scrollIntoView({ behavior: "smooth" });
+}
+
+function cancelarEdicionFijo() {
+    document.getElementById("fijo_index_editar").value = "-1";
+    document.getElementById("fijo_formulario_titulo").innerText = "Agregar Nuevo Gasto Fijo";
+    
+    let btnGuardar = document.getElementById("btn_guardar_fijo");
+    btnGuardar.innerText = "Guardar Gasto Fijo";
+    btnGuardar.style.backgroundColor = "var(--rosa-marca)";
+    
+    document.getElementById("btn_cancelar_fijo").style.display = "none";
+    limpiarFormularioFijo();
+}
+
+function limpiarFormularioFijo() {
+    mostrarTextoEnCaja("fijo_nombre",    "");
+    mostrarTextoEnCaja("fijo_categoria", "");
+    mostrarTextoEnCaja("fijo_valor",     "");
 }

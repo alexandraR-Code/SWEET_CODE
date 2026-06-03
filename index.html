@@ -28,9 +28,53 @@
     <main>
 
         <!-- ===================== COSTOS FIJOS ===================== -->
-        <section id="fijos" class="pantalla">
-            <h2>Costos Fijos</h2>
-            <div id="bloque_explicacion_fijos" class="bloque-teoria"></div>
+        <section id="fijos" class="pantalla activa">
+            <h2>Costos Fijos Mensuales</h2>
+            <div id="bloque_explicacion_fijos"></div>
+            
+            <div class="formulario-contenedor">
+                <h3 id="fijo_formulario_titulo">Agregar Nuevo Costo Fijo</h3>
+                <div class="grid-formulario">
+                    <div>
+                        <label>Nombre del Costo:</label>
+                        <input type="text" id="fijo_nombre" placeholder="Ej: Arriendo, Internet..." class="campo-control">
+                    </div>
+                    <div>
+                        <label>Categoría:</label>
+                        <input type="text" id="fijo_categoria" placeholder="Ej: Infraestructura..." class="campo-control">
+                    </div>
+                    <div>
+                        <label>Valor Mensual ($):</label>
+                        <input type="number" id="fijo_valor" placeholder="Ej: 350.00" class="campo-control">
+                    </div>
+                </div>
+                <input type="hidden" id="fijo_index_editar" value="-1">
+                <button id="btn_guardar_fijo" onclick="guardarCostosFijo()" class="btn-formulario guardar">Guardar Costo Fijo</button>
+                <button id="btn_cancelar_fijo" onclick="cancelarEdicionFijo()" class="btn-formulario cancelar" style="display: none; margin-left: 0.5rem;">Cancelar Edición</button>
+            </div>
+
+            <div class="contenedor-tabla" style="margin-top: 1.5rem;">
+                <table class="tabla-tech">
+                    <thead>
+                        <tr>
+                            <th class="text-center">N°</th>
+                            <th>Descripción</th>
+                            <th>Categoría</th>
+                            <th>Frecuencia</th>
+                            <th class="text-center">Monto Mensual</th>
+                            <th class="text-center">Monto Anual</th>
+                            <th class="text-center">% del Total</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla_costos_fijos"></tbody>
+                </table>
+            </div>
+
+            <div class="total-box-contenedor">
+                <span class="total-box-titulo">Total Gastos Fijos Mensuales: </span>
+                <strong id="total_fijos_calculado" class="total-box-monto">$0.00</strong>
+            </div>
         </section>
 
         <!-- ===================== COSTOS VARIABLES ===================== -->
@@ -51,20 +95,24 @@
             
             <div id="bloque_explicacion_materia" class="bloque-teoria"></div>
 
-            <div class="grid-totales">
-                <div class="tarjeta-total mp-directa">
-                    <p>Total MP Directa</p>
-                    <h3 id="total_materia_directa">$0.00</h3>
-                </div>
-                <div class="tarjeta-total mp-indirecta">
-                    <p>Total MP Indirecta</p>
-                    <h3 id="total_materia_indirecta">$0.00</h3>
-                </div>
-                <div class="tarjeta-total mp-general">
-                    <p>MATERIA PRIMA DIRECTA</p>
-                    <h3 id="total_materia_general">$0.00</h3>
-                </div>
+        <div class="grid-totales">
+            <div class="tarjeta-total mp-directa">
+                <p>Total MP Directa</p>
+                <h3 id="total_materia_directa">$0.00</h3>
             </div>
+            <div class="tarjeta-total mp-indirecta">
+                <p>Total MP Indirecta</p>
+                <h3 id="total_materia_indirecta">$0.00</h3>
+            </div>
+            <div class="tarjeta-total mp-general">
+                <p>MATERIA PRIMA TOTAL</p>
+                <h3 id="total_materia_general">$0.00</h3>
+            </div>
+            <div class="tarjeta-total mp-merma">
+                <p>Total Merma ($)</p>
+                <h3 id="total_merma_dinero">$0.00</h3>
+            </div>
+        </div>
 
             <div class="panel-formulario">
                 <h3 id="formulario_titulo">Agregar Nuevo Insumo</h3>
@@ -134,10 +182,52 @@
         </section>
 
         <!-- ===================== RECETAS ===================== -->
+        
         <section id="recetas" class="pantalla">
-            <h2>Costeo de Recetas y Menú</h2>
-            <div id="bloque_explicacion_recetas" class="bloque-teoria"></div>
+            <h2>Estructuración de Recetas y Costos</h2>
+            <div id="bloque_explicacion_recetas"></div>
+            <div id="formulario_edicion_receta" class="formulario-contenedor" style="margin-bottom: 1.5rem; display: none;">
+                <h3 id="receta_formulario_titulo">Modificando Insumo de Receta</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label>Ingrediente (nombre):</label>
+                        <input type="text" id="receta_ingrediente_nombre" readonly
+                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--texto-gris);">
+                    </div>
+                    <div>
+                        <label>Cantidad a usar en la receta:</label>
+                        <input type="number" id="receta_ingrediente_cantidad" placeholder="Ej: 18"
+                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-principal); color: white;">
+                    </div>
+                    <div>
+                        <label>Unidad de la receta:</label>
+                        <input type="text" id="receta_ingrediente_unidad" placeholder="Ej: gramos, ml, unidad"
+                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-principal); color: white;">
+                    </div>
+                    <div>
+                        <label>Tiempo de preparación (min):</label>
+                        <input type="number" id="receta_tiempo" placeholder="Ej: 5"
+                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-principal); color: white;">
+                    </div>
+                    <div>
+                        <label>Número de porciones (tazas):</label>
+                        <input type="number" id="receta_porciones" placeholder="Ej: 1"
+                            style="width:100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg-principal); color: white;">
+                    </div>
+                </div>
+                <!-- Campos ocultos de control -->
+                <input type="hidden" id="receta_id_editar" value="-1">
+                <input type="hidden" id="ingrediente_id_editar" value="-1">
+
+                <button onclick="guardarCambiosParametrosReceta()"
+                    style="background: #10b981; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold;">Guardar Cambios</button>
+                <button onclick="cancelarEdicionParametrosReceta()"
+                    style="background: var(--texto-gris); color: var(--bg-principal); border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold; margin-left: 0.5rem;">Cancelar</button>
+            </div>
+
+            <div id="contenedor_recetas_dinamicas"></div>
         </section>
+
 
         <!-- ===================== GANANCIAS ===================== -->
         <section id="ganancias" class="pantalla">

@@ -22,6 +22,10 @@ function mostrarSeccion(id){
   }
   if (id === "fijos") {
       document.getElementById("bloque_explicacion_fijos").innerHTML = explicacionCostosFijosHTML;
+      // Llama a la función del script principal para dibujar la tabla de costos fijos
+      if (typeof actualizarTablaCostosFijos === "function") {
+          actualizarTablaCostosFijos();
+      }
   }
   // Condición para la pestaña de costos directos e indirectos
   if (id === "directos") {
@@ -29,6 +33,9 @@ function mostrarSeccion(id){
   }
   if (id === "recetas") {
       document.getElementById("bloque_explicacion_recetas").innerHTML = explicacionRecetasHTML;
+      if (typeof actualizarPantallaRecetas === "function") {
+          actualizarPantallaRecetas();
+      }
   }
   if (id === "equilibrio") {
       document.getElementById("bloque_explicacion_equilibrio").innerHTML = explicacionEquilibrioHTML;
@@ -67,8 +74,6 @@ const explicacionCostosFijosHTML = `
         <strong>¿Qué son los Costos Fijos?</strong> Son obligaciones económicas que la cafetería debe cubrir independientemente del volumen de ventas o producción del mes. No varían si se venden 10 o 500 tazas, y deben pagarse para que el negocio pueda operar. Conocerlos permite planificar cuánto se necesita vender como mínimo para no generar pérdidas.
     </p>
     <ul>
-        <li><strong>Fórmula Costos Fijos Totales:</strong>
-            <div class="formula-tech-sm">CFT = F1 + F2 + F3...</div>
         </li>
     </ul>
 `;

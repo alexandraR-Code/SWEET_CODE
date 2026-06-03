@@ -20,6 +20,7 @@
     --tipografia: 'Segoe UI', Roboto, sans-serif;
     --transicion: all 0.3s ease;
     /* Transición fluida para efectos visuales */
+    --naranja-merma: #f59e0b;
 }
 
 /*Evita margenes erroneas en el navagador*/
@@ -600,6 +601,9 @@ main section h2::before {
 .tarjeta-total.mp-directa { border-left-color: var(--celeste-tech); }
 .tarjeta-total.mp-indirecta { border-left-color: #a855f7; } /* Morado complementario */
 .tarjeta-total.mp-general { border-left-color: var(--rosa-marca); }
+.tarjeta-total.mp-merma { 
+    border-left-color: var(--naranja-merma); 
+}
 
 /* 2. Reciclaje para el Formulario Operativo */
 .panel-formulario {
@@ -747,4 +751,79 @@ main section h2::before {
     background-color: var(--celeste-tech);
     color: var(--bg-principal);
     box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+/* ==========================================================================
+   ESTILOS PARA SECCIÓN RECETAS — formulario-contenedor
+   ========================================================================== */
+.formulario-contenedor {
+    background: var(--bg-tarjetas);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.formulario-contenedor h3 {
+    color: var(--celeste-tech);
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.formulario-contenedor label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--texto-gris);
+    margin-bottom: 0.4rem;
+}
+
+/* ==========================================================================
+   NUEVOS ESTILOS REUTILIZABLES PARA LA SECCIÓN DE COSTOS FIJOS
+   ========================================================================== */
+
+/* Alineaciones y Helpers de Texto */
+.text-center { text-align: center !important; }
+.text-blanco { color: var(--texto-blanco); }
+.text-gris { color: var(--texto-gris); }
+.text-celeste { color: var(--celeste-tech); }
+.text-rosa { color: var(--rosa-marca); }
+.text-verde { color: #10b981; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-bold { font-weight: 700; }
+.italic { font-style: italic; }
+.text-sm { font-size: 0.85rem; }
+
+/* Fila de Totales en el tfoot */
+.bg-total-row { 
+    background: rgba(16, 185, 129, 0.05); 
+}
+.bg-total-row td {
+    border-top: 2px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Caja de Resumen Inferior */
+.total-box-contenedor {
+    margin-top: 1.5rem; 
+    text-align: right; 
+    padding: 1.2rem 1.5rem; 
+    background: var(--bg-tarjetas); 
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    border-right: 4px solid var(--rosa-marca);
+}
+
+.total-box-titulo {
+    color: var(--texto-gris); 
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.total-box-monto {
+    color: var(--rosa-marca); 
+    font-size: 1.6rem; 
+    margin-left: 0.6rem;
+    font-family: monospace;
+    text-shadow: 0 0 10px rgba(232, 66, 124, 0.2);
 }
