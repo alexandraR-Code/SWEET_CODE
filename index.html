@@ -72,15 +72,51 @@
             </div>
 
             <div class="total-box-contenedor">
-                <span class="total-box-titulo">Total Gastos Fijos Mensuales: </span>
+                <span class="total-box-titulo">Total Costos Fijos Mensuales: </span>
                 <strong id="total_fijos_calculado" class="total-box-monto">$0.00</strong>
             </div>
         </section>
 
         <!-- ===================== COSTOS VARIABLES ===================== -->
-        <section id="variables" class="pantalla">
-            <h2>Costos Variables</h2>
-            <div id="bloque_explicacion_variables" class="bloque-teoria"></div>
+       <section id="variables" class="pantalla activa"> 
+            <h2>Costos Variables Operativos</h2> 
+            <div id="bloque_explicacion_variables" class="bloque-teoria"></div> 
+
+            <div id="contenedor_formulario_variable" class="panel-formulario"> 
+                <h3 id="variable_formulario_titulo">Agregar Nuevo Costo Variable</h3> 
+                
+                <input type="hidden" id="variable_index_editar" value="-1"> 
+
+                <div class="grid-formulario"> 
+                    <div> 
+                        <label>Concepto / Rubro:</label> 
+                        <input type="text" id="variable_nombre" placeholder="Ej. Electricidad, Envases..." class="campo-control"> 
+                    </div> 
+                    <div> 
+                        <label>Monto Mensual ($):</label> 
+                        <input type="number" id="variable_valor" step="0.01" placeholder="0.00" class="campo-control"> 
+                    </div> 
+                </div> 
+
+                <div class="botonera-formulario">
+                    <button id="btn_guardar_variable" onclick="guardarCostoVariable()" class="btn-formulario guardar">Guardar Costo Variable</button> 
+                    <button id="btn_cancelar_variable" onclick="cancelarEdicionVariable()" class="btn-formulario cancelar">Cancelar</button> 
+                </div>
+            </div> 
+
+            <div class="contenedor-tabla"> 
+                <table class="tabla-tech"> 
+                    <thead> 
+                        <tr> 
+                            <th class="th-concepto">Concepto / Rubro</th> 
+                            <th class="th-monto-rosa text-center">Monto Mensual ($)</th> 
+                            <th class="th-acciones text-center">Acciones</th> 
+                        </tr> 
+                    </thead> 
+                    <tbody id="tabla_costos_variables"> 
+                        </tbody> 
+                </table> 
+            </div> 
         </section>
 
         <!-- ===================== COSTOS DIRECTOS E INDIRECTOS ===================== -->

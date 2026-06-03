@@ -655,10 +655,10 @@ function actualizarTablaCostosFijos() {
 
     let totalAnual = totalMensual * 12;
     let tfoot = document.createElement("tfoot");
-    // Se eliminó un TD vacío del final para equilibrar el total de columnas (ahora son 8 en total)
+// Se eliminó un TD vacío del final para equilibrar el total de columnas (ahora son 8 en total)
     tfoot.innerHTML = `
     <tr class="bg-total-row">
-        <td colspan="4" class="text-verde font-bold uppercase" style="padding: 1rem;">Total</td>
+        <td colspan="4" class="text-verde font-bold uppercase">Total</td>
         <td class="text-verde font-bold text-center">$${convertirMoneda(totalMensual)}</td>
         <td class="text-verde font-bold text-center">$${convertirMoneda(totalAnual)}</td>
         <td class="text-verde font-bold text-center">100%</td>
@@ -674,7 +674,7 @@ function actualizarTablaCostosFijos() {
 }
 
 // ==========================================================
-// GUARDAR / EDITAR GASTO FIJO (Sin leer ni procesar notas)
+// GUARDAR / EDITAR COSTOS FIJO (Sin leer ni procesar notas)
 // ==========================================================
 function guardarCostosFijo() {
     let nombre    = recuperarTexto("fijo_nombre");
@@ -741,4 +741,207 @@ function limpiarFormularioFijo() {
     mostrarTextoEnCaja("fijo_nombre",    "");
     mostrarTextoEnCaja("fijo_categoria", "");
     mostrarTextoEnCaja("fijo_valor",     "");
+}
+
+// ============================================================
+// ARREGLO DE COSTOS VARIABLES OPERATIVOS
+// ============================================================
+let costosVariables = [
+    { concepto: "Materia Prima Directa (MPD)", monto: 0, esAutomatico: true },
+    { concepto: "Materia Prima Indirecta (MPI)", monto: 0, esAutomatico: true },
+    { concepto: "Merma en Dinero", monto: 0, esAutomatico: true },
+    // Los manuales inician aquí abajo:
+    { concepto: "Servicio de electricidad", monto: 45.00, esAutomatico: false },
+    { concepto: "Suministros de limpieza", monto: 18.00, esAutomatico: false }
+];
+
+// Helper inteligente para extraer números limpios desde el DOM de Materia Prima
+function obtenerValorDeMateria(idsPosibles) {
+    for (let id of idsPosibles) {
+        let el = document.getElementById(id);
+        if (el) {
+            let texto = el.innerText || el.value || "0";
+            let valor = parseFloat(texto.replace(/[^0-9.-]/g, ""));
+            if (!isNaN(valor)) return valor;
+        }
+    }
+    return 0; // Fallback seguro por si no encuentra el elemento
+}
+
+// ============================================================
+// RENDERIZAR TABLA DE COSTOS VARIABLES
+// ============================================================
+function actualizarTablaCostosVariables() {
+    let tablaBody = document.getElementById("tabla_costos_variables");
+    if (!tablaBody) return;
+
+    // Sincronización con los IDs corregidos de Materia Prima
+    costosVariables[0].monto = obtenerValorDeMateria(["total_mpd", "total_materia_directa", "mpd_total"]);
+    costosVariables[1].monto = obtenerValorDeMateria(["total_mpi", "total_materia_indirecta", "mpi_total"]);
+    costosVariables[2].monto = obtenerValorDeMateria(["total_merma_dinero", "total_merma", "merma_total"]);
+
+    tablaBody.innerHTML = "";
+    let totalMensualVariables = 0;
+
+    // Iteración sobre los rubros (Ahora renderiza 3 columnas)
+    for (let i = 0; i < costosVariables.length; i++) {
+        let item = costosVariables[i];
+        totalMensualVariables += item.monto;
+
+        let botonAccion = item.esAutomatico
+            ? `<span class="text-gris italic text-sm">Dinámico</span>`
+            : `<button onclick="cargarVariableParaEditar(${i})" class="btn-editar-tech">Editar</button>`;
+
+        let fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${item.concepto}</td>
+                <td class="text-center font-semibold text-verde">$${item.monto.toFixed(2)}</td>
+                <td class="text-center">${botonAccion}</td>
+            `;
+            tablaBody.appendChild(fila);
+    }
+
+    // Actualización del tfoot (Ajustado a la nueva estructura de 3 columnas)
+    let tfootViejo = tablaBody.parentElement.querySelector("tfoot");
+    if (tfootViejo) { tfootViejo.remove(); }
+
+    let tfoot = document.createElement("tfoot");
+    tfoot.className = "bg-total-row";
+    tfoot.innerHTML = `
+        <tr>
+            <td class="font-bold" style="padding: 1rem;">TOTAL COSTOS VARIABLES MENSUALES</td>
+            <td class="text-center font-bold text-verde" style="padding: 1rem;">$${totalMensualVariables.toFixed(2)}</td>
+            <td></td>
+        </tr>
+    `;
+    tablaBody.parentElement.appendChild(tfoot);
+
+    // Indicador visual del total en la interfaz
+    let resumenCV = document.getElementById("var_resumen_total");
+    if (resumenCV) {
+        resumenCV.innerText = `$${totalMensualVariables.toFixed(2)}`;
+    }
+}
+
+// ============================================================
+// FUNCIONES DE EDICIÓN PARA RUBROS MANUALES
+// ============================================================
+function cargarVariableParaEditar(index) {
+    let item = costosVariables[index];
+    if (item.esAutomatico) return; // Validación de seguridad
+
+    document.getElementById("variable_index_editar").value = index;
+    mostrarTextoEnCaja("variable_nombre", item.concepto);
+    mostrarTextoEnCaja("variable_valor", item.monto);
+    mostrarTextoEnCaja("variable_notas", item.notas);
+
+    document.getElementById("contenedor_formulario_variable").style.display = "block";
+    document.getElementById("contenedor_formulario_variable").scrollIntoView({ behavior: "smooth" });
+}
+
+function guardarCambiosVariable() {
+    let index = parseInt(document.getElementById("variable_index_editar").value);
+    if (index === -1) return;
+
+    let nuevoMonto = recuperarFloatSeguro("variable_valor");
+    let nuevasNotas = recuperarTexto("variable_notas");
+
+    costosVariables[index].monto = nuevoMonto;
+    costosVariables[index].notas = nuevasNotas;
+
+    cancelarEdicionVariable();
+    actualizarTablaCostosVariables();
+}
+
+function cancelarEdicionVariable() {
+    document.getElementById("variable_index_editar").value = "-1";
+    document.getElementById("contenedor_formulario_variable").style.display = "none";
+}
+
+function guardarCostoVariable() {
+    let nombre = recuperarTexto("variable_nombre").trim();
+    let valor = recuperarFloatSeguro("variable_valor");
+    let indexEditar = parseInt(document.getElementById("variable_index_editar").value);
+
+    if (nombre === "") {
+        alert("Por favor, ingrese el concepto del costo variable.");
+        return;
+    }
+    if (valor <= 0 || isNaN(valor)) {
+        alert("Por favor, ingrese un monto mensual válido mayor a 0.");
+        return;
+    }
+
+    if (indexEditar === -1) {
+        // AGREGAR NUEVO GASTO VARIABLE MANUAL
+        costosVariables.push({
+            concepto: nombre,
+            monto: valor,
+            esAutomatico: false
+        });
+    } else {
+        // MODIFICAR EXISTENTE
+        if (costosVariables[indexEditar].esAutomatico) {
+            alert("Este rubro es automático y no se puede modificar manualmente.");
+            cancelarEdicionVariable();
+            return;
+        }
+        costosVariables[indexEditar].concepto = nombre;
+        costosVariables[indexEditar].monto = valor;
+    }
+
+    cancelarEdicionVariable(); // Limpia y restablece el formulario
+    actualizarTablaCostosVariables(); // Recarga la tabla con los nuevos datos
+}
+
+function cargarVariableParaEditar(index) {
+    let item = costosVariables[index];
+    
+    // Control de seguridad por si intentan forzar la edición de un automático
+    if (item.esAutomatico) {
+        alert("Este rubro se calcula automáticamente desde la sección de Materia Prima.");
+        return;
+    }
+
+    // Inyectar datos en el formulario
+    mostrarTextoEnCaja("variable_nombre", item.concepto);
+    mostrarTextoEnCaja("variable_valor", item.monto);
+    
+    document.getElementById("variable_index_editar").value = index;
+    document.getElementById("variable_formulario_titulo").innerText = "Modificar Costo Variable";
+    
+    // Cambiar aspecto del botón a modo edición (Verde)
+    let btnGuardar = document.getElementById("btn_guardar_variable");
+    if (btnGuardar) {
+        btnGuardar.innerText = "Guardar Cambios";
+        btnGuardar.style.backgroundColor = "#10b981"; 
+    }
+    
+    // Mostrar botón cancelar
+    let btnCancelar = document.getElementById("btn_cancelar_variable");
+    if (btnCancelar) btnCancelar.style.display = "inline-block";
+    
+    // Scroll suave al formulario
+    document.getElementById("variable_formulario_titulo").scrollIntoView({ behavior: "smooth" });
+}
+
+function cancelarEdicionVariable() {
+    // Restablecer valores de control
+    document.getElementById("variable_index_editar").value = "-1";
+    document.getElementById("variable_formulario_titulo").innerText = "Agregar Nuevo Costo Variable";
+    
+    // Cambiar aspecto del botón a modo registrar (Rosa de tu marca)
+    let btnGuardar = document.getElementById("btn_guardar_variable");
+    if (btnGuardar) {
+        btnGuardar.innerText = "Guardar Costo Variable";
+        btnGuardar.style.backgroundColor = "var(--rosa-marca)";
+    }
+    
+    // Ocultar botón cancelar
+    let btnCancelar = document.getElementById("btn_cancelar_variable");
+    if (btnCancelar) btnCancelar.style.display = "none";
+    
+    // Limpiar cajas de texto
+    mostrarTextoEnCaja("variable_nombre", "");
+    mostrarTextoEnCaja("variable_valor", "");
 }

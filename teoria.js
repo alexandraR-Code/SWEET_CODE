@@ -42,7 +42,10 @@ function mostrarSeccion(id){
   }
   if(id === "variables"){
     document.getElementById("bloque_explicacion_variables").innerHTML = explicacionCostosVariablesHTML;
-  }
+    if (typeof actualizarTablaCostosVariables === "function") {
+                actualizarTablaCostosVariables();
+            }  
+}
   if(id === "manoDeObra"){
     document.getElementById("bloque_explicacion_manoDeObra").innerHTML = explicacionManoDeObraHTML;
     cargarOpcionesCargos();
@@ -129,11 +132,6 @@ const explicacionCostosVariablesHTML = `
         <strong>¿Qué son los Costos Variables?</strong> Son costos que cambian directamente según el volumen de producción o ventas de la cafetería. A diferencia de los costos fijos, si no se produce ni se vende nada, estos costos no se generan. Mientras más bebidas se preparen, mayor será el gasto en materias primas, empaques y suministros operativos.
     </p>
     <ul>
-        <li><strong>Fórmula Costos Variables:</strong>
-            <div class="formula-tech-sm">CVT = CVu × Q</div>
-        </li>
-        <li><strong>CVT</strong> = Costo Variable Total &nbsp;|&nbsp; <strong>CVu</strong> = Costo Variable Unitario &nbsp;|&nbsp; <strong>Q</strong> = Cantidad producida</li>
-    </ul>
 `;
 
 /*=============================*/

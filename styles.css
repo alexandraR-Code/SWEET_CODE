@@ -827,3 +827,154 @@ main section h2::before {
     font-family: monospace;
     text-shadow: 0 0 10px rgba(232, 66, 124, 0.2);
 }
+
+/* ==========================================================================
+    ESTILOS ESPECÍFICOS PARA LA SECCIÓN DE COSTOS VARIABLES
+   ========================================================================== */
+
+/* Ajuste del contenedor del formulario para Costos Variables */
+#variables .panel-formulario {
+    background-color: var(--bg-tarjetas);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 2.5rem;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+/* Encabezado interno del formulario de variables */
+#variables .panel-formulario h3 {
+    font-size: 1.2rem;
+    color: var(--rosa-marca);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.5rem;
+}
+
+/* Etiquetas del formulario */
+#variables .panel-formulario label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--texto-gris);
+    font-size: 0.9rem;
+}
+
+/* Botonera para alinear los controles de acción */
+.botonera-formulario {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Encabezado de tabla personalizado para la sección Variables con fondo Rosa tenue */
+#variables .tabla-tech th {
+    background: rgba(232, 66, 124, 0.1);
+    border-bottom: 2px solid rgba(232, 66, 124, 0.2);
+}
+
+/* Adaptación del botón dinámico 'Editar' inyectado por JS dentro de esta tabla */
+#tabla_costos_variables .btn-editar-tech {
+    background-color: rgba(232, 66, 124, 0.1);
+    color: var(--rosa-marca);
+    border: 1px solid rgba(232, 66, 124, 0.25);
+    padding: 0.4rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicion);
+}
+
+#tabla_costos_variables .btn-editar-tech:hover {
+    background-color: var(--rosa-marca);
+    color: var(--texto-blanco);
+    box-shadow: 0 0 12px rgba(232, 66, 124, 0.4);
+}
+
+/* Soporte responsive para la cuadrícula del formulario en móviles */
+@media (max-width: 600px) {
+    .botonera-formulario {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .botonera-formulario .btn-formulario {
+        width: 100%;
+        text-align: center;
+        margin-left: 0 !important;
+    }
+}
+/* Ajuste del contenedor del formulario para Costos Variables */
+#variables .panel-formulario {
+    background-color: var(--bg-tarjetas);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 2.5rem;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+/* Encabezado interno del formulario de variables */
+#variables .panel-formulario h3 {
+    font-size: 1.2rem;
+    color: var(--rosa-marca);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.5rem;
+}
+
+/* Etiquetas del formulario */
+#variables .panel-formulario label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--texto-gris);
+    font-size: 0.9rem;
+}
+
+/* Botonera para alinear los controles de acción */
+.botonera-formulario {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Encabezado de tabla personalizado para la sección Variables con fondo Rosa tenue */
+#variables .tabla-tech th {
+    background: rgba(232, 66, 124, 0.1);
+    border-bottom: 2px solid rgba(232, 66, 124, 0.2);
+}
+
+/* Adaptación del botón dinámico 'Editar' inyectado por JS dentro de esta tabla */
+#tabla_costos_variables .btn-editar-tech {
+    background-color: rgba(232, 66, 124, 0.1);
+    color: var(--rosa-marca);
+    border: 1px solid rgba(232, 66, 124, 0.25);
+    padding: 0.4rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicion);
+}
+
+#tabla_costos_variables .btn-editar-tech:hover {
+    background-color: var(--rosa-marca);
+    color: var(--texto-blanco);
+    box-shadow: 0 0 12px rgba(232, 66, 124, 0.4);
+}
+
+/* Soporte responsive para la cuadrícula del formulario en móviles */
+@media (max-width: 600px) {
+    .botonera-formulario {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .botonera-formulario .btn-formulario {
+        width: 100%;
+        text-align: center;
+        margin-left: 0 !important;
+    }
+}
