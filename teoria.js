@@ -15,10 +15,15 @@ function mostrarSeccion(id){
 
   if (id === "materia") {
       document.getElementById("bloque_explicacion_materia").innerHTML = explicacionMateriaPrimaHTML;
+      // Llama a la función del script principal para dibujar los insumos
+      if (typeof actualizarTablaMateria === "function") {
+          actualizarTablaMateria();
+      }
   }
-  if(id === "fijos"){
-    document.getElementById("bloque_explicacion_fijos").innerHTML = explicacionCostosFijosHTML;
+  if (id === "fijos") {
+      document.getElementById("bloque_explicacion_fijos").innerHTML = explicacionCostosFijosHTML;
   }
+  // Condición para la pestaña de costos directos e indirectos
   if (id === "directos") {
       document.getElementById("bloque_explicacion_directos").innerHTML = explicacionDirectosHTML;
   }
@@ -51,11 +56,7 @@ const explicacionMateriaPrimaHTML = `
     <ul>
         <li><strong>Materia Prima Directa (MPD):</strong> Ingredientes que forman parte del producto terminado (Ej: café, leche, jarabes). Su costo es directamente asignable a cada unidad producida.</li>
         <li><strong>Materia Prima Indirecta (MPI):</strong> Materiales necesarios para la presentación y servicio, pero que no forman parte del contenido (Ej: vasos, tapas, pajillas, servilletas).</li>
-        <li><strong>Costo de Materia Prima por unidad:</strong>
-            <div class="formula-tech-sm">CMPu = Costo del insumo / Unidades que rinde</div>
-        </li>
-        <li><strong>CMPu</strong> = Costo de Materia Prima unitario &nbsp;|&nbsp; <strong>Unidades que rinde</strong> = cantidad de porciones obtenidas del insumo</li>
-    </ul>
+        </ul>
 `;
 
 /*=============================*/
