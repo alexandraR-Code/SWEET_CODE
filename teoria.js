@@ -19,7 +19,11 @@ function mostrarSeccion(id){
   // SI la sección que se va a mostrar es 'materia', inyectamos su teoría
   if (id === "materia") {
       document.getElementById("bloque_explicacion_materia").innerHTML = explicacionMateriaPrimaHTML;
-  }
+      // Llama a la función del script principal para dibujar los insumos
+      if (typeof actualizarTablaMateria === "function") {
+          actualizarTablaMateria();
+      }
+    }
   // Condición para la pestaña de costos directos e indirectos
   if (id === "directos") {
       document.getElementById("bloque_explicacion_directos").innerHTML = explicacionDirectosHTML;

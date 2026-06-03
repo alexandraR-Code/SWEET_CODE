@@ -44,8 +44,83 @@
 <!-- ===================== MATERIA PRIMA ===================== -->
         <section id="materia" class="pantalla">
             <h2>Registro de Insumos (Materia Prima)</h2>
+            
             <div id="bloque_explicacion_materia" class="bloque-teoria"></div>
 
+            <div class="grid-totales">
+                <div class="tarjeta-total mp-directa">
+                    <p>Total MP Directa</p>
+                    <h3 id="total_materia_directa">$0.00</h3>
+                </div>
+                <div class="tarjeta-total mp-indirecta">
+                    <p>Total MP Indirecta</p>
+                    <h3 id="total_materia_indirecta">$0.00</h3>
+                </div>
+                <div class="tarjeta-total mp-general">
+                    <p>MATERIA PRIMA DIRECTA</p>
+                    <h3 id="total_materia_general">$0.00</h3>
+                </div>
+            </div>
+
+            <div class="panel-formulario">
+                <h3 id="formulario_titulo">Agregar Nuevo Insumo</h3>
+                
+                <input type="hidden" id="mat_index_editar" value="-1">
+
+                <div class="grid-formulario">
+                    <div class="campo-grupo">
+                        <label>Nombre del Insumo:</label>
+                        <input type="text" id="mat_nombre" placeholder="Ej: Café en grano" class="campo-control">
+                    </div>
+                    <div class="campo-grupo">
+                        <label>Unidad de Medida:</label>
+                        <input type="text" id="mat_unidad" placeholder="Ej: kg, litro, paquete" class="campo-control">
+                    </div>
+                    <div class="campo-grupo">
+                        <label>Cantidad Formato:</label>
+                        <input type="number" id="mat_cantidad" step="any" placeholder="Ej: 1.00 o 100" class="campo-control">
+                    </div>
+                    <div class="campo-grupo">
+                        <label>Precio de Compra ($):</label>
+                        <input type="number" id="mat_precio" step="any" placeholder="Ej: 12.50" class="campo-control">
+                    </div>
+                    <div class="campo-grupo">
+                        <label>% Merma Estándar:</label>
+                        <input type="number" id="mat_merma" step="any" placeholder="Ej: 5.00" class="campo-control">
+                    </div>
+                    <div class="campo-grupo">
+                        <label>Clasificación Operativa:</label>
+                        <select id="mat_tipo" class="campo-control">
+                            <option value="DIRECTA">DIRECTA</option>
+                            <option value="INDIRECTA">INDIRECTA</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="botonera-formulario">
+                    <button type="button" id="btn_cancelar_edicion" onclick="cancelarEdicionMateria()" class="btn-formulario cancelar" style="display: none;">Cancelar</button>
+                    <button type="button" id="btn_guardar_materia" onclick="procesarFormularioMateria()" class="btn-formulario guardar">Guardar Insumo</button>
+                </div>
+            </div>
+
+            <div class="contenedor-tabla">
+                <table class="tabla-tech">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Insumo / Descripción</th>
+                            <th>U. Medida</th>
+                            <th>Cantidad</th>
+                            <th>Precio Compra</th>
+                            <th>% Merma</th>
+                            <th>Tipo Insumo</th>
+                            <th style="text-align: center;">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla_materia_prima">
+                    </tbody>
+                </table>
+            </div>
         </section>
         <!-- ===================== MANOS DE OBRA ===================== -->
         <section id="personal" class="pantalla">

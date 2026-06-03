@@ -395,3 +395,195 @@ main section h2::before {
     margin-bottom: 1.8rem;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
 }
+
+/* ==========================================================================
+   ELEMENTOS INTERACTIVOS DE MATERIA PRIMA (REPLICANDO TU ESTILO TECH)
+   ========================================================================== */
+
+/* 1. Reciclaje para las Tarjetas de Totales (Hereda la sombra y fondo de tus bloques) */
+.grid-totales {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem; /* Mismo gap que tu nav */
+    margin: 2rem 0;
+}
+
+.tarjeta-total {
+    background-color: var(--bg-tarjetas); /* Recicla tu fondo */
+    padding: 1.5rem;
+    border-radius: 12px; /* Mismo radio que tus botones */
+    border-left: 4px solid var(--texto-gris);
+    box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.4); /* Sombra suavizada de tu header */
+    transition: var(--transicion); /* Tu animación global */
+}
+
+.tarjeta-total:hover {
+    transform: translateY(-3px); /* Tu efecto de elevación */
+}
+
+.tarjeta-total p {
+    font-size: 0.85rem;
+    color: var(--texto-gris);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.tarjeta-total h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--texto-blanco);
+}
+
+/* Bordes personalizados usando tus colores de identidad */
+.tarjeta-total.mp-directa { border-left-color: var(--celeste-tech); }
+.tarjeta-total.mp-indirecta { border-left-color: #a855f7; } /* Morado complementario */
+.tarjeta-total.mp-general { border-left-color: var(--rosa-marca); }
+
+/* 2. Reciclaje para el Formulario Operativo */
+.panel-formulario {
+    background-color: var(--bg-tarjetas);
+    padding: 2rem;
+    border-radius: 16px; /* Empata con tus bloques de teoría */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 2.5rem;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+.panel-formulario h3 {
+    font-size: 1.2rem;
+    color: var(--celeste-tech);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.5rem;
+}
+
+.grid-formulario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Inputs y Selects adaptados a tu paleta de colores oscura */
+.campo-control {
+    width: 100%;
+    background-color: var(--bg-principal); /* Fondo oscuro profundo */
+    color: var(--texto-blanco);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    outline: none;
+    transition: var(--transicion);
+}
+
+.campo-control:focus {
+    border-color: var(--celeste-tech);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+/* Botonera interna del formulario */
+.botonera-formulario {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.btn-formulario {
+    padding: 0.8rem 1.8rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    transition: var(--transicion);
+}
+
+.btn-formulario.guardar {
+    background-color: var(--rosa-marca);
+    color: var(--texto-blanco);
+}
+
+.btn-formulario.guardar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -8px rgba(225, 29, 72, 0.4);
+}
+
+.btn-formulario.cancelar {
+    background-color: transparent;
+    color: var(--texto-gris);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-formulario.cancelar:hover {
+    color: var(--texto-blanco);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 3. Estilos de la Tabla (Empata con las clases inyectadas por tu script.js) */
+.contenedor-tabla {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+.tabla-tech {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-tarjetas);
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.tabla-tech th {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--celeste-tech); /* Encabezados celestes */
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+.tabla-tech td {
+    padding: 1rem;
+    color: var(--texto-blanco);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.tabla-tech tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.01);
+}
+
+/* Clases de celda inyectadas por tu script.js para cambiar el color del tipo */
+.tipo-directa {
+    color: var(--celeste-tech) !important;
+    font-weight: 600;
+}
+
+.tipo-indirecta {
+    color: #c084fc !important; /* Tono morado claro */
+    font-weight: 600;
+}
+
+/* Estilo del Botón "Editar" inyectado por tu JS (.btn-editar-tech) */
+.btn-editar-tech {
+    background-color: rgba(56, 189, 248, 0.1);
+    color: var(--celeste-tech);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicion);
+}
+
+.btn-editar-tech:hover {
+    background-color: var(--celeste-tech);
+    color: var(--bg-principal);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
