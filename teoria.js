@@ -289,6 +289,7 @@ const explicacionMateriaPrimaHTML = `
                     <th>Cantidad</th>
                     <th>Precio Compra</th>
                     <th>% Merma</th>
+                    <th>Precio final</th>
                     <th>Tipo Insumo</th>
                     <th style="text-align:center;">Acción</th>
                 </tr>
@@ -538,7 +539,7 @@ const explicacionGananciaHTML = `
             <div class="formula-tech-sm">GN = Ventas Totales - Total de Costos y Gastos</div>
         </li>
         <li><strong>Margen de Ganancia:</strong>
-            <div class="formula-tech-sm">Margen = (GN ÷ Ventas Totales) × 100</div>
+            <div class="formula-tech-sm">Margen = (GN / Ventas Totales) × 100</div>
         </li>
     </ul>
 

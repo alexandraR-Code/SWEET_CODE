@@ -198,9 +198,14 @@ function actualizarTablaCostosVariables() {
     let tablaBody = document.getElementById("tabla_costos_variables");
     if (!tablaBody) return;
 
-    costosVariables[0].monto = obtenerValorDeMateria(["total_mpd", "total_materia_directa", "mpd_total"]);
-    costosVariables[1].monto = obtenerValorDeMateria(["total_mpi", "total_materia_indirecta", "mpi_total"]);
-    costosVariables[2].monto = obtenerValorDeMateria(["total_merma_dinero", "total_merma", "merma_total"]);
+    let totalesMP = calcularTotalesMateriaPrima();
+    let totalMerma = 0;
+    for (let i = 0; i < materiasPrimas.length; i++) {
+        totalMerma += materiasPrimas[i].precio * (materiasPrimas[i].merma / 100);
+    }
+    costosVariables[0].monto = totalesMP.totalDirecta;
+    costosVariables[1].monto = totalesMP.totalIndirecta;
+    costosVariables[2].monto = totalMerma;
 
     tablaBody.innerHTML = "";
     let totalMensualVariables = 0;
@@ -481,7 +486,6 @@ function sincronizarTotalesMateriaPrima() {
     let elMerma = document.getElementById("total_merma_dinero");
     if (elMerma) elMerma.innerText = convertirMoneda(totalMerma);
 }
-
 // Calcula el costo real por unidad de un insumo descontando la merma
 function obtenerCostoNetoUnitarioInsumo(item) {
     let cantidadUtilizable = item.cantidad * (1 - (item.merma / 100));
@@ -508,8 +512,10 @@ function actualizarTablaMateria() {
                 <td class="col-nombre">${item.nombre}</td>
                 <td class="col-unidad">${item.unidad}</td>
                 <td class="col-cantidad">${item.cantidad.toFixed(2)}</td>
-                <td class="col-precio">$${item.precio.toFixed(2)}</td>
+                <td class="col-precio">${item.precio.toFixed(2)}</td>
                 <td class="col-merma">${item.merma.toFixed(2)}%</td>
+                <td class="col-merma">$${(item.cantidad*item.precio*(1-(item.merma/100))).toFixed(2)}</td>
+
                 <td class="col-tipo ${claseTipo}">${item.tipo}</td>
                 <td class="col-acciones">
                     <button onclick="cargarMateriaParaEditar(${index})" class="btn-editar-tech">Editar</button>
