@@ -830,6 +830,54 @@ let recetasBase = [
     }
 ];
 
+// Calcula el costo de materia prima (ingredientes) de una receta, sumando cada ingrediente
+// según su costo neto unitario en materiasPrimas. No dibuja nada, solo devuelve el número.
+// Se extrajo de actualizarPantallaRecetas() para poder reutilizarla también en el Resumen General.
+function calcularCostoIngredientesReceta(receta) {
+    let totalMateriaPrimaReceta = 0;
+
+    receta.ingredientes.forEach(function (ingrediente) {
+        let insumoEncontrado = materiasPrimas.find(function (m) {
+            return m.nombre.toLowerCase().trim() === ingrediente.buscarNombre.toLowerCase().trim();
+        });
+
+        if (insumoEncontrado) {
+            let costoNetoInsumoCompleto = obtenerCostoNetoUnitarioInsumo(insumoEncontrado);
+            let costoUnitarioCalculado = 0;
+            // Si es conversión (kg/litro → gramos/ml), divide entre 1000; si no, usa cantidad directa
+            if (ingrediente.esConversion) {
+                costoUnitarioCalculado = costoNetoInsumoCompleto / 1000;
+            } else {
+                costoUnitarioCalculado = costoNetoInsumoCompleto / insumoEncontrado.cantidad;
+            }
+            totalMateriaPrimaReceta += costoUnitarioCalculado * ingrediente.cantidadReceta;
+        }
+    });
+
+    return totalMateriaPrimaReceta;
+}
+
+// Suma el costoTotal de los empleados de tipo "Directo" (personal de producción)
+// y lo divide entre los minutos laborales del mes, para obtener cuánto cuesta cada minuto de mano de obra.
+// Usa la misma convención de 240 horas/mes que ya aplica agregarEmpleado() para calcular la hora normal.
+function obtenerCostoManoObraPorMinuto() {
+    let totalCostoDirecto = 0;
+    for (let i = 0; i < listaEmpleados.length; i++) {
+        if (listaEmpleados[i].tipo === "Directo") {
+            totalCostoDirecto += listaEmpleados[i].costoTotal;
+        }
+    }
+    let minutosLaboralesMes = 240 * 60;
+    return totalCostoDirecto / minutosLaboralesMes;
+}
+
+// Calcula cuánto cuesta la mano de obra de una receta específica, según su tiempo de preparación.
+// El tiempo se edita desde el formulario de edición de receta que ya existe (receta_tiempo).
+function calcularCostoManoObraReceta(receta) {
+    let costoPorMinuto = obtenerCostoManoObraPorMinuto();
+    return costoPorMinuto * receta.tiempoPreparacion;
+}
+
 // Genera dinámicamente las tarjetas HTML de cada receta con sus costos calculados
 function actualizarPantallaRecetas() {
     let contenedor = document.getElementById("contenedor_recetas_dinamicas");
@@ -861,8 +909,6 @@ function actualizarPantallaRecetas() {
                     <tbody>
         `;
 
-        let totalMateriaPrimaReceta = 0;
-
         receta.ingredientes.forEach(function (ingrediente, iIndex) {
             let insumoEncontrado = materiasPrimas.find(function (m) {
                 return m.nombre.toLowerCase().trim() === ingrediente.buscarNombre.toLowerCase().trim();
@@ -878,7 +924,6 @@ function actualizarPantallaRecetas() {
                     costoUnitarioCalculado = costoNetoInsumoCompleto / insumoEncontrado.cantidad;
                 }
                 subtotalCalculado = costoUnitarioCalculado * ingrediente.cantidadReceta;
-                totalMateriaPrimaReceta += subtotalCalculado;
             }
 
             tablaHTML += `
@@ -897,12 +942,25 @@ function actualizarPantallaRecetas() {
             `;
         });
 
+        // Costo de ingredientes (función reutilizable) y costo de mano de obra según el tiempo de preparación
+        let totalMateriaPrimaReceta = calcularCostoIngredientesReceta(receta);
+        let costoManoObraReceta = calcularCostoManoObraReceta(receta);
+        let costoTotalProduccionReceta = totalMateriaPrimaReceta + costoManoObraReceta;
+
         tablaHTML += `
                     </tbody>
                     <tfoot>
                         <tr style="background: rgba(16, 185, 129, 0.05);">
-                            <td colspan="5" style="padding: 0.8rem; text-align: right; font-weight: bold; color: #10b981; text-transform: uppercase;">Total Costo por Taza:</td>
+                            <td colspan="5" style="padding: 0.8rem; text-align: right; font-weight: bold; color: #10b981; text-transform: uppercase;">Total Costo Ingredientes:</td>
                             <td colspan="2" style="padding: 0.8rem; text-align: left; padding-left: 2.5rem; font-weight: bold; color: #10b981; font-size: 1.1rem;">$${totalMateriaPrimaReceta.toFixed(4)}</td>
+                        </tr>
+                        <tr style="background: rgba(56, 189, 248, 0.05);">
+                            <td colspan="5" style="padding: 0.8rem; text-align: right; font-weight: bold; color: var(--celeste-tech); text-transform: uppercase;">Costo Mano de Obra (${receta.tiempoPreparacion} min):</td>
+                            <td colspan="2" style="padding: 0.8rem; text-align: left; padding-left: 2.5rem; font-weight: bold; color: var(--celeste-tech); font-size: 1.1rem;">$${costoManoObraReceta.toFixed(4)}</td>
+                        </tr>
+                        <tr style="background: rgba(232, 66, 124, 0.08);">
+                            <td colspan="5" style="padding: 0.8rem; text-align: right; font-weight: bold; color: var(--rosa-marca); text-transform: uppercase;">Costo Total de Producción:</td>
+                            <td colspan="2" style="padding: 0.8rem; text-align: left; padding-left: 2.5rem; font-weight: bold; color: var(--rosa-marca); font-size: 1.15rem;">$${costoTotalProduccionReceta.toFixed(4)}</td>
                         </tr>
                     </tfoot>
                 </table>
