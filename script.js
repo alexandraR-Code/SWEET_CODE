@@ -855,7 +855,7 @@ function actualizarPantallaRecetas() {
                             <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 110px;">Unidad</th>
                             <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 130px; text-align: right;">Costo/Ud ($)</th>
                             <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 130px; text-align: right;">Subtotal ($)</th>
-                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 90px; text-align: center;">Acción</th>
+                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 120px; text-align: center;">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -864,7 +864,6 @@ function actualizarPantallaRecetas() {
         let totalMateriaPrimaReceta = 0;
 
         receta.ingredientes.forEach(function (ingrediente, iIndex) {
-            // Busca el insumo correspondiente en materiasPrimas por nombre
             let insumoEncontrado = materiasPrimas.find(function (m) {
                 return m.nombre.toLowerCase().trim() === ingrediente.buscarNombre.toLowerCase().trim();
             });
@@ -873,7 +872,6 @@ function actualizarPantallaRecetas() {
 
             if (insumoEncontrado) {
                 let costoNetoInsumoCompleto = obtenerCostoNetoUnitarioInsumo(insumoEncontrado);
-                // Si es conversión (kg/litro → gramos/ml), divide entre 1000; si no, usa cantidad directa
                 if (ingrediente.esConversion) {
                     costoUnitarioCalculado = costoNetoInsumoCompleto / 1000;
                 } else {
@@ -891,8 +889,9 @@ function actualizarPantallaRecetas() {
                     <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--texto-gris); font-style: italic;">${ingrediente.unidadReceta}</td>
                     <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: var(--texto-gris);">$${costoUnitarioCalculado.toFixed(4)}</td>
                     <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: white; font-weight: 500;">$${subtotalCalculado.toFixed(4)}</td>
-                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center;">
+                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; white-space: nowrap;">
                         <button onclick="cargarIngredienteParaEditar(${rIndex}, ${iIndex})" style="background: transparent; border: 1px solid var(--rosa-marca); color: var(--rosa-marca); padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold;">Editar</button>
+                        <button onclick="eliminarIngredienteDeReceta(${rIndex}, ${iIndex})" title="Quitar este ingrediente de la receta" style="background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; margin-left: 0.3rem;">✕</button>
                     </td>
                 </tr>
             `;
@@ -907,13 +906,46 @@ function actualizarPantallaRecetas() {
                         </tr>
                     </tfoot>
                 </table>
+
+                <div style="margin-top: 1rem;">
+                    <button onclick="mostrarFormAgregarIngrediente(${rIndex})" style="background: transparent; border: 1px dashed var(--celeste-tech); color: var(--celeste-tech); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">+ Agregar Ingrediente a esta receta</button>
+
+                    <div id="form_agregar_ing_${rIndex}" style="display: none; margin-top: 1rem; background: rgba(255,255,255,0.03); border-radius: 8px; padding: 1rem;">
+                        <div class="grid-formulario">
+                            <div>
+                                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Insumo:</label>
+                                <select id="nuevo_ing_nombre_${rIndex}" class="campo-control">
+                                    ${generarOpcionesInsumosHTML()}
+                                </select>
+                            </div>
+                            <div>
+                                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Cantidad en la receta:</label>
+                                <input type="number" step="0.01" id="nuevo_ing_cantidad_${rIndex}" placeholder="Ej: 15" class="campo-control">
+                            </div>
+                            <div>
+                                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Unidad en la receta:</label>
+                                <input type="text" id="nuevo_ing_unidad_${rIndex}" placeholder="gramos, ml, unidad" class="campo-control">
+                            </div>
+                            <div>
+                                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">¿Requiere conversión?</label>
+                                <select id="nuevo_ing_conversion_${rIndex}" class="campo-control">
+                                    <option value="true">Sí (insumo en kg o litros)</option>
+                                    <option value="false">No (insumo por unidad)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="botonera-formulario" style="margin-top: 1rem;">
+                            <button onclick="ocultarFormAgregarIngrediente(${rIndex})" class="btn-formulario cancelar">Cancelar</button>
+                            <button onclick="confirmarAgregarIngrediente(${rIndex})" class="btn-formulario guardar">Agregar a la Receta</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
 
         contenedor.innerHTML += tablaHTML;
     });
 }
-
 // Carga los datos de un ingrediente específico en el formulario de edición de receta
 function cargarIngredienteParaEditar(recetaIndex, ingredienteIndex) {
     let receta = recetasBase[recetaIndex];
@@ -968,7 +1000,181 @@ function cancelarEdicionParametrosReceta() {
     mostrarTextoEnCaja("receta_tiempo", "");
     mostrarTextoEnCaja("receta_porciones", "");
 }
+// Genera las opciones <option> del selector de insumos a partir de materiasPrimas
+function generarOpcionesInsumosHTML() {
+    if (typeof materiasPrimas === "undefined" || materiasPrimas.length === 0) {
+        return `<option value="">-- No hay insumos registrados --</option>`;
+    }
+    let opciones = `<option value="">-- Selecciona un insumo --</option>`;
+    materiasPrimas.forEach(function (insumo) {
+        opciones += `<option value="${insumo.nombre}">${insumo.nombre}</option>`;
+    });
+    return opciones;
+}
 
+// ---------- EDICIÓN DINÁMICA: agregar/quitar ingredientes en una receta existente ----------
+
+function mostrarFormAgregarIngrediente(rIndex) {
+    let formulario = document.getElementById("form_agregar_ing_" + rIndex);
+    if (formulario) formulario.style.display = "block";
+}
+
+function ocultarFormAgregarIngrediente(rIndex) {
+    let formulario = document.getElementById("form_agregar_ing_" + rIndex);
+    if (formulario) formulario.style.display = "none";
+}
+
+function confirmarAgregarIngrediente(rIndex) {
+    let nombreInsumo = recuperarTexto("nuevo_ing_nombre_" + rIndex);
+    let cantidad = recuperarFloat("nuevo_ing_cantidad_" + rIndex);
+    let unidad = recuperarTexto("nuevo_ing_unidad_" + rIndex);
+    let esConversionTexto = recuperarTexto("nuevo_ing_conversion_" + rIndex);
+
+    if (nombreInsumo === "" || isNaN(cantidad) || cantidad <= 0 || unidad === "") {
+        alert("Por favor, selecciona el insumo y completa la cantidad y la unidad correctamente.");
+        return;
+    }
+
+    recetasBase[rIndex].ingredientes.push({
+        buscarNombre: nombreInsumo,
+        cantidadReceta: cantidad,
+        unidadReceta: unidad,
+        esConversion: esConversionTexto === "true"
+    });
+
+    actualizarPantallaRecetas();
+}
+
+function eliminarIngredienteDeReceta(rIndex, iIndex) {
+    let receta = recetasBase[rIndex];
+    let nombreIngrediente = receta.ingredientes[iIndex].buscarNombre;
+
+    let confirmado = confirm("¿Seguro que deseas quitar \"" + nombreIngrediente + "\" de la receta \"" + receta.nombreReceta + "\"?");
+    if (!confirmado) return;
+
+    receta.ingredientes.splice(iIndex, 1);
+    actualizarPantallaRecetas();
+}
+
+// ---------- CREACIÓN DESDE CERO: dar de alta una receta completamente nueva ----------
+
+function mostrarFormularioNuevaReceta() {
+    let formulario = document.getElementById("formulario_nueva_receta");
+    if (!formulario) return;
+
+    formulario.style.display = "block";
+    document.getElementById("contenedor_filas_nueva_receta").innerHTML = "";
+    agregarFilaIngredienteNuevaReceta();
+    formulario.scrollIntoView({ behavior: "smooth" });
+}
+
+function cancelarNuevaReceta() {
+    mostrarTextoEnCaja("nueva_receta_nombre", "");
+    mostrarTextoEnCaja("nueva_receta_tiempo", "");
+    mostrarTextoEnCaja("nueva_receta_porciones", "");
+    document.getElementById("contenedor_filas_nueva_receta").innerHTML = "";
+    document.getElementById("formulario_nueva_receta").style.display = "none";
+}
+
+function agregarFilaIngredienteNuevaReceta() {
+    let contenedorFilas = document.getElementById("contenedor_filas_nueva_receta");
+    if (!contenedorFilas) return;
+
+    let filaHTML = `
+        <div class="fila-ingrediente-nueva-receta" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.3fr auto; gap: 0.6rem; align-items: end; margin-bottom: 0.8rem;">
+            <div>
+                <label style="display:block; font-size:0.78rem; color:var(--texto-gris); margin-bottom:0.3rem;">Insumo:</label>
+                <select class="campo-control fila-ing-select">
+                    ${generarOpcionesInsumosHTML()}
+                </select>
+            </div>
+            <div>
+                <label style="display:block; font-size:0.78rem; color:var(--texto-gris); margin-bottom:0.3rem;">Cantidad:</label>
+                <input type="number" step="0.01" class="campo-control fila-ing-cantidad" placeholder="Ej: 10">
+            </div>
+            <div>
+                <label style="display:block; font-size:0.78rem; color:var(--texto-gris); margin-bottom:0.3rem;">Unidad:</label>
+                <input type="text" class="campo-control fila-ing-unidad" placeholder="gramos, ml, unidad">
+            </div>
+            <div>
+                <label style="display:block; font-size:0.78rem; color:var(--texto-gris); margin-bottom:0.3rem;">¿Conversión?</label>
+                <select class="campo-control fila-ing-conversion">
+                    <option value="true">Sí (kg/L → g/ml)</option>
+                    <option value="false">No (unidad directa)</option>
+                </select>
+            </div>
+            <button onclick="eliminarFilaIngredienteNuevaReceta(this)" title="Quitar esta fila" style="background: transparent; border: 1px solid #ef4444; color: #ef4444; border-radius: 4px; padding: 0.45rem 0.6rem; cursor: pointer;">✕</button>
+        </div>
+    `;
+
+    contenedorFilas.insertAdjacentHTML("beforeend", filaHTML);
+}
+
+function eliminarFilaIngredienteNuevaReceta(boton) {
+    let contenedorFilas = document.getElementById("contenedor_filas_nueva_receta");
+    let totalFilas = contenedorFilas.querySelectorAll(".fila-ingrediente-nueva-receta").length;
+
+    if (totalFilas <= 1) {
+        alert("La receta debe tener al menos un ingrediente.");
+        return;
+    }
+
+    boton.closest(".fila-ingrediente-nueva-receta").remove();
+}
+
+function guardarNuevaRecetaDesdeCero() {
+    let nombre = recuperarTexto("nueva_receta_nombre").trim();
+    let tiempo = recuperarInt("nueva_receta_tiempo");
+    let porciones = recuperarInt("nueva_receta_porciones");
+
+    if (nombre === "" || isNaN(tiempo) || tiempo <= 0 || isNaN(porciones) || porciones <= 0) {
+        alert("Por favor, completa el nombre, el tiempo de preparación y el número de porciones correctamente.");
+        return;
+    }
+
+    let filas = document.querySelectorAll("#contenedor_filas_nueva_receta .fila-ingrediente-nueva-receta");
+    let nuevosIngredientes = [];
+
+    for (let i = 0; i < filas.length; i++) {
+        let fila = filas[i];
+        let nombreInsumo = fila.querySelector(".fila-ing-select").value;
+        let cantidad = parseFloat(fila.querySelector(".fila-ing-cantidad").value);
+        let unidad = fila.querySelector(".fila-ing-unidad").value.trim();
+        let esConversion = fila.querySelector(".fila-ing-conversion").value === "true";
+
+        if (nombreInsumo === "" || isNaN(cantidad) || cantidad <= 0 || unidad === "") {
+            alert("Revisa la fila de ingrediente #" + (i + 1) + ": selecciona el insumo y completa cantidad y unidad.");
+            return;
+        }
+
+        nuevosIngredientes.push({
+            buscarNombre: nombreInsumo,
+            cantidadReceta: cantidad,
+            unidadReceta: unidad,
+            esConversion: esConversion
+        });
+    }
+
+    if (nuevosIngredientes.length === 0) {
+        alert("Agrega al menos un ingrediente a la receta.");
+        return;
+    }
+
+    let nuevoId = recetasBase.length > 0
+        ? Math.max(...recetasBase.map(function (r) { return r.idReceta; })) + 1
+        : 0;
+
+    recetasBase.push({
+        idReceta: nuevoId,
+        nombreReceta: nombre.toUpperCase(),
+        tiempoPreparacion: tiempo,
+        numeroPorciones: porciones,
+        ingredientes: nuevosIngredientes
+    });
+
+    cancelarNuevaReceta();
+    actualizarPantallaRecetas();
+}
 
 // ============================================================
 // SECCIÓN: GANANCIAS

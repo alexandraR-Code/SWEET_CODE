@@ -346,6 +346,39 @@ const explicacionRecetasHTML = `
     </div>
 
     <div id="contenedor_recetas_dinamicas" style="margin-top: 1.5rem;"></div>
+    
+    <div style="margin-top: 2rem; margin-bottom: 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin: 0;">Crear Receta Nueva desde Cero</h3>
+            <button onclick="mostrarFormularioNuevaReceta()" class="btn-formulario guardar">+ Nueva Receta</button>
+        </div>
+
+        <div id="formulario_nueva_receta" style="display: none; margin-top: 1.2rem;">
+            <div class="grid-formulario">
+                <div>
+                    <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Nombre de la receta:</label>
+                    <input type="text" id="nueva_receta_nombre" placeholder="Ej: FRAPPÉ DE VAINILLA" class="campo-control">
+                </div>
+                <div>
+                    <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Tiempo de preparación (min):</label>
+                    <input type="number" id="nueva_receta_tiempo" placeholder="Ej: 5" class="campo-control">
+                </div>
+                <div>
+                    <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Número de porciones (tazas):</label>
+                    <input type="number" id="nueva_receta_porciones" placeholder="Ej: 1" class="campo-control">
+                </div>
+            </div>
+
+            <h4 style="color: var(--rosa-marca); margin-top: 1.2rem; margin-bottom: 0.6rem; font-size: 0.95rem;">Ingredientes / Insumos</h4>
+            <div id="contenedor_filas_nueva_receta"></div>
+            <button onclick="agregarFilaIngredienteNuevaReceta()" style="margin-top: 0.6rem; border: 1px dashed var(--celeste-tech); color: var(--celeste-tech); background: transparent; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">+ Agregar Ingrediente</button>
+
+            <div class="botonera-formulario" style="margin-top: 1.5rem;">
+                <button onclick="cancelarNuevaReceta()" class="btn-formulario cancelar">Cancelar</button>
+                <button onclick="guardarNuevaRecetaDesdeCero()" class="btn-formulario guardar">Guardar Receta Nueva</button>
+            </div>
+        </div>
+    </div>
 `;
 
 /*=============================*/
