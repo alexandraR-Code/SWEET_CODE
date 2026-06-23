@@ -12,6 +12,7 @@
 
     /* Colores de Identidad */
     --rosa-marca: #e8427c;
+    --rosa-claro: #f472b6;
     /* logotipo */
     --celeste-tech: #38bdf8;
     /* enfoques */
@@ -35,13 +36,12 @@
 }
 
 body {
-    background-color: var(--bg-principal);
+    min-height: 100vh;
     color: var(--texto-blanco);
     font-family: var(--tipografia);
-    min-height: 100vh;
+    background: radial-gradient(circle at top, rgba(232, 66, 124, 0.14), transparent 30%),
+                linear-gradient(180deg, #111827 0%, var(--bg-principal) 100%);
     padding: 2rem 1.5rem;
-
-    /* Centrado vertical de la estructura de la página */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -190,6 +190,224 @@ nav button:focus {
     }
 }
 
+/* Clases reutilizables */
+.card {
+    background-color: var(--bg-tarjetas);
+    border: 1px solid rgba(232, 66, 124, 0.18);
+    border-radius: 18px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.22);
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.seccion-contenedor {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 2rem;
+    padding: 2rem 1.5rem;
+}
+
+.titulo-seccion {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--texto-blanco);
+    margin-bottom: 1.5rem;
+    position: relative;
+    letter-spacing: -0.01em;
+}
+
+.titulo-seccion::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    width: 4px;
+    background-color: var(--celeste-tech);
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--celeste-tech);
+}
+
+.texto-destacado {
+    color: var(--texto-gris);
+    font-weight: 600;
+}
+
+.img-qr {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+}
+
+.boton-principal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 1.75rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--rosa-marca), rgba(232, 66, 124, 0.95));
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transicion);
+    box-shadow: 0 18px 40px rgba(232, 66, 124, 0.28);
+}
+
+.boton-principal:hover,
+.boton-principal:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 48px rgba(232, 66, 124, 0.38);
+}
+
+.boton-secundario {
+    background-color: var(--bg-tarjetas);
+    color: var(--texto-gris);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.2rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transicion);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.boton-secundario:hover {
+    color: var(--texto-blanco);
+    background-color: #1e293b;
+    border-color: var(--rosa-marca);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -8px rgba(225, 29, 72, 0.3);
+}
+
+.boton-secundario:focus {
+    outline: 2px solid var(--celeste-tech);
+    outline-offset: 2px;
+}
+
+.text-muted {
+    color: var(--texto-gris);
+}
+
+.caratula-contenedor {
+    width: 100%;
+    max-width: 920px;
+    min-height: calc(100vh - 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.caratula-card {
+    width: 100%;
+    padding: 3rem 2.5rem;
+    border-radius: 28px;
+    position: relative;
+    text-align: center;
+}
+
+.caratula-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at top right, rgba(232, 66, 124, 0.18), transparent 25%);
+    pointer-events: none;
+}
+
+.caratula-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.caratula-logo {
+    display: flex;
+    justify-content: center;
+}
+
+.caratula-logo img {
+    width: 140px;
+    max-width: 100%;
+    filter: drop-shadow(0 0 20px rgba(232, 66, 124, 0.45));
+}
+
+.caratula-tag {
+    color: var(--rosa-marca);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.caratula-card h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    margin-bottom: 1rem;
+    color: var(--texto-blanco);
+}
+
+.caratula-item {
+    color: var(--texto-gris);
+    font-size: 1rem;
+    margin: 0.65rem 0;
+}
+
+.caratula-integrantes {
+    margin: 1.6rem auto 2rem;
+    max-width: 520px;
+}
+
+.integrantes-titulo {
+    color: var(--texto-blanco);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.caratula-integrantes ul {
+    list-style: none;
+    display: grid;
+    gap: 0.7rem;
+}
+
+.caratula-integrantes li {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.95rem 1.15rem;
+    border-radius: 14px;
+    color: var(--texto-blanco);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 680px) {
+    .caratula-card {
+        padding: 2rem 1.5rem;
+        border-radius: 24px;
+    }
+
+    .caratula-logo img {
+        width: 120px;
+    }
+
+    .caratula-card h1 {
+        font-size: 2.4rem;
+    }
+
+    .caratula-contenedor {
+        min-height: calc(100vh - 2rem);
+    }
+}
+
 /* Responsive Desig */
 
 /* Cuando la pantalla sea más pequeña que 600px de ancho (Celulares) */
@@ -244,13 +462,13 @@ nav button:focus {
     }
 }
 
-/* 1. Por defecto, ocultamos TODAS las secciones que estén dentro de <main> */
-main section {
+/* 1. Por defecto, ocultamos las secciones solo dentro del simulador */
+main.simulador section {
     display: none;
 }
 
-/* 2. ¡La magia! Solo mostramos la sección que tenga la clase 'activa' */
-main section.activa {
+/* 2. ¡La magia! Solo mostramos la sección que tenga la clase 'activa' dentro del simulador */
+main.simulador section.activa {
     display: block;
     animation: suavizarEntrada 0.4s ease forwards;
 }
@@ -280,19 +498,19 @@ main section.activa {
     /* Separación elegante respecto a los botones */
 }
 
-/* Estilo para los títulos principales de cada sección (H2) */
-main section h2 {
+/* Estilo para los títulos principales de cada sección */
+.titulo-seccion {
     font-size: 1.7rem;
     font-weight: 700;
     color: var(--texto-blanco);
     margin-bottom: 1.5rem;
-    padding-left: 1rem;
     position: relative;
     letter-spacing: -0.01em;
+    padding-left: 1rem;
 }
 
-/* Indicador visual al lado izquierdo del H2 (Toque de editor de código) */
-main section h2::before {
+/* Indicador visual al lado izquierdo del título */
+.titulo-seccion::before {
     content: '';
     position: absolute;
     left: 0;
@@ -442,6 +660,29 @@ main section h2::before {
     color: var(--texto-blanco);
     border: 0.5px solid var(--celeste-tech);
     font-size: 0.95rem;
+}
+
+.input-bold {
+    font-weight: 700;
+}
+
+.input-italic {
+    font-style: italic;
+}
+
+.td-footer-label {
+    text-align: right;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.td-footer-value {
+    padding-left: 1rem;
+    font-size: 1.1rem;
+}
+
+.table-empty-cell {
+    padding: 2rem;
 }
 
 .fila-tabla {
@@ -697,11 +938,410 @@ main section h2::before {
     box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
 
-/* Botonera interna del formulario */
-.botonera-formulario {
+.input-mini {
+    width: 70px;
+    min-width: 50px;
+}
+
+.input-45 {
+    width: 45px;
+}
+
+.input-50 {
+    width: 50px;
+}
+
+.input-80 {
+    width: 80px;
+}
+
+.input-90 {
+    width: 90px;
+}
+
+.input-center {
+    text-align: center;
+}
+
+.receta-card {
+    background: var(--bg-tarjetas);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.receta-card-header {
     display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.receta-card-title {
+    color: var(--rosa-marca);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.receta-card-badge {
+    background: rgba(56, 189, 248, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--celeste-tech);
+}
+
+.tabla-receta {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 1rem;
+}
+
+.tabla-receta thead {
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--celeste-tech);
+}
+
+.tabla-receta th,
+.tabla-receta td {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.tabla-receta th {
+    font-weight: 600;
+}
+
+.tabla-receta .text-right {
+    text-align: right;
+}
+
+.tabla-receta .text-center {
+    text-align: center;
+}
+
+.tabla-receta .td-muted {
+    color: var(--texto-gris);
+}
+
+.tabla-receta .td-strong {
+    color: var(--texto-blanco);
+    font-weight: 500;
+}
+
+.tabla-receta .td-highlight {
+    color: var(--celeste-tech);
+    font-weight: bold;
+}
+
+.tabla-receta .row-total-receta {
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.tabla-receta .row-mano-obra {
+    background: rgba(56, 189, 248, 0.05);
+}
+
+.tabla-receta .row-total-produccion {
+    background: rgba(232, 66, 124, 0.08);
+}
+
+.acciones-receta {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-receta {
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: var(--transicion);
+}
+
+.btn-receta-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    color: white;
+}
+
+.btn-receta-danger {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+}
+
+.btn-receta-outline {
+    background: transparent;
+    border: 1px solid var(--rosa-marca);
+    color: var(--rosa-marca);
+}
+
+.btn-receta-dashed {
+    background: transparent;
+    border: 1px dashed var(--celeste-tech);
+    color: var(--celeste-tech);
+    padding: 0.4rem 0.8rem;
+}
+
+.form-agregar-ing {
+    display: none;
+    margin-top: 1rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.fila-ingrediente-nueva-receta {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.3fr auto;
+    gap: 0.6rem;
+    align-items: end;
+    margin-bottom: 0.8rem;
+}
+
+.fila-ingrediente-nueva-receta label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--texto-gris);
+    margin-bottom: 0.3rem;
+}
+
+.btn-eliminar-receta {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    border-radius: 4px;
+    padding: 0.45rem 0.6rem;
+    cursor: pointer;
+}
+
+.btn-dashed {
+    background: transparent;
+    border: 1px dashed var(--celeste-tech);
+    color: var(--celeste-tech);
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.tabla-receta tfoot td {
+    padding: 0.8rem;
+    font-weight: 700;
+}
+
+.tabla-receta .row-total-receta td {
+    background: rgba(16, 185, 129, 0.05);
+    color: #10b981;
+    text-transform: uppercase;
+}
+
+.tabla-receta .row-mano-obra td {
+    background: rgba(56, 189, 248, 0.05);
+    color: var(--celeste-tech);
+    text-transform: uppercase;
+}
+
+.tabla-receta .row-total-produccion td {
+    background: rgba(232, 66, 124, 0.08);
+    color: var(--rosa-marca);
+    text-transform: uppercase;
+}
+
+.tabla-receta .td-footer-label {
+    text-align: right;
+}
+
+.tabla-receta .td-footer-value {
+    padding-left: 1rem;
+    font-size: 1.1rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.full-width-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-empty-state td {
+    padding: 2rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.mt-1-2 {
+    margin-top: 1.2rem;
+}
+
+.mt-1-5 {
+    margin-top: 1.5rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.mb-1-5 {
+    margin-bottom: 1.5rem;
+}
+
+.section-heading {
+    color: var(--celeste-tech);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.section-heading-strong {
+    font-size: 1.2rem;
+    color: var(--celeste-tech);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 0.5rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--texto-gris);
+    margin-bottom: 0.4rem;
+}
+
+.form-label-small {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--texto-gris);
+    margin-bottom: 0.3rem;
+}
+
+.preview-box {
+    display: none;
+    background: var(--bg-principal);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.preview-box p {
+    color: var(--texto-gris);
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.8rem;
+}
+
+.preview-label {
+    color: var(--texto-gris);
+    font-size: 0.8rem;
+}
+
+.preview-legend {
+    color: var(--texto-gris);
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.preview-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: monospace;
+}
+
+.overflow-auto {
+    overflow-x: auto;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.preview-value.celeste {
+    color: var(--celeste-tech);
+}
+
+.preview-value.verde {
+    color: #10b981;
+}
+
+.preview-value.rosa {
+    color: var(--rosa-marca);
+}
+
+.text-morado {
+    color: #a855f7;
+}
+
+.btn-add {
+    margin-top: 0.6rem;
+    border: 1px dashed var(--celeste-tech);
+    color: var(--celeste-tech);
+    background: transparent;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.button-group-inline {
+    margin-top: 1.5rem;
+}
+
+.table-full {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.th-center {
+    text-align: center;
+}
+
+.th-actions {
+    text-align: center;
+}
+
+.th-monto-celeste,
+.th-monto-rosa,
+.th-monto-verde {
+    text-align: right;
+}
+
+.th-concepto {
+    text-align: left;
 }
 
 .btn-formulario {
@@ -875,8 +1515,141 @@ main section h2::before {
     font-style: italic;
 }
 
+.text-right {
+    text-align: right !important;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.text-success {
+    color: #10b981;
+}
+
+.text-danger {
+    color: var(--rosa-marca);
+}
+
+.text-violeta {
+    color: #a855f7;
+}
+
+.d-none {
+    display: none;
+}
+
+.mt-1-8 {
+    margin-top: 1.8rem;
+}
+
+.td-pad-1 {
+    padding: 1rem;
+}
+
+.input-small-center {
+    width: 80px;
+    text-align: center;
+    padding: 0.3rem;
+}
+
+.flex-between-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.section-description {
+    color: var(--texto-gris);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.full-width-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.section-divider {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.subtitle-rosa {
+    color: var(--rosa-marca);
+    margin-top: 1.2rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+}
+
+.table-full {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-empty-cell {
+    padding: 2rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mt-1-2 {
+    margin-top: 1.2rem;
+}
+
+.mt-1-5 {
+    margin-top: 1.5rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.mb-0-8 {
+    margin-bottom: 0.8rem;
+}
+
 .text-sm {
     font-size: 0.85rem;
+}
+
+.preview-card {
+    display: none;
+    background: var(--bg-principal);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.preview-card-title {
+    color: var(--texto-gris);
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.8rem;
+}
+
+.preview-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: monospace;
 }
 
 /* Fila de Totales en el tfoot */

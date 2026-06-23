@@ -56,30 +56,30 @@ const explicacionCostosFijosHTML = `
         <strong>¿Qué son los Costos Fijos?</strong> Son obligaciones económicas que la cafetería debe cubrir independientemente del volumen de ventas o producción del mes. No varían si se venden 10 o 500 tazas, y deben pagarse para que el negocio pueda operar.
     </p>
 
-    <div style="margin-top: 2rem;">
-        <h3 id="fijo_formulario_titulo" style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">Agregar Nuevo Costo Fijo</h3>
+    <div class="mt-2">
+        <h3 id="fijo_formulario_titulo" class="section-heading">Agregar Nuevo Costo Fijo</h3>
         <input type="hidden" id="fijo_index_editar" value="-1">
         <div class="grid-formulario">
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Nombre del Costo:</label>
+                <label class="form-label">Nombre del Costo:</label>
                 <input type="text" id="fijo_nombre" placeholder="Ej: Arriendo, Internet..." class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Categoría:</label>
+                <label class="form-label">Categoría:</label>
                 <input type="text" id="fijo_categoria" placeholder="Ej: Infraestructura..." class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Valor Mensual ($):</label>
+                <label class="form-label">Valor Mensual ($):</label>
                 <input type="number" id="fijo_valor" placeholder="Ej: 350.00" class="campo-control">
             </div>
         </div>
         <div class="botonera-formulario">
-            <button id="btn_cancelar_fijo" onclick="cancelarEdicionFijo()" class="btn-formulario cancelar" style="display:none;">Cancelar Edición</button>
+            <button id="btn_cancelar_fijo" onclick="cancelarEdicionFijo()" class="btn-formulario cancelar d-none">Cancelar Edición</button>
             <button id="btn_guardar_fijo" onclick="guardarCostosFijo()" class="btn-formulario guardar">Guardar Costo Fijo</button>
         </div>
     </div>
 
-    <div class="contenedor-tabla" style="margin-top: 1.5rem;">
+    <div class="contenedor-tabla mt-1-5">
         <table class="tabla-tech">
             <thead>
                 <tr>
@@ -111,26 +111,26 @@ const explicacionCostosVariablesHTML = `
         <strong>¿Qué son los Costos Variables?</strong> Son costos que cambian directamente según el volumen de producción o ventas de la cafetería. Si no se produce ni se vende nada, estos costos no se generan.
     </p>
 
-    <div style="margin-top: 2rem;">
-        <h3 id="variable_formulario_titulo" style="color: var(--rosa-marca); font-size: 1.2rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem;">Agregar Nuevo Costo Variable</h3>
+    <div class="mt-2">
+        <h3 id="variable_formulario_titulo" class="section-heading">Agregar Nuevo Costo Variable</h3>
         <input type="hidden" id="variable_index_editar" value="-1">
         <div class="grid-formulario">
             <div>
-                <label style="display:block; margin-bottom:0.5rem; color:var(--texto-gris); font-size:0.9rem;">Concepto / Rubro:</label>
+                <label class="form-label">Concepto / Rubro:</label>
                 <input type="text" id="variable_nombre" placeholder="Ej. Electricidad, Envases..." class="campo-control">
             </div>
             <div>
-                <label style="display:block; margin-bottom:0.5rem; color:var(--texto-gris); font-size:0.9rem;">Monto Mensual ($):</label>
+                <label class="form-label">Monto Mensual ($):</label>
                 <input type="number" id="variable_valor" step="0.01" placeholder="0.00" class="campo-control">
             </div>
         </div>
         <div class="botonera-formulario">
-            <button id="btn_cancelar_variable" onclick="cancelarEdicionVariable()" class="btn-formulario cancelar" style="display:none;">Cancelar</button>
+            <button id="btn_cancelar_variable" onclick="cancelarEdicionVariable()" class="btn-formulario cancelar d-none">Cancelar</button>
             <button id="btn_guardar_variable" onclick="guardarCostoVariable()" class="btn-formulario guardar">Guardar Costo Variable</button>
         </div>
     </div>
 
-    <div class="contenedor-tabla" style="margin-top: 1.5rem;">
+    <div class="contenedor-tabla mt-1-5">
         <table class="tabla-tech">
             <thead>
                 <tr>
@@ -171,8 +171,8 @@ const explicacionDirectosHTML = `
         </div>
     </div>
 
-    <div style="margin-top: 2rem;">
-        <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">
+    <div class="mt-2">
+        <h3 class="section-heading">
             Detalle de Costos Directos
         </h3>
         <div class="contenedor-tabla">
@@ -190,8 +190,8 @@ const explicacionDirectosHTML = `
         </div>
     </div>
 
-    <div style="margin-top: 2rem;">
-        <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">
+    <div class="mt-2">
+        <h3 class="section-heading">
             Detalle de Costos Indirectos
         </h3>
         <div class="contenedor-tabla">
@@ -241,32 +241,32 @@ const explicacionMateriaPrimaHTML = `
         </div>
     </div>
 
-    <div style="margin-top: 1.5rem;">
-        <h3 id="formulario_titulo" style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">Agregar Nuevo Insumo</h3>
+    <div class="mt-1-5">
+        <h3 id="formulario_titulo" class="section-heading">Agregar Nuevo Insumo</h3>
         <input type="hidden" id="mat_index_editar" value="-1">
         <div class="grid-formulario">
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Nombre del Insumo:</label>
+                <label class="form-label">Nombre del Insumo:</label>
                 <input type="text" id="mat_nombre" placeholder="Ej: Café en grano" class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Unidad de Medida:</label>
+                <label class="form-label">Unidad de Medida:</label>
                 <input type="text" id="mat_unidad" placeholder="Ej: kg, litro, paquete" class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Cantidad Formato:</label>
+                <label class="form-label">Cantidad Formato:</label>
                 <input type="number" id="mat_cantidad" step="any" placeholder="Ej: 1.00" class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Precio de Compra ($):</label>
+                <label class="form-label">Precio de Compra ($):</label>
                 <input type="number" id="mat_precio" step="any" placeholder="Ej: 12.50" class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">% Merma Estándar:</label>
+                <label class="form-label">% Merma Estándar:</label>
                 <input type="number" id="mat_merma" step="any" placeholder="Ej: 5.00" class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Clasificación Operativa:</label>
+                <label class="form-label">Clasificación Operativa:</label>
                 <select id="mat_tipo" class="campo-control">
                     <option value="DIRECTA">DIRECTA</option>
                     <option value="INDIRECTA">INDIRECTA</option>
@@ -274,12 +274,12 @@ const explicacionMateriaPrimaHTML = `
             </div>
         </div>
         <div class="botonera-formulario">
-            <button type="button" id="btn_cancelar_edicion" onclick="cancelarEdicionMateria()" class="btn-formulario cancelar" style="display:none;">Cancelar</button>
+            <button type="button" id="btn_cancelar_edicion" onclick="cancelarEdicionMateria()" class="btn-formulario cancelar d-none">Cancelar</button>
             <button type="button" id="btn_guardar_materia" onclick="procesarFormularioMateria()" class="btn-formulario guardar">Guardar Insumo</button>
         </div>
     </div>
 
-    <div class="contenedor-tabla" style="margin-top: 1.5rem;">
+    <div class="contenedor-tabla mt-1-5">
         <table class="tabla-tech">
             <thead>
                 <tr>
@@ -291,7 +291,7 @@ const explicacionMateriaPrimaHTML = `
                     <th>% Merma</th>
                     <th>Precio final</th>
                     <th>Tipo Insumo</th>
-                    <th style="text-align:center;">Acción</th>
+                    <th class="th-center">Acción</th>
                 </tr>
             </thead>
             <tbody id="tabla_materia_prima"></tbody>
@@ -313,75 +313,42 @@ const explicacionRecetasHTML = `
         <li><strong>CTR</strong> = Costo Total de la Receta &nbsp;|&nbsp; <strong>CMPu</strong> = Costo de Materia Prima unitario &nbsp;|&nbsp; <strong>Σ</strong> = sumatoria de todos los ingredientes</li>
     </ul>
 
-    <div id="formulario_edicion_receta" style="margin-top: 1.5rem; margin-bottom: 1.5rem; display: none; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.5rem;">
-        <h3 id="receta_formulario_titulo" style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1.2rem;">Modificando Insumo de Receta</h3>
-        <div class="grid-formulario">
-            <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Ingrediente (nombre):</label>
-                <input type="text" id="receta_ingrediente_nombre" readonly class="campo-control" style="opacity:0.6;">
-            </div>
-            <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Cantidad a usar en la receta:</label>
-                <input type="number" id="receta_ingrediente_cantidad" placeholder="Ej: 18" class="campo-control">
-            </div>
-            <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Unidad de la receta:</label>
-                <input type="text" id="receta_ingrediente_unidad" placeholder="Ej: gramos, ml, unidad" class="campo-control">
-            </div>
-            <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Tiempo de preparación (min):</label>
-                <input type="number" id="receta_tiempo" placeholder="Ej: 5" class="campo-control">
-            </div>
-            <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Número de porciones (tazas):</label>
-                <input type="number" id="receta_porciones" placeholder="Ej: 1" class="campo-control">
-            </div>
-        </div>
-        <input type="hidden" id="receta_id_editar" value="-1">
-        <input type="hidden" id="ingrediente_id_editar" value="-1">
-        <div class="botonera-formulario">
-            <button onclick="cancelarEdicionParametrosReceta()" class="btn-formulario cancelar">Cancelar</button>
-            <button onclick="guardarCambiosParametrosReceta()" class="btn-formulario guardar">Guardar Cambios</button>
-        </div>
-    </div>
-
-    <div id="contenedor_recetas_dinamicas" style="margin-top: 1.5rem;"></div>
+    <div id="contenedor_recetas_dinamicas" class="mt-1-5"></div>
     
-    <div style="margin-top: 2rem; margin-bottom: 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.5rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-            <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin: 0;">Crear Receta Nueva desde Cero</h3>
+    <div class="section-divider">
+        <div class="flex-between">
+            <h3 class="section-heading">Crear Receta Nueva desde Cero</h3>
             <button onclick="mostrarFormularioNuevaReceta()" class="btn-formulario guardar">+ Nueva Receta</button>
         </div>
 
-        <div id="formulario_nueva_receta" style="display: none; margin-top: 1.2rem;">
+        <div id="formulario_nueva_receta" class="d-none mt-1-2">
             <div class="grid-formulario">
                 <div>
-                    <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Nombre de la receta:</label>
+                    <label class="form-label">Nombre de la receta:</label>
                     <input type="text" id="nueva_receta_nombre" placeholder="Ej: FRAPPÉ DE VAINILLA" class="campo-control">
                 </div>
                 <div>
-                    <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Tiempo de preparación (min):</label>
+                    <label class="form-label">Tiempo de preparación (min):</label>
                     <input type="number" id="nueva_receta_tiempo" placeholder="Ej: 5" class="campo-control">
                 </div>
                 <div>
-                    <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Número de porciones (tazas):</label>
+                    <label class="form-label">Número de porciones (tazas):</label>
                     <input type="number" id="nueva_receta_porciones" placeholder="Ej: 1" class="campo-control">
                 </div>
             </div>
 
-            <h4 style="color: var(--rosa-marca); margin-top: 1.2rem; margin-bottom: 0.6rem; font-size: 0.95rem;">Ingredientes / Insumos</h4>
+            <h4 class="subtitle-rosa">Ingredientes / Insumos</h4>
             <div id="contenedor_filas_nueva_receta"></div>
-            <button onclick="agregarFilaIngredienteNuevaReceta()" style="margin-top: 0.6rem; border: 1px dashed var(--celeste-tech); color: var(--celeste-tech); background: transparent; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">+ Agregar Ingrediente</button>
+            <button onclick="agregarFilaIngredienteNuevaReceta()" class="btn-add">+ Agregar Ingrediente</button>
 
-            <div class="botonera-formulario" style="margin-top: 1.5rem;">
+            <div class="botonera-formulario mt-1-5">
                 <button onclick="cancelarNuevaReceta()" class="btn-formulario cancelar">Cancelar</button>
                 <button onclick="guardarNuevaRecetaDesdeCero()" class="btn-formulario guardar">Guardar Receta Nueva</button>
             </div>
         </div>
     </div>
 `;
-
-/*=============================*/
+//*=============================*/
 // MANO DE OBRA
 /*=============================*/
 const explicacionManoDeObraHTML = `
@@ -396,8 +363,8 @@ const explicacionManoDeObraHTML = `
         <li><strong>IT</strong> = Ingreso Total &nbsp;|&nbsp; <strong>IESS</strong> = 12.15% &nbsp;|&nbsp; <strong>D3</strong> = Décimo Tercero &nbsp;|&nbsp; <strong>D4</strong> = Décimo Cuarto &nbsp;|&nbsp; <strong>Vac</strong> = Vacaciones &nbsp;|&nbsp; <strong>FR</strong> = Fondos de Reserva</li>
     </ul>
 
-    <div style="margin-top: 1.8rem;">
-        <p style="margin-bottom: 1rem;"><strong>Registrar empleado:</strong></p>
+    <div class="mt-1-8">
+        <p class="mb-1"><strong>Registrar empleado:</strong></p>
         <div class="grid-formulario">
             <div>
                 <label>Nombre del empleado</label>
@@ -407,7 +374,7 @@ const explicacionManoDeObraHTML = `
                 <label>Cargo</label>
                 <select id="inputCargo" class="input-formulario" onchange="manejarCargo()"></select>
             </div>
-            <div id="divNuevoCargo" style="display:none;">
+            <div id="divNuevoCargo" class="d-none">
                 <label>Nombre del nuevo cargo</label>
                 <input type="text" id="inputNuevoCargo" class="input-formulario" placeholder="Ej: Limpieza">
             </div>
@@ -431,14 +398,14 @@ const explicacionManoDeObraHTML = `
         <button onclick="agregarEmpleado()" class="boton-agregar">+ Agregar empleado</button>
     </div>
 
-    <div style="margin-top: 2rem; overflow-x: auto;">
-        <table style="width:100%; border-collapse:collapse;">
+    <div class="mt-2 overflow-auto">
+        <table class="full-width-table">
             <thead>
                 <tr>
                     <th class="encabezado-tabla th-num">#</th>
                     <th class="encabezado-tabla th-concepto">Nombre</th>
                     <th class="encabezado-tabla th-concepto">Cargo</th>
-                    <th class="encabezado-tabla th-concepto" style="text-align:center;">Tipo</th>
+                    <th class="encabezado-tabla th-concepto th-center">Tipo</th>
                     <th class="encabezado-tabla th-monto-celeste">Sueldo Base ($)</th>
                     <th class="encabezado-tabla th-monto-celeste">Ingreso Total ($)</th>
                     <th class="encabezado-tabla th-monto-rosa">IESS 12.15%</th>
@@ -486,44 +453,44 @@ const explicacionEquilibrioHTML = `
     </div>
 
     <!-- FORMULARIO -->
-    <div style="margin-top: 2rem;">
-        <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">
+    <div class="mt-2">
+        <h3 class="section-heading">
             Calcular Punto de Equilibrio
         </h3>
         <div class="grid-formulario">
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Nombre del escenario:</label>
+                <label class="form-label">Nombre del escenario:</label>
                 <input type="text" id="eq_nombre" placeholder="Ej: Precio estándar" class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Precio de venta por taza ($):</label>
+                <label class="form-label">Precio de venta por taza ($):</label>
                 <input type="number" id="eq_precio" step="0.01" placeholder="Ej: 2.50" class="campo-control" oninput="previsualizarEquilibrio()">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Tazas estimadas al mes (para CVu):</label>
+                <label class="form-label">Tazas estimadas al mes (para CVu):</label>
                 <input type="number" id="eq_tazas_estimadas" placeholder="Ej: 800" class="campo-control" oninput="previsualizarEquilibrio()">
             </div>
         </div>
 
         <!-- PREVISUALIZACIÓN EN TIEMPO REAL -->
-        <div id="eq_preview" style="display:none; background: var(--bg-principal); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 1.2rem; margin-bottom: 1.2rem;">
-            <p style="color:var(--texto-gris); font-size:0.85rem; margin-bottom:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Vista previa del cálculo</p>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:0.8rem;">
+        <div id="eq_preview" class="preview-card d-none">
+            <p class="preview-card-title">Vista previa del cálculo</p>
+            <div class="preview-grid">
                 <div>
-                    <p style="color:var(--texto-gris); font-size:0.8rem;">Costo Variable por Taza</p>
-                    <p id="prev_eq_cvu" style="color:var(--celeste-tech); font-size:1.2rem; font-weight:700; font-family:monospace;">$0.00</p>
+                    <p class="preview-label">Costo Variable por Taza</p>
+                    <p id="prev_eq_cvu" class="preview-value celeste">$0.00</p>
                 </div>
                 <div>
-                    <p style="color:var(--texto-gris); font-size:0.8rem;">Margen de Contribución</p>
-                    <p id="prev_eq_margen" style="color:#10b981; font-size:1.2rem; font-weight:700; font-family:monospace;">$0.00</p>
+                    <p class="preview-label">Margen de Contribución</p>
+                    <p id="prev_eq_margen" class="preview-value verde">$0.00</p>
                 </div>
                 <div>
-                    <p style="color:var(--texto-gris); font-size:0.8rem;">Tazas para Equilibrio</p>
-                    <p id="prev_eq_tazas" style="color:var(--rosa-marca); font-size:1.2rem; font-weight:700; font-family:monospace;">0 tazas</p>
+                    <p class="preview-label">Tazas para Equilibrio</p>
+                    <p id="prev_eq_tazas" class="preview-value rosa">0 tazas</p>
                 </div>
                 <div>
-                    <p style="color:var(--texto-gris); font-size:0.8rem;">Ingresos en Equilibrio</p>
-                    <p id="prev_eq_ingresos" style="color:var(--celeste-tech); font-size:1.2rem; font-weight:700; font-family:monospace;">$0.00</p>
+                    <p class="preview-label">Ingresos en Equilibrio</p>
+                    <p id="prev_eq_ingresos" class="preview-value celeste">$0.00</p>
                 </div>
             </div>
         </div>
@@ -534,8 +501,8 @@ const explicacionEquilibrioHTML = `
     </div>
 
     <!-- TABLA DE ESCENARIOS -->
-    <div style="margin-top: 2rem;">
-        <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">
+    <div class="mt-2">
+        <h3 class="section-heading">
             Escenarios Guardados
         </h3>
         <div class="contenedor-tabla">
@@ -593,44 +560,44 @@ const explicacionGananciaHTML = `
     </div>
 
     <!-- FORMULARIO CALCULADORA -->
-    <div style="margin-top: 2rem;">
-        <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">
+    <div class="mt-2">
+        <h3 class="section-heading">
             Calcular Ganancia por Escenario
         </h3>
         <div class="grid-formulario">
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Nombre del escenario:</label>
+                <label class="form-label">Nombre del escenario:</label>
                 <input type="text" id="gan_nombre" placeholder="Ej: Semana normal" class="campo-control">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Precio de venta por taza ($):</label>
+                <label class="form-label">Precio de venta por taza ($):</label>
                 <input type="number" id="gan_precio" step="0.01" placeholder="Ej: 2.50" class="campo-control" oninput="previsualizarGanancia()">
             </div>
             <div>
-                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Tazas vendidas al mes:</label>
+                <label class="form-label">Tazas vendidas al mes:</label>
                 <input type="number" id="gan_tazas" placeholder="Ej: 800" class="campo-control" oninput="previsualizarGanancia()">
             </div>
         </div>
 
         <!-- PREVISUALIZACIÓN EN TIEMPO REAL -->
-        <div id="gan_preview" style="display:none; background: var(--bg-principal); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 1.2rem; margin-bottom: 1.2rem;">
-            <p style="color:var(--texto-gris); font-size:0.85rem; margin-bottom:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Vista previa del cálculo</p>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:0.8rem;">
+        <div id="gan_preview" class="preview-card d-none">
+            <p class="preview-card-title">Vista previa del cálculo</p>
+            <div class="preview-grid">
                 <div>
-                    <p style="color:var(--texto-gris); font-size:0.8rem;">Ingresos Totales</p>
-                    <p id="prev_ingresos" style="color:var(--celeste-tech); font-size:1.2rem; font-weight:700; font-family:monospace;">$0.00</p>
+                    <p class="preview-label">Ingresos Totales</p>
+                    <p id="prev_ingresos" class="preview-value celeste">$0.00</p>
                 </div>
                 <div>
-                    <p style="color:var(--texto-gris); font-size:0.8rem;">Ganancia Bruta</p>
-                    <p id="prev_bruta" style="color:#10b981; font-size:1.2rem; font-weight:700; font-family:monospace;">$0.00</p>
+                    <p class="preview-label">Ganancia Bruta</p>
+                    <p id="prev_bruta" class="preview-value verde">$0.00</p>
                 </div>
                 <div>
-                    <p style="color:var(--texto-gris); font-size:0.8rem;">Ganancia Neta</p>
-                    <p id="prev_neta" style="color:#10b981; font-size:1.2rem; font-weight:700; font-family:monospace;">$0.00</p>
+                    <p class="preview-label">Ganancia Neta</p>
+                    <p id="prev_neta" class="preview-value verde">$0.00</p>
                 </div>
                 <div>
-                    <p style="color:var(--texto-gris); font-size:0.8rem;">Margen</p>
-                    <p id="prev_margen" style="color:var(--rosa-marca); font-size:1.2rem; font-weight:700; font-family:monospace;">0.00%</p>
+                    <p class="preview-label">Margen</p>
+                    <p id="prev_margen" class="preview-value rosa">0.00%</p>
                 </div>
             </div>
         </div>
@@ -641,11 +608,11 @@ const explicacionGananciaHTML = `
     </div>
 
     <!-- TABLA DE PRECIO SUGERIDO POR RECETA (automática, se llena sola desde recetasBase) -->
-    <div style="margin-top: 2rem;">
-        <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">
+    <div class="mt-2">
+        <h3 class="section-heading">
             Precio Sugerido por Receta del Menú
         </h3>
-        <p style="color:var(--texto-gris); font-size:0.85rem; margin-bottom:1rem;">
+        <p class="section-description">
             Se calcula automáticamente para cada receta: <strong>Precio Sugerido = Costo de Producción ÷ (1 − % Margen ÷ 100)</strong>. Puedes editar el % Margen de cada receta directamente en la tabla.
         </p>
         <div class="contenedor-tabla">
@@ -667,8 +634,8 @@ const explicacionGananciaHTML = `
     </div>
 
     <!-- TABLA DE ESCENARIOS -->
-    <div style="margin-top: 2rem;">
-        <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">
+    <div class="mt-2">
+        <h3 class="section-heading">
             Escenarios Guardados
         </h3>
         <div class="contenedor-tabla">

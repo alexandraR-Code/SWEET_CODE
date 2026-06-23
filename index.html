@@ -16,61 +16,62 @@
         <h1>Simulador de Costos y Presupuestos</h1>
     </header>
     <nav>
-        <button onclick="mostrarSeccion('fijos')">Costos fijos</button>
-        <button onclick="mostrarSeccion('variables')">Costos variables</button>
-        <button onclick="mostrarSeccion('directos')">Costos Directos e Indirectos</button>
-        <button onclick="mostrarSeccion('materia')">Materia Prima</button>
-        <button onclick="mostrarSeccion('manoDeObra')">Mano de obra</button>
-        <button onclick="mostrarSeccion('recetas')">Recetas y Costos</button>
-        <button onclick="mostrarSeccion('ganancias')">Ganancias</button>
-        <button onclick="mostrarSeccion('equilibrio')">Equilibrio financiero</button>
+        <button class="boton-secundario" onclick="mostrarSeccion('fijos')">Costos fijos</button>
+        <button class="boton-secundario" onclick="mostrarSeccion('variables')">Costos variables</button>
+        <button class="boton-secundario" onclick="mostrarSeccion('directos')">Costos Directos e Indirectos</button>
+        <button class="boton-secundario" onclick="mostrarSeccion('materia')">Materia Prima</button>
+        <button class="boton-secundario" onclick="mostrarSeccion('manoDeObra')">Mano de obra</button>
+        <button class="boton-secundario" onclick="mostrarSeccion('recetas')">Recetas y Costos</button>
+        <button class="boton-secundario" onclick="mostrarSeccion('ganancias')">Ganancias</button>
+        <button class="boton-secundario" onclick="mostrarSeccion('equilibrio')">Equilibrio financiero</button>
     </nav>
-    <main>
+    <main class="simulador">
 
-        <section id="fijos" class="pantalla">
-            <h2>Costos Fijos Mensuales</h2>
+        <section id="fijos" class="pantalla seccion-contenedor">
+            <h2 class="titulo-seccion">Costos Fijos Mensuales</h2>
             <div id="bloque_explicacion_fijos" class="bloque-teoria"></div>
         </section>
 
-        <section id="variables" class="pantalla">
-            <h2>Costos Variables Operativos</h2>
+        <section id="variables" class="pantalla seccion-contenedor">
+            <h2 class="titulo-seccion">Costos Variables Operativos</h2>
             <div id="bloque_explicacion_variables" class="bloque-teoria"></div>
         </section>
 
-        <section id="directos" class="pantalla">
-            <h2>Costos Directos e Indirectos</h2>
+        <section id="directos" class="pantalla seccion-contenedor">
+            <h2 class="titulo-seccion">Costos Directos e Indirectos</h2>
             <div id="bloque_explicacion_directos" class="bloque-teoria"></div>
         </section>
 
-        <section id="materia" class="pantalla">
-            <h2>Registro de Insumos (Materia Prima)</h2>
+        <section id="materia" class="pantalla seccion-contenedor">
+            <h2 class="titulo-seccion">Registro de Insumos (Materia Prima)</h2>
             <div id="bloque_explicacion_materia" class="bloque-teoria"></div>
         </section>
 
-        <section id="manoDeObra" class="pantalla">
-            <h2>Mano de Obra</h2>
+        <section id="manoDeObra" class="pantalla seccion-contenedor">
+            <h2 class="titulo-seccion">Mano de Obra</h2>
             <div id="bloque_explicacion_manoDeObra" class="bloque-teoria"></div>
         </section>
 
-        <section id="recetas" class="pantalla">
-            <h2>Estructuración de Recetas y Costos</h2>
+        <section id="recetas" class="pantalla seccion-contenedor">
+            <h2 class="titulo-seccion">Estructuración de Recetas y Costos</h2>
             <div id="bloque_explicacion_recetas" class="bloque-teoria"></div>
         </section>
 
-        <section id="ganancias" class="pantalla">
-            <h2>Ganancia (o Utilidad)</h2>
+        <section id="ganancias" class="pantalla seccion-contenedor">
+            <h2 class="titulo-seccion">Ganancia (o Utilidad)</h2>
             <div id="bloque_explicacion_ganancias" class="bloque-teoria"></div>
         </section>
 
-        <section id="equilibrio" class="pantalla">
-            <h2>Punto de Equilibrio Financiero</h2>
+        <section id="equilibrio" class="pantalla seccion-contenedor">
+            <h2 class="titulo-seccion">Punto de Equilibrio Financiero</h2>
             <div id="bloque_explicacion_equilibrio" class="bloque-teoria"></div>
         </section>
     </main>
     <footer>
         <p>Desarrollado por: Alexandra Ramirez &amp; Ronald Sanchez</p>
         <p>© 2026 Sweet Code | ¿Tienes feedback? Ayúdanos con este cuestionario:</p>
-        <img src="qr.png" alt="QR Cuestionario" style="width: 100px; height: 100px; margin-top: 10px;">
+        <p><a class="boton-secundario" href="caratula.html">Volver a la carátula</a></p>
+        <img src="qr.png" alt="QR Cuestionario" class="img-qr">
     </footer>
 
     <script src="teoria.js"></script>

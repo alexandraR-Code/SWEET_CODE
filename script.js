@@ -1,4 +1,4 @@
-// SECCIÓN: COSTOS FIJOS
+﻿// SECCIÃ“N: COSTOS FIJOS
 // ============================================================
 
 // Arreglo con todos los gastos fijos mensuales del negocio
@@ -18,6 +18,7 @@ let costosFijos = [
 ];
 
 // Suma el costoTotal de todos los empleados que tienen el cargo indicado
+/**\n * Calcula el costo total de todos los empleados con el cargo dado.\n * Itera sobre `listaEmpleados` y suma `costoTotal` cuando el cargo coincide,\n * incluyendo la lógica de equivalencia entre "Cajera" y "Cajero".\n * @param {string} cargo - Cargo a filtrar (por ejemplo, "Barista").\n * @returns {number} Total acumulado de los costos de ese cargo.\n */
 function obtenerCostoTotalPorCargo(cargo) {
     let total = 0;
     for (let j = 0; j < listaEmpleados.length; j++) {
@@ -30,6 +31,7 @@ function obtenerCostoTotalPorCargo(cargo) {
 }
 
 // Sincroniza los sueldos desde mano de obra, dibuja la tabla y actualiza el total mensual
+/**\n * Sincroniza los costos fijos con los valores actuales de mano de obra,\n * recalcula totales y renderiza la tabla HTML de costos fijos.\n * @returns {void}\n */
 function actualizarTablaCostosFijos() {
     let tablaBody = document.getElementById("tabla_costos_fijos");
     if (!tablaBody) return;
@@ -96,6 +98,7 @@ function actualizarTablaCostosFijos() {
 }
 
 // Valida el formulario y guarda o actualiza el gasto fijo según el modo activo
+/**\n * Valida y guarda un costo fijo nuevo o editado.\n * Si está en modo edición, actualiza el registro existente; si no, inserta uno nuevo.\n * @returns {void}\n */
 function guardarCostosFijo() {
     let nombre = recuperarTexto("fijo_nombre");
     let categoria = recuperarTexto("fijo_categoria");
@@ -129,6 +132,7 @@ function guardarCostosFijo() {
 }
 
 // Inyecta los datos del gasto fijo seleccionado en el formulario para editarlo
+/**\n * Carga los valores de un costo fijo en el formulario para edición.\n * Actualiza el título, el botón y muestra el botón cancelar.\n * @param {number} index - Índice del costo fijo en el arreglo `costosFijos`.\n * @returns {void}\n */
 function cargarFijoParaEditar(index) {
     let item = costosFijos[index];
     mostrarTextoEnCaja("fijo_nombre", item.concepto);
@@ -147,6 +151,7 @@ function cargarFijoParaEditar(index) {
 }
 
 // Restablece el formulario de costos fijos al estado de agregar nuevo gasto
+/**\n * Restablece el formulario de costos fijos al estado de creación.\n * Vuelve a ocultar el botón cancelar y limpia los campos.\n * @returns {void}\n */
 function cancelarEdicionFijo() {
     document.getElementById("fijo_index_editar").value = "-1";
     document.getElementById("fijo_formulario_titulo").innerText = "Agregar Nuevo Gasto Fijo";
@@ -160,6 +165,7 @@ function cancelarEdicionFijo() {
 }
 
 // Vacía todos los campos del formulario de costos fijos
+/**\n * Limpia los campos del formulario de costo fijo estableciendo valores vacíos.\n * @returns {void}\n */
 function limpiarFormularioFijo() {
     mostrarTextoEnCaja("fijo_nombre", "");
     mostrarTextoEnCaja("fijo_categoria", "");
@@ -168,7 +174,7 @@ function limpiarFormularioFijo() {
 
 
 // ============================================================
-// SECCIÓN: COSTOS VARIABLES
+// SECCIÃ“N: COSTOS VARIABLES
 // ============================================================
 
 // Arreglo con los rubros variables: los 3 primeros son automáticos desde materia prima
@@ -181,6 +187,7 @@ let costosVariables = [
 ];
 
 // Extrae un número limpio del DOM intentando varios IDs posibles
+/**\n * Devuelve el primer valor numérico encontrado en uno de los elementos DOM dados.\n * Intenta cada id y parsea el texto o valor eliminando caracteres no numéricos.\n * @param {string[]} idsPosibles - Lista de IDs de elementos a consultar.\n * @returns {number} Valor numérico extraído o 0 si no hay dato válido.\n */
 function obtenerValorDeMateria(idsPosibles) {
     for (let id of idsPosibles) {
         let el = document.getElementById(id);
@@ -194,6 +201,7 @@ function obtenerValorDeMateria(idsPosibles) {
 }
 
 // Sincroniza los automáticos desde materia prima, dibuja la tabla y actualiza el total
+/**\n * Sincroniza los costos variables automáticos desde materia prima,\n * construye la tabla de costos variables y actualiza el total mensual.\n * @returns {void}\n */
 function actualizarTablaCostosVariables() {
     let tablaBody = document.getElementById("tabla_costos_variables");
     if (!tablaBody) return;
@@ -234,8 +242,8 @@ function actualizarTablaCostosVariables() {
     tfoot.className = "bg-total-row";
     tfoot.innerHTML = `
         <tr>
-            <td class="font-bold" style="padding: 1rem;">TOTAL COSTOS VARIABLES MENSUALES</td>
-            <td class="text-center font-bold text-verde" style="padding: 1rem;">$${totalMensualVariables.toFixed(2)}</td>
+            <td class="font-bold td-pad-1">TOTAL COSTOS VARIABLES MENSUALES</td>
+            <td class="text-center font-bold text-verde td-pad-1">$${totalMensualVariables.toFixed(2)}</td>
             <td></td>
         </tr>
     `;
@@ -248,6 +256,7 @@ function actualizarTablaCostosVariables() {
 }
 
 // Inyecta los datos del rubro variable en el formulario para editarlo; bloquea los automáticos
+/**\n * Carga un costo variable en el formulario para edición.\n * Evita editar rubros automáticos que se calculan desde materia prima.\n * @param {number} index - Índice del rubro en `costosVariables`.\n * @returns {void}\n */
 function cargarVariableParaEditar(index) {
     let item = costosVariables[index];
 
@@ -275,6 +284,7 @@ function cargarVariableParaEditar(index) {
 }
 
 // Valida el formulario y agrega o actualiza el costo variable manual según el modo activo
+/**\n * Valida y guarda un costo variable manual.\n * Actualiza el arreglo si el índice está en modo edición o agrega un nuevo rubro.\n * @returns {void}\n */
 function guardarCostoVariable() {
     let nombre = recuperarTexto("variable_nombre").trim();
     let valor = recuperarFloatSeguro("variable_valor");
@@ -306,6 +316,7 @@ function guardarCostoVariable() {
 }
 
 // Restablece el formulario de costos variables al estado de agregar nuevo rubro
+/**\n * Restablece el formulario de costo variable al estado de alta.\n * Limpia los campos y oculta el botón de cancelar.\n * @returns {void}\n */
 function cancelarEdicionVariable() {
     document.getElementById("variable_index_editar").value = "-1";
     document.getElementById("variable_formulario_titulo").innerText = "Agregar Nuevo Costo Variable";
@@ -325,10 +336,11 @@ function cancelarEdicionVariable() {
 
 
 // ============================================================
-// SECCIÓN: COSTOS DIRECTOS E INDIRECTOS
+// SECCIÃ“N: COSTOS DIRECTOS E INDIRECTOS
 // ============================================================
 
 // Clasifica materia prima, mano de obra y costos fijos en directos e indirectos y actualiza las tarjetas
+/**\n * Calcula y muestra los costos directos e indirectos en tablas separadas.\n * Suma materia prima, mano de obra y costos fijos según su clasificación.\n * @returns {void}\n */
 function actualizarTablaDirectos() {
     let cuerpoDirectos = document.getElementById("tabla_costos_directos");
     let cuerpoIndirectos = document.getElementById("tabla_costos_indirectos");
@@ -358,7 +370,7 @@ function actualizarTablaDirectos() {
         <tr>
             <td class="text-gris text-center">${contI++}</td>
             <td class="text-blanco font-semibold">Materia Prima Indirecta</td>
-            <td style="color:#a855f7;">Insumos de presentación</td>
+            <td class="text-violeta">Insumos de presentación</td>
             <td class="text-verde font-bold text-center">${convertirMoneda(totalesMP.totalIndirecta)}</td>
         </tr>`;
     totalIndirectos += totalesMP.totalIndirecta;
@@ -370,7 +382,7 @@ function actualizarTablaDirectos() {
             cuerpoDirectos.innerHTML += `
                 <tr>
                     <td class="text-gris text-center">${contD++}</td>
-                    <td class="text-blanco font-semibold">Mano de Obra — ${emp.nombre} (${emp.cargo})</td>
+                    <td class="text-blanco font-semibold">Mano de Obra â€” ${emp.nombre} (${emp.cargo})</td>
                     <td class="text-celeste">Personal directo</td>
                     <td class="text-verde font-bold text-center">${convertirMoneda(emp.costoTotal)}</td>
                 </tr>`;
@@ -379,8 +391,8 @@ function actualizarTablaDirectos() {
             cuerpoIndirectos.innerHTML += `
                 <tr>
                     <td class="text-gris text-center">${contI++}</td>
-                    <td class="text-blanco font-semibold">Mano de Obra — ${emp.nombre} (${emp.cargo})</td>
-                    <td style="color:#a855f7;">Personal indirecto</td>
+                    <td class="text-blanco font-semibold">Mano de Obra â€” ${emp.nombre} (${emp.cargo})</td>
+                    <td class="text-violeta">Personal indirecto</td>
                     <td class="text-verde font-bold text-center">${convertirMoneda(emp.costoTotal)}</td>
                 </tr>`;
             totalIndirectos += emp.costoTotal;
@@ -397,7 +409,7 @@ function actualizarTablaDirectos() {
             <tr>
                 <td class="text-gris text-center">${contI++}</td>
                 <td class="text-blanco font-semibold">${fijo.concepto}</td>
-                <td style="color:#a855f7;">${fijo.categoria}</td>
+                <td class="text-violeta">${fijo.categoria}</td>
                 <td class="text-verde font-bold text-center">${convertirMoneda(fijo.montoMensual)}</td>
             </tr>`;
         totalIndirectos += fijo.montoMensual;
@@ -414,7 +426,7 @@ function actualizarTablaDirectos() {
 
 
 // ============================================================
-// SECCIÓN: MATERIA PRIMA
+// SECCIÃ“N: MATERIA PRIMA
 // ============================================================
 
 // Arreglo principal con todos los insumos directos e indirectos del negocio
@@ -437,6 +449,7 @@ let materiasPrimas = [
 ];
 
 // Suma los precios separando materia prima directa e indirecta
+/**\n * Suma los precios de materia prima directa e indirecta por separado.\n * Utiliza la propiedad `tipo` para separar los valores.\n * @returns {{totalDirecta:number, totalIndirecta:number}} Totales por tipo.\n */
 function calcularTotalesMateriaPrima() {
     let totalDirecta = 0;
     let totalIndirecta = 0;
@@ -451,6 +464,7 @@ function calcularTotalesMateriaPrima() {
 }
 
 // Actualiza todos los elementos del DOM que muestran totales de materia prima y merma
+/**\n * Actualiza todos los elementos del DOM que muestran totales de materia prima y merma.\n * Calcula el total combinado y también el monto de pérdida por merma.\n * @returns {void}\n */
 function sincronizarTotalesMateriaPrima() {
     let totales = calcularTotalesMateriaPrima();
     let mpd = totales.totalDirecta;
@@ -487,6 +501,7 @@ function sincronizarTotalesMateriaPrima() {
     if (elMerma) elMerma.innerText = convertirMoneda(totalMerma);
 }
 // Calcula el costo real por unidad de un insumo descontando la merma
+/**\n * Calcula el costo neto por unidad utilizable de un insumo descontando la merma.\n * Si la cantidad utilizable es 0 o negativa retorna 0 para evitar división por cero.\n * @param {object} item - Insumo con propiedades `cantidad`, `precio` y `merma`.\n * @returns {number} Costo neto por unidad utilizable.\n */
 function obtenerCostoNetoUnitarioInsumo(item) {
     let cantidadUtilizable = item.cantidad * (1 - (item.merma / 100));
     if (cantidadUtilizable > 0) {
@@ -496,6 +511,7 @@ function obtenerCostoNetoUnitarioInsumo(item) {
 }
 
 // Dibuja todas las filas de la tabla de insumos y sincroniza los totales
+/**\n * Renderiza la tabla de materia prima y recalcula los totales asociados.\n * Utiliza el costo neto descontando merma para cada insumo.\n * @returns {void}\n */
 function actualizarTablaMateria() {
     let tablaBody = document.getElementById("tabla_materia_prima");
     if (!tablaBody) return;
@@ -532,6 +548,7 @@ function actualizarTablaMateria() {
 }
 
 // Inyecta los datos del insumo seleccionado en el formulario para editarlo
+/**\n * Carga un insumo de materia prima en el formulario para edición.\n * Ajusta el título y el botón de guardado, y habilita el formulario.\n * @param {number} index - Índice del insumo en `materiasPrimas`.\n * @returns {void}\n */
 function cargarMateriaParaEditar(index) {
     let item = materiasPrimas[index];
     mostrarTextoEnCaja("mat_nombre", item.nombre);
@@ -550,6 +567,7 @@ function cargarMateriaParaEditar(index) {
 }
 
 // Valida el formulario y guarda o actualiza el insumo según el modo activo (nuevo o edición)
+/**\n * Valida el formulario de materia prima y guarda o actualiza el insumo.\n * Inserta directos después del último directo existente y reordena indirectos.\n * @returns {void}\n */
 function procesarFormularioMateria() {
     let nombre = recuperarTexto("mat_nombre");
     let unidad = recuperarTexto("mat_unidad");
@@ -597,6 +615,7 @@ function procesarFormularioMateria() {
 }
 
 // Restablece el formulario de materia prima al estado de agregar nuevo insumo
+/**\n * Restablece el formulario de materia prima al modo de nuevo insumo.\n * Restaura el texto del título y oculta el botón cancelar.\n * @returns {void}\n */
 function cancelarEdicionMateria() {
     document.getElementById("mat_index_editar").value = "-1";
     document.getElementById("formulario_titulo").innerText = "Agregar Nuevo Insumo";
@@ -607,6 +626,7 @@ function cancelarEdicionMateria() {
 }
 
 // Vacía todos los campos del formulario de materia prima
+/**\n * Limpia todos los campos del formulario de materia prima.\n * @returns {void}\n */
 function limpiarFormularioMateria() {
     mostrarTextoEnCaja("mat_nombre", "");
     mostrarTextoEnCaja("mat_unidad", "");
@@ -618,7 +638,7 @@ function limpiarFormularioMateria() {
 
 // ============================================================
 // ============================================================
-// SECCIÓN: MANO DE OBRA
+// SECCIÃ“N: MANO DE OBRA
 // ============================================================
 
 // Arreglo con los cargos predefinidos del negocio
@@ -636,6 +656,7 @@ let listaEmpleados = [
 ];
 
 // Llena el select de cargos con las opciones del arreglo cargos
+/**\n * Llena el select de cargos con opciones definidas en el arreglo `cargos`.\n * Agrega una opción extra para permitir la creación de un cargo nuevo.\n * @returns {void}\n */
 function cargarOpcionesCargos() {
     let selectCargo = recuperarElemento("inputCargo");
     selectCargo.innerHTML = "";
@@ -646,6 +667,7 @@ function cargarOpcionesCargos() {
 }
 
 // Detecta el cargo seleccionado y autocompleta el sueldo y tipo correspondiente
+/**\n * Ajusta el formulario de mano de obra según el cargo seleccionado.\n * Muestra el campo para un nuevo cargo o autocompleta sueldo y tipo.\n * @returns {void}\n */
 function manejarCargo() {
     let cargoSeleccionado = recuperarTexto("inputCargo");
     let divNuevoCargo = recuperarElemento("divNuevoCargo");
@@ -670,6 +692,7 @@ function manejarCargo() {
 }
 
 // Lee el formulario, calcula beneficios de ley y agrega el empleado al arreglo
+/**\n * Crea un empleado con su sueldo, horas extras y beneficios de ley.\n * Calcula IESS, décimo tercero, décimo cuarto, vacaciones y fondo de reserva.\n * @returns {void}\n */
 function agregarEmpleado() {
     let nombre = recuperarTexto("inputNombre");
     let cargoSelect = recuperarTexto("inputCargo");
@@ -708,12 +731,14 @@ function agregarEmpleado() {
 }
 
 // Elimina al empleado en la posición indicada usando splice
+/**\n * Elimina un empleado de `listaEmpleados` según su índice.\n * @param {number} indice - Posición del empleado a eliminar.\n * @returns {void}\n */
 function eliminarEmpleado(indice) {
     listaEmpleados.splice(indice, 1);
     mostrarTabla();
 }
 
 // Recorre listaEmpleados y construye las filas HTML de la tabla de mano de obra
+/**\n * Construye la tabla de mano de obra en el DOM a partir de `listaEmpleados`.\n * Itera la lista y formatea los valores monetarios con `convertirMoneda`.\n * @returns {void}\n */
 function mostrarTabla() {
     let cuerpo = recuperarElemento("tablaEmpleados");
     if (!cuerpo) return;
@@ -737,7 +762,7 @@ function mostrarTabla() {
                 <td class="td-rosa">${convertirMoneda(e.vacaciones)}</td>
                 <td class="td-rosa">${convertirMoneda(e.fondosReserva)}</td>
                 <td class="td-verde">${convertirMoneda(e.costoTotal)}</td>
-                <td style="text-align:center;">
+                <td class="text-center">
                     <button class="btn-eliminar-tabla" onclick="eliminarEmpleado(${i})">Eliminar</button>
                 </td>
             </tr>`;
@@ -746,7 +771,7 @@ function mostrarTabla() {
 
 
 // ============================================================
-// SECCIÓN: RECETAS Y COSTOS
+// SECCIÃ“N: RECETAS Y COSTOS
 // ============================================================
 
 // Arreglo con las recetas base del menú, cada una con sus ingredientes e insumos
@@ -767,7 +792,7 @@ let recetasBase = [
     },
     {
         idReceta: 1,
-        nombreReceta: "CAFÉ AMERICANO",
+        nombreReceta: "CAFÃ‰ AMERICANO",
         tiempoPreparacion: 4,
         numeroPorciones: 1,
         ingredientes: [
@@ -781,7 +806,7 @@ let recetasBase = [
     },
     {
         idReceta: 2,
-        nombreReceta: "CAFÉ CON LECHE",
+        nombreReceta: "CAFÃ‰ CON LECHE",
         tiempoPreparacion: 5,
         numeroPorciones: 1,
         ingredientes: [
@@ -830,21 +855,20 @@ let recetasBase = [
     }
 ];
 
-// Calcula el costo de materia prima (ingredientes) de una receta, sumando cada ingrediente
-// según su costo neto unitario en materiasPrimas. No dibuja nada, solo devuelve el número.
-// Se extrajo de actualizarPantallaRecetas() para poder reutilizarla también en el Resumen General.
+// Registro de qué recetas están en modo edición (por índice)
+let recetasEnModoEdicion = {};
+
+/**\n * Calcula el costo total de los ingredientes de una receta.\n * Busca cada insumo en `materiasPrimas`, obtiene su costo neto y aplica conversión si es necesario.\n * @param {object} receta - Objeto de receta con arreglo `ingredientes`.\n * @returns {number} Costo total de materia prima de la receta.\n */
+
 function calcularCostoIngredientesReceta(receta) {
     let totalMateriaPrimaReceta = 0;
-
     receta.ingredientes.forEach(function (ingrediente) {
         let insumoEncontrado = materiasPrimas.find(function (m) {
             return m.nombre.toLowerCase().trim() === ingrediente.buscarNombre.toLowerCase().trim();
         });
-
         if (insumoEncontrado) {
             let costoNetoInsumoCompleto = obtenerCostoNetoUnitarioInsumo(insumoEncontrado);
             let costoUnitarioCalculado = 0;
-            // Si es conversión (kg/litro → gramos/ml), divide entre 1000; si no, usa cantidad directa
             if (ingrediente.esConversion) {
                 costoUnitarioCalculado = costoNetoInsumoCompleto / 1000;
             } else {
@@ -853,13 +877,11 @@ function calcularCostoIngredientesReceta(receta) {
             totalMateriaPrimaReceta += costoUnitarioCalculado * ingrediente.cantidadReceta;
         }
     });
-
     return totalMateriaPrimaReceta;
 }
 
-// Suma el costoTotal de los empleados de tipo "Directo" (personal de producción)
-// y lo divide entre los minutos laborales del mes, para obtener cuánto cuesta cada minuto de mano de obra.
-// Usa la misma convención de 240 horas/mes que ya aplica agregarEmpleado() para calcular la hora normal.
+/**\n * Calcula el costo de mano de obra directo por minuto.\n * Suma `costoTotal` de empleados directos y divide por minutos laborales mensuales.\n * @returns {number} Costo de mano de obra por minuto.\n */
+
 function obtenerCostoManoObraPorMinuto() {
     let totalCostoDirecto = 0;
     for (let i = 0; i < listaEmpleados.length; i++) {
@@ -871,14 +893,63 @@ function obtenerCostoManoObraPorMinuto() {
     return totalCostoDirecto / minutosLaboralesMes;
 }
 
-// Calcula cuánto cuesta la mano de obra de una receta específica, según su tiempo de preparación.
-// El tiempo se edita desde el formulario de edición de receta que ya existe (receta_tiempo).
+/**\n * Calcula el costo de mano de obra para una receta específica.\n * Multiplica el costo por minuto por el tiempo de preparación de la receta.\n * @param {object} receta - Objeto de receta con `tiempoPreparacion`.\n * @returns {number} Costo de mano de obra de la receta.\n */
+
 function calcularCostoManoObraReceta(receta) {
     let costoPorMinuto = obtenerCostoManoObraPorMinuto();
     return costoPorMinuto * receta.tiempoPreparacion;
 }
 
-// Genera dinámicamente las tarjetas HTML de cada receta con sus costos calculados
+// Activa o desactiva el modo edición de una receta y redibuja
+/**\n * Alterna el modo de edición para una receta en pantalla.\n * Activa o desactiva el estado de edición y vuelve a renderizar la vista.\n * @param {number} rIndex - Índice de la receta en `recetasBase`.\n * @returns {void}\n */
+function toggleModoEdicionReceta(rIndex) {
+    if (recetasEnModoEdicion[rIndex]) {
+        delete recetasEnModoEdicion[rIndex];
+    } else {
+        recetasEnModoEdicion[rIndex] = true;
+    }
+    actualizarPantallaRecetas();
+}
+
+// Guarda todos los cambios editados en la tabla de una receta y sale del modo edición
+/**\n * Guarda los cambios de edición masiva de una receta.\n * Actualiza tiempo, porciones y cada ingrediente editado antes de recargar la vista.\n * @param {number} rIndex - Índice de la receta editada.\n * @returns {void}\n */
+function guardarCambiosMasivosReceta(rIndex) {
+    let receta = recetasBase[rIndex];
+
+    // Guardar tiempo y porciones del encabezado
+    let inputTiempo = document.getElementById("edit_tiempo_" + rIndex);
+    let inputPorciones = document.getElementById("edit_porciones_" + rIndex);
+
+    if (inputTiempo) {
+        let nuevoTiempo = parseInt(inputTiempo.value);
+        if (!isNaN(nuevoTiempo) && nuevoTiempo > 0) receta.tiempoPreparacion = nuevoTiempo;
+    }
+    if (inputPorciones) {
+        let nuevasPorciones = parseInt(inputPorciones.value);
+        if (!isNaN(nuevasPorciones) && nuevasPorciones > 0) receta.numeroPorciones = nuevasPorciones;
+    }
+
+    // Guardar cantidad y unidad de cada ingrediente
+    receta.ingredientes.forEach(function (ingrediente, iIndex) {
+        let inputCantidad = document.getElementById("edit_cantidad_" + rIndex + "_" + iIndex);
+        let inputUnidad = document.getElementById("edit_unidad_" + rIndex + "_" + iIndex);
+
+        if (inputCantidad) {
+            let nuevaCantidad = parseFloat(inputCantidad.value);
+            if (!isNaN(nuevaCantidad) && nuevaCantidad > 0) ingrediente.cantidadReceta = nuevaCantidad;
+        }
+        if (inputUnidad) {
+            let nuevaUnidad = inputUnidad.value.trim();
+            if (nuevaUnidad !== "") ingrediente.unidadReceta = nuevaUnidad;
+        }
+    });
+
+    delete recetasEnModoEdicion[rIndex];
+    actualizarPantallaRecetas();
+}
+
+/**\n * Renderiza todas las recetas dinámicamente en el DOM.\n * Muestra inputs e información de costos dependiendo del modo edición.\n * @returns {void}\n */
+
 function actualizarPantallaRecetas() {
     let contenedor = document.getElementById("contenedor_recetas_dinamicas");
     if (!contenedor) return;
@@ -886,24 +957,34 @@ function actualizarPantallaRecetas() {
     contenedor.innerHTML = "";
 
     recetasBase.forEach(function (receta, rIndex) {
+        let enEdicion = !!recetasEnModoEdicion[rIndex];
+
+        // Cabecera: tiempo y porciones â€” texto o input según modo
+        let campoCabecera = enEdicion
+            ? `<strong>Tiempo prep.:</strong> 
+               <input type="number" id="edit_tiempo_${rIndex}" value="${receta.tiempoPreparacion}" class="campo-control input-50 input-center"> min 
+               &nbsp;|&nbsp; <strong>Porciones:</strong> 
+               <input type="number" id="edit_porciones_${rIndex}" value="${receta.numeroPorciones}" class="campo-control input-45 input-center">`
+            : `<strong>Tiempo prep.:</strong> ${receta.tiempoPreparacion} min | <strong>Porciones (Tazas):</strong> ${receta.numeroPorciones}`;
+
         let tablaHTML = `
-            <div class="receta-card" style="background: var(--bg-tarjetas); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
-                    <h3 style="color: var(--rosa-marca); font-size: 1.3rem; text-transform: uppercase; margin: 0;">${receta.nombreReceta}</h3>
-                    <div style="background: rgba(56, 189, 248, 0.1); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; color: var(--celeste-tech);">
-                        <strong>Tiempo prep.:</strong> ${receta.tiempoPreparacion} min | <strong>Porciones (Tazas):</strong> ${receta.numeroPorciones}
+            <div class="receta-card">
+                <div class="receta-card-header">
+                    <h3 class="receta-card-title">${receta.nombreReceta}</h3>
+                    <div class="receta-card-badge">
+                        ${campoCabecera}
                     </div>
                 </div>
-                <table style="width: 100%; border-collapse: collapse; text-align: left; margin-top: 1rem;">
-                    <thead style="background: rgba(56, 189, 248, 0.1); color: var(--celeste-tech);">
+                <table class="tabla-receta">
+                    <thead>
                         <tr>
-                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 40px;">#</th>
-                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Ingrediente / Insumo Base</th>
-                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 110px; text-align: center;">Cantidad</th>
-                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 110px;">Unidad</th>
-                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 130px; text-align: right;">Costo/Ud ($)</th>
-                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 130px; text-align: right;">Subtotal ($)</th>
-                            <th style="padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 120px; text-align: center;">Acción</th>
+                            <th class="th-num">#</th>
+                            <th>Ingrediente / Insumo Base</th>
+                            <th class="text-center">Cantidad</th>
+                            <th>Unidad</th>
+                            <th class="text-right">Costo/Ud ($)</th>
+                            <th class="text-right">Subtotal ($)</th>
+                            ${enEdicion ? `<th class="text-center">Quitar</th>` : ""}
                         </tr>
                     </thead>
                     <tbody>
@@ -926,76 +1007,104 @@ function actualizarPantallaRecetas() {
                 subtotalCalculado = costoUnitarioCalculado * ingrediente.cantidadReceta;
             }
 
+            // Celdas de cantidad y unidad: inputs en edición, texto en vista normal
+            let celdaCantidad = enEdicion
+                ? `<input type="number" step="0.01" id="edit_cantidad_${rIndex}_${iIndex}" value="${ingrediente.cantidadReceta}" class="campo-control input-80 input-center input-bold">`
+                : `${ingrediente.cantidadReceta.toFixed(2)}`;
+
+            let celdaUnidad = enEdicion
+                ? `<input type="text" id="edit_unidad_${rIndex}_${iIndex}" value="${ingrediente.unidadReceta}" class="campo-control input-90 input-italic">`
+                : `${ingrediente.unidadReceta}`;
+
+            let celdaEliminar = enEdicion
+                ? `<td class="text-center">
+                       <button onclick="eliminarIngredienteDeReceta(${rIndex}, ${iIndex})" 
+                               title="Quitar ingrediente" class="btn-eliminar-receta">âœ•</button>
+                   </td>`
+                : "";
+
             tablaHTML += `
                 <tr>
-                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--texto-gris);">${iIndex + 1}</td>
-                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: white; font-weight: 500;">${ingrediente.buscarNombre}</td>
-                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; color: var(--celeste-tech); font-weight: bold;">${ingrediente.cantidadReceta.toFixed(2)}</td>
-                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--texto-gris); font-style: italic;">${ingrediente.unidadReceta}</td>
-                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: var(--texto-gris);">$${costoUnitarioCalculado.toFixed(4)}</td>
-                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; color: white; font-weight: 500;">$${subtotalCalculado.toFixed(4)}</td>
-                    <td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; white-space: nowrap;">
-                        <button onclick="cargarIngredienteParaEditar(${rIndex}, ${iIndex})" style="background: transparent; border: 1px solid var(--rosa-marca); color: var(--rosa-marca); padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold;">Editar</button>
-                        <button onclick="eliminarIngredienteDeReceta(${rIndex}, ${iIndex})" title="Quitar este ingrediente de la receta" style="background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; margin-left: 0.3rem;">✕</button>
-                    </td>
+                    <td class="td-muted text-center">${iIndex + 1}</td>
+                    <td class="td-strong">${ingrediente.buscarNombre}</td>
+                    <td class="td-highlight text-center">${celdaCantidad}</td>
+                    <td class="td-muted text-right">${celdaUnidad}</td>
+                    <td class="td-muted text-right">$${costoUnitarioCalculado.toFixed(4)}</td>
+                    <td class="td-strong text-right">$${subtotalCalculado.toFixed(4)}</td>
+                    ${celdaEliminar}
                 </tr>
             `;
         });
 
-        // Costo de ingredientes (función reutilizable) y costo de mano de obra según el tiempo de preparación
         let totalMateriaPrimaReceta = calcularCostoIngredientesReceta(receta);
         let costoManoObraReceta = calcularCostoManoObraReceta(receta);
         let costoTotalProduccionReceta = totalMateriaPrimaReceta + costoManoObraReceta;
 
+        // Colspan dinámico: 7 columnas en edición, 6 en vista normal
+        let colspanTotales = enEdicion ? 6 : 5;
+
         tablaHTML += `
                     </tbody>
                     <tfoot>
-                        <tr style="background: rgba(16, 185, 129, 0.05);">
-                            <td colspan="5" style="padding: 0.8rem; text-align: right; font-weight: bold; color: #10b981; text-transform: uppercase;">Total Costo Ingredientes:</td>
-                            <td colspan="2" style="padding: 0.8rem; text-align: left; padding-left: 2.5rem; font-weight: bold; color: #10b981; font-size: 1.1rem;">$${totalMateriaPrimaReceta.toFixed(4)}</td>
+                        <tr class="row-total-receta">
+                            <td colspan="${colspanTotales}" class="td-footer-label">Total Costo Ingredientes:</td>
+                            <td class="td-footer-value">$${totalMateriaPrimaReceta.toFixed(4)}</td>
                         </tr>
-                        <tr style="background: rgba(56, 189, 248, 0.05);">
-                            <td colspan="5" style="padding: 0.8rem; text-align: right; font-weight: bold; color: var(--celeste-tech); text-transform: uppercase;">Costo Mano de Obra (${receta.tiempoPreparacion} min):</td>
-                            <td colspan="2" style="padding: 0.8rem; text-align: left; padding-left: 2.5rem; font-weight: bold; color: var(--celeste-tech); font-size: 1.1rem;">$${costoManoObraReceta.toFixed(4)}</td>
+                        <tr class="row-mano-obra">
+                            <td colspan="${colspanTotales}" class="td-footer-label">Costo Mano de Obra (${receta.tiempoPreparacion} min):</td>
+                            <td class="td-footer-value">$${costoManoObraReceta.toFixed(4)}</td>
                         </tr>
-                        <tr style="background: rgba(232, 66, 124, 0.08);">
-                            <td colspan="5" style="padding: 0.8rem; text-align: right; font-weight: bold; color: var(--rosa-marca); text-transform: uppercase;">Costo Total de Producción:</td>
-                            <td colspan="2" style="padding: 0.8rem; text-align: left; padding-left: 2.5rem; font-weight: bold; color: var(--rosa-marca); font-size: 1.15rem;">$${costoTotalProduccionReceta.toFixed(4)}</td>
+                        <tr class="row-total-produccion">
+                            <td colspan="${colspanTotales}" class="td-footer-label">Costo Total de Producción:</td>
+                            <td class="td-footer-value">$${costoTotalProduccionReceta.toFixed(4)}</td>
                         </tr>
                     </tfoot>
                 </table>
 
-                <div style="margin-top: 1rem;">
-                    <button onclick="mostrarFormAgregarIngrediente(${rIndex})" style="background: transparent; border: 1px dashed var(--celeste-tech); color: var(--celeste-tech); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">+ Agregar Ingrediente a esta receta</button>
+                <div class="acciones-receta">
+                    ${enEdicion
+                        ? `<button onclick="guardarCambiosMasivosReceta(${rIndex})" class="btn-receta btn-receta-primary">
+                               ðŸ’¾ Guardar Cambios
+                           </button>
+                           <button onclick="toggleModoEdicionReceta(${rIndex})" class="btn-receta btn-receta-danger">
+                               âœ• Cancelar
+                           </button>`
+                        : `<button onclick="toggleModoEdicionReceta(${rIndex})" class="btn-receta btn-receta-outline">
+                               âœï¸ Editar Lista
+                           </button>`
+                    }
+                    <button onclick="mostrarFormAgregarIngrediente(${rIndex})" class="btn-dashed">
+                        + Agregar Ingrediente a esta receta
+                    </button>
+                </div>
 
-                    <div id="form_agregar_ing_${rIndex}" style="display: none; margin-top: 1rem; background: rgba(255,255,255,0.03); border-radius: 8px; padding: 1rem;">
-                        <div class="grid-formulario">
-                            <div>
-                                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Insumo:</label>
-                                <select id="nuevo_ing_nombre_${rIndex}" class="campo-control">
-                                    ${generarOpcionesInsumosHTML()}
-                                </select>
-                            </div>
-                            <div>
-                                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Cantidad en la receta:</label>
-                                <input type="number" step="0.01" id="nuevo_ing_cantidad_${rIndex}" placeholder="Ej: 15" class="campo-control">
-                            </div>
-                            <div>
-                                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">Unidad en la receta:</label>
-                                <input type="text" id="nuevo_ing_unidad_${rIndex}" placeholder="gramos, ml, unidad" class="campo-control">
-                            </div>
-                            <div>
-                                <label style="display:block; font-size:0.85rem; color:var(--texto-gris); margin-bottom:0.4rem;">¿Requiere conversión?</label>
-                                <select id="nuevo_ing_conversion_${rIndex}" class="campo-control">
-                                    <option value="true">Sí (insumo en kg o litros)</option>
-                                    <option value="false">No (insumo por unidad)</option>
-                                </select>
-                            </div>
+                <div id="form_agregar_ing_${rIndex}" class="form-agregar-ing hidden">
+                    <div class="grid-formulario">
+                        <div>
+                            <label class="form-label">Insumo:</label>
+                            <select id="nuevo_ing_nombre_${rIndex}" class="campo-control">
+                                ${generarOpcionesInsumosHTML()}
+                            </select>
                         </div>
-                        <div class="botonera-formulario" style="margin-top: 1rem;">
-                            <button onclick="ocultarFormAgregarIngrediente(${rIndex})" class="btn-formulario cancelar">Cancelar</button>
-                            <button onclick="confirmarAgregarIngrediente(${rIndex})" class="btn-formulario guardar">Agregar a la Receta</button>
+                        <div>
+                            <label class="form-label">Cantidad en la receta:</label>
+                            <input type="number" step="0.01" id="nuevo_ing_cantidad_${rIndex}" placeholder="Ej: 15" class="campo-control">
                         </div>
+                        <div>
+                            <label class="form-label">Unidad en la receta:</label>
+                            <input type="text" id="nuevo_ing_unidad_${rIndex}" placeholder="gramos, ml, unidad" class="campo-control">
+                        </div>
+                        <div>
+                            <label class="form-label">Â¿Requiere conversión?</label>
+                            <select id="nuevo_ing_conversion_${rIndex}" class="campo-control">
+                                <option value="true">Sí (insumo en kg o litros)</option>
+                                <option value="false">No (insumo por unidad)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="botonera-formulario mt-1">
+                        <button onclick="ocultarFormAgregarIngrediente(${rIndex})" class="btn-formulario cancelar">Cancelar</button>
+                        <button onclick="confirmarAgregarIngrediente(${rIndex})" class="btn-formulario guardar">Agregar a la Receta</button>
                     </div>
                 </div>
             </div>
@@ -1004,61 +1113,11 @@ function actualizarPantallaRecetas() {
         contenedor.innerHTML += tablaHTML;
     });
 }
-// Carga los datos de un ingrediente específico en el formulario de edición de receta
-function cargarIngredienteParaEditar(recetaIndex, ingredienteIndex) {
-    let receta = recetasBase[recetaIndex];
-    let ingrediente = receta.ingredientes[ingredienteIndex];
 
-    mostrarTextoEnCaja("receta_ingrediente_nombre", ingrediente.buscarNombre);
-    mostrarTextoEnCaja("receta_ingrediente_cantidad", ingrediente.cantidadReceta);
-    mostrarTextoEnCaja("receta_ingrediente_unidad", ingrediente.unidadReceta);
-    mostrarTextoEnCaja("receta_tiempo", receta.tiempoPreparacion);
-    mostrarTextoEnCaja("receta_porciones", receta.numeroPorciones);
+// â”€â”€ Helpers del formulario de agregar ingrediente â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-    document.getElementById("receta_id_editar").value = recetaIndex;
-    document.getElementById("ingrediente_id_editar").value = ingredienteIndex;
+/**\n * Genera el HTML de opciones para el select de insumos disponibles.\n * Recorre `materiasPrimas` y construye un listado de `<option>`.\n * @returns {string} HTML para usar dentro de un elemento <select>.\n */
 
-    document.getElementById("formulario_edicion_receta").style.display = "block";
-    document.getElementById("receta_formulario_titulo").innerText = "Modificando Insumo de la Receta: " + receta.nombreReceta;
-    document.getElementById("formulario_edicion_receta").scrollIntoView({ behavior: 'smooth' });
-}
-
-// Valida y guarda los cambios de cantidad, unidad, tiempo y porciones de la receta editada
-function guardarCambiosParametrosReceta() {
-    let rIndex = parseInt(document.getElementById("receta_id_editar").value);
-    let iIndex = parseInt(document.getElementById("ingrediente_id_editar").value);
-
-    let nuevaCantidad = recuperarFloat("receta_ingrediente_cantidad");
-    let nuevaUnidad = recuperarTexto("receta_ingrediente_unidad");
-    let nuevoTiempo = recuperarInt("receta_tiempo");
-    let nuevasPorciones = recuperarInt("receta_porciones");
-
-    if (isNaN(nuevaCantidad) || nuevaUnidad === "" || isNaN(nuevoTiempo) || isNaN(nuevasPorciones)) {
-        alert("Por favor, rellene todos los campos con valores válidos.");
-        return;
-    }
-
-    recetasBase[rIndex].tiempoPreparacion = nuevoTiempo;
-    recetasBase[rIndex].numeroPorciones = nuevasPorciones;
-    recetasBase[rIndex].ingredientes[iIndex].cantidadReceta = nuevaCantidad;
-    recetasBase[rIndex].ingredientes[iIndex].unidadReceta = nuevaUnidad;
-
-    cancelarEdicionParametrosReceta();
-    actualizarPantallaRecetas();
-}
-
-// Oculta el formulario de edición de receta y limpia sus campos
-function cancelarEdicionParametrosReceta() {
-    document.getElementById("receta_id_editar").value = "-1";
-    document.getElementById("ingrediente_id_editar").value = "-1";
-    document.getElementById("formulario_edicion_receta").style.display = "none";
-    mostrarTextoEnCaja("receta_ingrediente_nombre", "");
-    mostrarTextoEnCaja("receta_ingrediente_cantidad", "");
-    mostrarTextoEnCaja("receta_ingrediente_unidad", "");
-    mostrarTextoEnCaja("receta_tiempo", "");
-    mostrarTextoEnCaja("receta_porciones", "");
-}
-// Genera las opciones <option> del selector de insumos a partir de materiasPrimas
 function generarOpcionesInsumosHTML() {
     if (typeof materiasPrimas === "undefined" || materiasPrimas.length === 0) {
         return `<option value="">-- No hay insumos registrados --</option>`;
@@ -1070,17 +1129,21 @@ function generarOpcionesInsumosHTML() {
     return opciones;
 }
 
-// ---------- EDICIÓN DINÁMICA: agregar/quitar ingredientes en una receta existente ----------
+/**\n * Muestra el formulario para agregar un nuevo ingrediente a una receta.\n * @param {number} rIndex - Índice de receta a la que se agrega el ingrediente.\n * @returns {void}\n */
 
 function mostrarFormAgregarIngrediente(rIndex) {
     let formulario = document.getElementById("form_agregar_ing_" + rIndex);
     if (formulario) formulario.style.display = "block";
 }
 
+/**\n * Oculta el formulario de nuevo ingrediente para una receta.\n * @param {number} rIndex - Índice de la receta correspondiente.\n * @returns {void}\n */
+
 function ocultarFormAgregarIngrediente(rIndex) {
     let formulario = document.getElementById("form_agregar_ing_" + rIndex);
     if (formulario) formulario.style.display = "none";
 }
+
+/**\n * Valida y agrega un nuevo ingrediente a la receta seleccionada.\n * Inserta un objeto con `buscarNombre`, cantidad, unidad y conversión.\n * @param {number} rIndex - Índice de la receta destino.\n * @returns {void}\n */
 
 function confirmarAgregarIngrediente(rIndex) {
     let nombreInsumo = recuperarTexto("nuevo_ing_nombre_" + rIndex);
@@ -1103,28 +1166,31 @@ function confirmarAgregarIngrediente(rIndex) {
     actualizarPantallaRecetas();
 }
 
+/**\n * Elimina un ingrediente de una receta tras confirmar la acción.\n * @param {number} rIndex - Índice de la receta.\n * @param {number} iIndex - Índice del ingrediente dentro de la receta.\n * @returns {void}\n */
+
 function eliminarIngredienteDeReceta(rIndex, iIndex) {
     let receta = recetasBase[rIndex];
     let nombreIngrediente = receta.ingredientes[iIndex].buscarNombre;
-
-    let confirmado = confirm("¿Seguro que deseas quitar \"" + nombreIngrediente + "\" de la receta \"" + receta.nombreReceta + "\"?");
+    let confirmado = confirm("Â¿Seguro que deseas quitar \"" + nombreIngrediente + "\" de la receta \"" + receta.nombreReceta + "\"?");
     if (!confirmado) return;
-
     receta.ingredientes.splice(iIndex, 1);
     actualizarPantallaRecetas();
 }
 
-// ---------- CREACIÓN DESDE CERO: dar de alta una receta completamente nueva ----------
+// â”€â”€ Crear receta nueva desde cero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+/**\n * Muestra el formulario para crear una receta desde cero.\n * Inicializa una fila de ingrediente vacía y hace scroll al formulario.\n * @returns {void}\n */
 
 function mostrarFormularioNuevaReceta() {
     let formulario = document.getElementById("formulario_nueva_receta");
     if (!formulario) return;
-
     formulario.style.display = "block";
     document.getElementById("contenedor_filas_nueva_receta").innerHTML = "";
     agregarFilaIngredienteNuevaReceta();
     formulario.scrollIntoView({ behavior: "smooth" });
 }
+
+/**\n * Cancela la creación de una receta nueva y limpia el formulario.\n * @returns {void}\n */
 
 function cancelarNuevaReceta() {
     mostrarTextoEnCaja("nueva_receta_nombre", "");
@@ -1134,51 +1200,51 @@ function cancelarNuevaReceta() {
     document.getElementById("formulario_nueva_receta").style.display = "none";
 }
 
+/**\n * Agrega una nueva fila al formulario de creación de receta.\n * Inserta campos para seleccionar insumo, cantidad, unidad y conversión.\n * @returns {void}\n */
+
 function agregarFilaIngredienteNuevaReceta() {
     let contenedorFilas = document.getElementById("contenedor_filas_nueva_receta");
     if (!contenedorFilas) return;
-
     let filaHTML = `
-        <div class="fila-ingrediente-nueva-receta" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.3fr auto; gap: 0.6rem; align-items: end; margin-bottom: 0.8rem;">
+        <div class="fila-ingrediente-nueva-receta">
             <div>
-                <label style="display:block; font-size:0.78rem; color:var(--texto-gris); margin-bottom:0.3rem;">Insumo:</label>
-                <select class="campo-control fila-ing-select">
-                    ${generarOpcionesInsumosHTML()}
-                </select>
+                <label class="form-label-small">Insumo:</label>
+                <select class="campo-control fila-ing-select">${generarOpcionesInsumosHTML()}</select>
             </div>
             <div>
-                <label style="display:block; font-size:0.78rem; color:var(--texto-gris); margin-bottom:0.3rem;">Cantidad:</label>
+                <label class="form-label-small">Cantidad:</label>
                 <input type="number" step="0.01" class="campo-control fila-ing-cantidad" placeholder="Ej: 10">
             </div>
             <div>
-                <label style="display:block; font-size:0.78rem; color:var(--texto-gris); margin-bottom:0.3rem;">Unidad:</label>
+                <label class="form-label-small">Unidad:</label>
                 <input type="text" class="campo-control fila-ing-unidad" placeholder="gramos, ml, unidad">
             </div>
             <div>
-                <label style="display:block; font-size:0.78rem; color:var(--texto-gris); margin-bottom:0.3rem;">¿Conversión?</label>
+                <label class="form-label-small">Â¿Conversión?</label>
                 <select class="campo-control fila-ing-conversion">
-                    <option value="true">Sí (kg/L → g/ml)</option>
+                    <option value="true">Sí (kg/L â†’ g/ml)</option>
                     <option value="false">No (unidad directa)</option>
                 </select>
             </div>
-            <button onclick="eliminarFilaIngredienteNuevaReceta(this)" title="Quitar esta fila" style="background: transparent; border: 1px solid #ef4444; color: #ef4444; border-radius: 4px; padding: 0.45rem 0.6rem; cursor: pointer;">✕</button>
+            <button onclick="eliminarFilaIngredienteNuevaReceta(this)" title="Quitar esta fila" class="btn-eliminar-receta">âœ•</button>
         </div>
     `;
-
     contenedorFilas.insertAdjacentHTML("beforeend", filaHTML);
 }
+
+/**\n * Elimina una fila de ingrediente del formulario de nueva receta.\n * Evita eliminar la última fila para mantener al menos un ingrediente.\n * @param {HTMLElement} boton - Botón que dispara la eliminación.\n * @returns {void}\n */
 
 function eliminarFilaIngredienteNuevaReceta(boton) {
     let contenedorFilas = document.getElementById("contenedor_filas_nueva_receta");
     let totalFilas = contenedorFilas.querySelectorAll(".fila-ingrediente-nueva-receta").length;
-
     if (totalFilas <= 1) {
         alert("La receta debe tener al menos un ingrediente.");
         return;
     }
-
     boton.closest(".fila-ingrediente-nueva-receta").remove();
 }
+
+/**\n * Valida y guarda una nueva receta creada desde cero.\n * Construye el objeto de receta con sus ingredientes y lo agrega a `recetasBase`.\n * @returns {void}\n */
 
 function guardarNuevaRecetaDesdeCero() {
     let nombre = recuperarTexto("nueva_receta_nombre").trim();
@@ -1204,13 +1270,7 @@ function guardarNuevaRecetaDesdeCero() {
             alert("Revisa la fila de ingrediente #" + (i + 1) + ": selecciona el insumo y completa cantidad y unidad.");
             return;
         }
-
-        nuevosIngredientes.push({
-            buscarNombre: nombreInsumo,
-            cantidadReceta: cantidad,
-            unidadReceta: unidad,
-            esConversion: esConversion
-        });
+        nuevosIngredientes.push({ buscarNombre: nombreInsumo, cantidadReceta: cantidad, unidadReceta: unidad, esConversion: esConversion });
     }
 
     if (nuevosIngredientes.length === 0) {
@@ -1235,13 +1295,14 @@ function guardarNuevaRecetaDesdeCero() {
 }
 
 // ============================================================
-// SECCIÓN: GANANCIAS
+// SECCIÃ“N: GANANCIAS
 // ============================================================
 
 // Arreglo donde se almacenan los escenarios de ganancia creados por el usuario
 let escenariosganancias = [];
 
 // Sincroniza los sueldos de personal y retorna la suma total de todos los costos fijos
+/**\n * Actualiza los costos fijos de personal y devuelve el total mensual.\n * Sincroniza los valores automáticos de barista, cajera y administrador.\n * @returns {number} Total mensual de costos fijos.\n */
 function obtenerTotalCostosFijosActual() {
     let total = 0;
     for (let i = 0; i < costosFijos.length; i++) {
@@ -1258,6 +1319,7 @@ function obtenerTotalCostosFijosActual() {
 }
 
 // Sincroniza los rubros automáticos y retorna la suma total de todos los costos variables
+/**\n * Actualiza los rubros variables basados en materia prima y devuelve el total.\n * Calcula materia prima directa, indirecta y merma en dinero.\n * @returns {number} Total mensual de costos variables.\n */
 function obtenerTotalCostosVariablesActual() {
     let totalesMP = calcularTotalesMateriaPrima();
     let totalMerma = 0;
@@ -1276,6 +1338,7 @@ function obtenerTotalCostosVariablesActual() {
 }
 
 // Calcula el precio sugerido de venta a partir de un costo de producción y un margen deseado (%)
+/**\n * Calcula el precio de venta sugerido según costo de producción y margen.\n * Aplica la fórmula `precio = costo / (1 - margen/100)`.\n * @param {number} costoProduccion - Costo de producción total.\n * @param {number} margenPorcentaje - Margen deseado en porcentaje.\n * @returns {number} Precio sugerido o 0 si el margen no es válido.\n */
 function calcularPrecioSugerido(costoProduccion, margenPorcentaje) {
     if (margenPorcentaje >= 100 || margenPorcentaje < 0) return 0;
     return costoProduccion / (1 - (margenPorcentaje / 100));
@@ -1286,6 +1349,7 @@ function calcularPrecioSugerido(costoProduccion, margenPorcentaje) {
 let margenesPorReceta = {};
 
 // Devuelve el % de margen guardado para una receta, o 30% si todavía no se ha definido uno
+/**\n * Devuelve el margen guardado para una receta o 30% por defecto.\n * @param {number} idReceta - Identificador de la receta.\n * @returns {number} Margen almacenado o valor por defecto.\n */
 function obtenerMargenGuardado(idReceta) {
     if (margenesPorReceta.hasOwnProperty(idReceta)) {
         return margenesPorReceta[idReceta];
@@ -1294,6 +1358,7 @@ function obtenerMargenGuardado(idReceta) {
 }
 
 // Se llama al editar el input de % Margen de una fila de la tabla: guarda el nuevo valor y recalcula esa fila
+/**\n * Actualiza el margen de una receta y recalcula su precio sugerido.\n * Guarda el valor ingresado y vuelve a renderizar el precio en la tabla.\n * @param {number} idReceta - Identificador de la receta.\n * @returns {void}\n */
 function actualizarMargenRecetaEnTabla(idReceta) {
     let inputMargen = document.getElementById("margen_receta_" + idReceta);
     let margenIngresado = recuperarFloatSeguro("margen_receta_" + idReceta);
@@ -1312,6 +1377,7 @@ function actualizarMargenRecetaEnTabla(idReceta) {
 }
 
 // Dibuja la tabla de precio sugerido con una fila automática por cada receta de recetasBase
+/**\n * Renderiza la tabla con el precio sugerido de cada receta.\n * Para cada receta calcula costo de ingredientes, mano de obra y margen.\n * @returns {void}\n */
 function renderizarTablaPrecioSugerido() {
     let cuerpo = document.getElementById("tabla_precio_sugerido_recetas");
     if (!cuerpo) return;
@@ -1321,7 +1387,7 @@ function renderizarTablaPrecioSugerido() {
     if (recetasBase.length === 0) {
         cuerpo.innerHTML = `
             <tr>
-                <td colspan="7" class="text-center text-gris" style="padding:2rem;">
+                <td colspan="7" class="text-center text-gris table-empty-cell">
                     Aún no hay recetas registradas en "Recetas y Costos".
                 </td>
             </tr>`;
@@ -1341,10 +1407,10 @@ function renderizarTablaPrecioSugerido() {
                 <td class="text-blanco font-semibold">${receta.nombreReceta}</td>
                 <td class="text-center text-gris">${convertirMoneda(costoIngredientes)}</td>
                 <td class="text-center text-gris">${convertirMoneda(costoManoObra)}</td>
-                <td class="text-center font-semibold" style="color:#10b981;">${convertirMoneda(costoProduccion)}</td>
+                <td class="text-center font-semibold text-success">${convertirMoneda(costoProduccion)}</td>
                 <td class="text-center">
                     <input type="number" step="0.01" id="margen_receta_${receta.idReceta}" value="${margenActual}"
-                        class="campo-control" style="width:80px; text-align:center; padding:0.3rem;"
+                        class="campo-control input-small-center"
                         oninput="actualizarMargenRecetaEnTabla(${receta.idReceta})">
                     %
                 </td>
@@ -1354,6 +1420,7 @@ function renderizarTablaPrecioSugerido() {
 }
 
 // Actualiza las tarjetas de resumen de costos y recarga las tablas de la sección Ganancias
+/**\n * Actualiza las tarjetas de costos de la sección Ganancias y recarga tablas.\n * Obtiene totales fijos y variables, y renderiza precios sugeridos y escenarios.\n * @returns {void}\n */
 function actualizarSeccionGanancias() {
     let totalFijos = obtenerTotalCostosFijosActual();
     let totalVariables = obtenerTotalCostosVariablesActual();
@@ -1371,6 +1438,7 @@ function actualizarSeccionGanancias() {
 }
 
 // Calcula en tiempo real los indicadores del escenario mientras el usuario escribe
+/**\n * Calcula indicadores de ganancias en tiempo real mientras el usuario escribe.\n * Determina ingresos, ganancia bruta, ganancia neta y margen porcentual.\n * @returns {void}\n */
 function previsualizarGanancia() {
     let precio = recuperarFloatSeguro("gan_precio");
     let tazas = recuperarFloatSeguro("gan_tazas");
@@ -1405,6 +1473,7 @@ function previsualizarGanancia() {
 }
 
 // Valida el formulario, calcula los indicadores y guarda el escenario en el arreglo
+/**\n * Guarda un escenario de ganancia con los valores calculados actuales.\n * Calcula ingresos, ganancia bruta, neta y margen antes de almacenar el escenario.\n * @returns {void}\n */
 function guardarEscenarioGanancia() {
     let nombre = recuperarTexto("gan_nombre").trim();
     let precio = recuperarFloatSeguro("gan_precio");
@@ -1434,12 +1503,14 @@ function guardarEscenarioGanancia() {
 }
 
 // Elimina el escenario de ganancia en la posición indicada
+/**\n * Elimina un escenario de la lista de ganancias por su índice.\n * @param {number} indice - Índice del escenario a eliminar.\n * @returns {void}\n */
 function eliminarEscenario(indice) {
     escenariosganancias.splice(indice, 1);
     renderizarTablaEscenarios();
 }
 
 // Dibuja la tabla con todos los escenarios de ganancia guardados
+/**\n * Renderiza la tabla de escenarios de ganancia guardados.\n * Muestra valores con clases de estilo según resultado positivo o negativo.\n * @returns {void}\n */
 function renderizarTablaEscenarios() {
     let cuerpo = document.getElementById("tabla_escenarios_ganancias");
     if (!cuerpo) return;
@@ -1449,7 +1520,7 @@ function renderizarTablaEscenarios() {
     if (escenariosganancias.length === 0) {
         cuerpo.innerHTML = `
             <tr>
-                <td colspan="9" class="text-center text-gris" style="padding:2rem;">
+                <td colspan="9" class="text-center text-gris table-empty-cell">
                     Aún no hay escenarios guardados. Completa el formulario de arriba.
                 </td>
             </tr>`;
@@ -1458,8 +1529,8 @@ function renderizarTablaEscenarios() {
 
     for (let i = 0; i < escenariosganancias.length; i++) {
         let e = escenariosganancias[i];
-        let colorNeta = e.gananciaNeta >= 0 ? "#10b981" : "var(--rosa-marca)";
-        let colorMargen = e.margen >= 0 ? "#10b981" : "var(--rosa-marca)";
+        let claseNeta = e.gananciaNeta >= 0 ? "text-success" : "text-danger";
+        let claseMargen = e.margen >= 0 ? "text-success" : "text-danger";
 
         cuerpo.innerHTML += `
             <tr>
@@ -1468,9 +1539,9 @@ function renderizarTablaEscenarios() {
                 <td class="text-center text-celeste font-semibold">${convertirMoneda(e.precio)}</td>
                 <td class="text-center">${e.tazas}</td>
                 <td class="text-center font-semibold">${convertirMoneda(e.ingresos)}</td>
-                <td class="text-center" style="color:#10b981; font-weight:600;">${convertirMoneda(e.gananciaBruta)}</td>
-                <td class="text-center font-bold" style="color:${colorNeta};">${convertirMoneda(e.gananciaNeta)}</td>
-                <td class="text-center font-bold" style="color:${colorMargen};">${e.margen.toFixed(2)}%</td>
+                <td class="text-center text-success font-semibold">${convertirMoneda(e.gananciaBruta)}</td>
+                <td class="text-center font-bold ${claseNeta}">${convertirMoneda(e.gananciaNeta)}</td>
+                <td class="text-center font-bold ${claseMargen}">${e.margen.toFixed(2)}%</td>
                 <td class="text-center">
                     <button onclick="eliminarEscenario(${i})" class="btn-eliminar-tabla">Eliminar</button>
                 </td>
@@ -1480,13 +1551,14 @@ function renderizarTablaEscenarios() {
 
 
 // ============================================================
-// SECCIÓN: PUNTO DE EQUILIBRIO
+// SECCIÃ“N: PUNTO DE EQUILIBRIO
 // ============================================================
 
 // Arreglo donde se almacenan los escenarios de equilibrio creados por el usuario
 let escenariosEquilibrio = [];
 
 // Actualiza las tarjetas de costos actuales y recarga la tabla de escenarios de equilibrio
+/**\n * Actualiza los totales de la sección Punto de Equilibrio y recarga la tabla.\n * Muestra el total de costos fijos y variables actuales.\n * @returns {void}\n */
 function actualizarSeccionEquilibrio() {
     let totalFijos = obtenerTotalCostosFijosActual();
     let totalVariables = obtenerTotalCostosVariablesActual();
@@ -1503,6 +1575,7 @@ function actualizarSeccionEquilibrio() {
 }
 
 // Calcula en tiempo real el CVu, margen de contribución y punto de equilibrio mientras el usuario escribe
+/**\n * Calcula el punto de equilibrio en tiempo real durante la edición.\n * Usa CVu, margen de contribución y redondea hacia arriba las tazas necesarias.\n * @returns {void}\n */
 function previsualizarEquilibrio() {
     let precio = recuperarFloatSeguro("eq_precio");
     let tazas = recuperarFloatSeguro("eq_tazas_estimadas");
@@ -1540,10 +1613,11 @@ function previsualizarEquilibrio() {
     if (elC) elC.innerText = convertirMoneda(cvu);
     if (elM) { elM.innerText = convertirMoneda(margenContrib); elM.style.color = colorMargen; }
     if (elT) elT.innerText = textoTazas;
-    if (elI) elI.innerText = tazasEquilibrio === Infinity ? "—" : convertirMoneda(ingresosEquil);
+    if (elI) elI.innerText = tazasEquilibrio === Infinity ? "â€”" : convertirMoneda(ingresosEquil);
 }
 
 // Valida el formulario, calcula el punto de equilibrio y guarda el escenario en el arreglo
+/**\n * Guarda un escenario de punto de equilibrio con los datos actuales.\n * Calcula CVu, margen de contribución, tazas e ingresos de equilibrio.\n * @returns {void}\n */
 function guardarEscenarioEquilibrio() {
     let nombre = recuperarTexto("eq_nombre").trim();
     let precio = recuperarFloatSeguro("eq_precio");
@@ -1572,12 +1646,14 @@ function guardarEscenarioEquilibrio() {
 }
 
 // Elimina el escenario de equilibrio en la posición indicada
+/**\n * Elimina un escenario de equilibrio por índice.\n * @param {number} indice - Índice del escenario a eliminar.\n * @returns {void}\n */
 function eliminarEscenarioEquilibrio(indice) {
     escenariosEquilibrio.splice(indice, 1);
     renderizarTablaEquilibrio();
 }
 
 // Dibuja la tabla con todos los escenarios de punto de equilibrio guardados
+/**\n * Renderiza la tabla de escenarios de punto de equilibrio guardados.\n * Convierte valores infinitos en texto legible si el escenario no es viable.\n * @returns {void}\n */
 function renderizarTablaEquilibrio() {
     let cuerpo = document.getElementById("tabla_escenarios_equilibrio");
     if (!cuerpo) return;
@@ -1587,7 +1663,7 @@ function renderizarTablaEquilibrio() {
     if (escenariosEquilibrio.length === 0) {
         cuerpo.innerHTML = `
             <tr>
-                <td colspan="8" class="text-center text-gris" style="padding:2rem;">
+                <td colspan="8" class="text-center text-gris table-empty-cell">
                     Aún no hay escenarios guardados. Completa el formulario de arriba.
                 </td>
             </tr>`;
@@ -1596,9 +1672,9 @@ function renderizarTablaEquilibrio() {
 
     for (let i = 0; i < escenariosEquilibrio.length; i++) {
         let e = escenariosEquilibrio[i];
-        let colorMargen = e.margenContrib >= 0 ? "#10b981" : "var(--rosa-marca)";
+        let claseMargen = e.margenContrib >= 0 ? "text-success" : "text-danger";
         let textoTazas = e.tazasEquil === Infinity ? "No viable" : e.tazasEquil + " tazas";
-        let textoIngresos = e.tazasEquil === Infinity ? "—" : convertirMoneda(e.ingresosEquil);
+        let textoIngresos = e.tazasEquil === Infinity ? "â€”" : convertirMoneda(e.ingresosEquil);
 
         cuerpo.innerHTML += `
             <tr>
@@ -1606,7 +1682,7 @@ function renderizarTablaEquilibrio() {
                 <td class="text-blanco font-semibold">${e.nombre}</td>
                 <td class="text-center text-celeste font-semibold">${convertirMoneda(e.precio)}</td>
                 <td class="text-center text-gris">${convertirMoneda(e.cvu)}</td>
-                <td class="text-center font-bold" style="color:${colorMargen};">${convertirMoneda(e.margenContrib)}</td>
+                <td class="text-center font-bold ${claseMargen}">${convertirMoneda(e.margenContrib)}</td>
                 <td class="text-center font-bold text-rosa">${textoTazas}</td>
                 <td class="text-center font-semibold text-celeste">${textoIngresos}</td>
                 <td class="text-center">
@@ -1615,3 +1691,5 @@ function renderizarTablaEquilibrio() {
             </tr>`;
     }
 }
+
+
