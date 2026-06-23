@@ -640,6 +640,32 @@ const explicacionGananciaHTML = `
         </div>
     </div>
 
+    <!-- TABLA DE PRECIO SUGERIDO POR RECETA (automática, se llena sola desde recetasBase) -->
+    <div style="margin-top: 2rem;">
+        <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">
+            Precio Sugerido por Receta del Menú
+        </h3>
+        <p style="color:var(--texto-gris); font-size:0.85rem; margin-bottom:1rem;">
+            Se calcula automáticamente para cada receta: <strong>Precio Sugerido = Costo de Producción ÷ (1 − % Margen ÷ 100)</strong>. Puedes editar el % Margen de cada receta directamente en la tabla.
+        </p>
+        <div class="contenedor-tabla">
+            <table class="tabla-tech">
+                <thead>
+                    <tr>
+                        <th class="text-center">N°</th>
+                        <th>Receta</th>
+                        <th class="text-center">Costo Ingredientes</th>
+                        <th class="text-center">Costo Mano de Obra</th>
+                        <th class="text-center">Costo de Producción</th>
+                        <th class="text-center">% Margen</th>
+                        <th class="text-center">Precio Sugerido</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla_precio_sugerido_recetas"></tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- TABLA DE ESCENARIOS -->
     <div style="margin-top: 2rem;">
         <h3 style="color: var(--celeste-tech); font-size: 1.1rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.07);">

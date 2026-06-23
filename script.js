@@ -1275,7 +1275,85 @@ function obtenerTotalCostosVariablesActual() {
     return total;
 }
 
-// Actualiza las tarjetas de resumen de costos y recarga la tabla de escenarios
+// Calcula el precio sugerido de venta a partir de un costo de producción y un margen deseado (%)
+function calcularPrecioSugerido(costoProduccion, margenPorcentaje) {
+    if (margenPorcentaje >= 100 || margenPorcentaje < 0) return 0;
+    return costoProduccion / (1 - (margenPorcentaje / 100));
+}
+
+// Guarda el % de margen elegido para cada receta (clave: idReceta), para que no se pierda al repintar la tabla.
+// Empieza en 30% por defecto para toda receta que aún no tenga un margen guardado.
+let margenesPorReceta = {};
+
+// Devuelve el % de margen guardado para una receta, o 30% si todavía no se ha definido uno
+function obtenerMargenGuardado(idReceta) {
+    if (margenesPorReceta.hasOwnProperty(idReceta)) {
+        return margenesPorReceta[idReceta];
+    }
+    return 30;
+}
+
+// Se llama al editar el input de % Margen de una fila de la tabla: guarda el nuevo valor y recalcula esa fila
+function actualizarMargenRecetaEnTabla(idReceta) {
+    let inputMargen = document.getElementById("margen_receta_" + idReceta);
+    let margenIngresado = recuperarFloatSeguro("margen_receta_" + idReceta);
+    margenesPorReceta[idReceta] = margenIngresado;
+
+    let receta = recetasBase.find(function (r) { return r.idReceta === idReceta; });
+    if (!receta) return;
+
+    let costoIngredientes = calcularCostoIngredientesReceta(receta);
+    let costoManoObra = calcularCostoManoObraReceta(receta);
+    let costoProduccion = costoIngredientes + costoManoObra;
+    let precioSugerido = calcularPrecioSugerido(costoProduccion, margenIngresado);
+
+    let elPrecio = document.getElementById("precio_sugerido_" + idReceta);
+    if (elPrecio) elPrecio.innerText = convertirMoneda(precioSugerido);
+}
+
+// Dibuja la tabla de precio sugerido con una fila automática por cada receta de recetasBase
+function renderizarTablaPrecioSugerido() {
+    let cuerpo = document.getElementById("tabla_precio_sugerido_recetas");
+    if (!cuerpo) return;
+
+    cuerpo.innerHTML = "";
+
+    if (recetasBase.length === 0) {
+        cuerpo.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center text-gris" style="padding:2rem;">
+                    Aún no hay recetas registradas en "Recetas y Costos".
+                </td>
+            </tr>`;
+        return;
+    }
+
+    recetasBase.forEach(function (receta) {
+        let costoIngredientes = calcularCostoIngredientesReceta(receta);
+        let costoManoObra = calcularCostoManoObraReceta(receta);
+        let costoProduccion = costoIngredientes + costoManoObra;
+        let margenActual = obtenerMargenGuardado(receta.idReceta);
+        let precioSugerido = calcularPrecioSugerido(costoProduccion, margenActual);
+
+        cuerpo.innerHTML += `
+            <tr>
+                <td class="text-gris text-center">${receta.idReceta + 1}</td>
+                <td class="text-blanco font-semibold">${receta.nombreReceta}</td>
+                <td class="text-center text-gris">${convertirMoneda(costoIngredientes)}</td>
+                <td class="text-center text-gris">${convertirMoneda(costoManoObra)}</td>
+                <td class="text-center font-semibold" style="color:#10b981;">${convertirMoneda(costoProduccion)}</td>
+                <td class="text-center">
+                    <input type="number" step="0.01" id="margen_receta_${receta.idReceta}" value="${margenActual}"
+                        class="campo-control" style="width:80px; text-align:center; padding:0.3rem;"
+                        oninput="actualizarMargenRecetaEnTabla(${receta.idReceta})">
+                    %
+                </td>
+                <td id="precio_sugerido_${receta.idReceta}" class="text-center font-bold text-rosa">${convertirMoneda(precioSugerido)}</td>
+            </tr>`;
+    });
+}
+
+// Actualiza las tarjetas de resumen de costos y recarga las tablas de la sección Ganancias
 function actualizarSeccionGanancias() {
     let totalFijos = obtenerTotalCostosFijosActual();
     let totalVariables = obtenerTotalCostosVariablesActual();
@@ -1288,6 +1366,7 @@ function actualizarSeccionGanancias() {
     if (elV) elV.innerText = convertirMoneda(totalVariables);
     if (elT) elT.innerText = convertirMoneda(totalGeneral);
 
+    renderizarTablaPrecioSugerido();
     renderizarTablaEscenarios();
 }
 
