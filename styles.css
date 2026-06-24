@@ -1,38 +1,38 @@
-/* Variables de color (se permite cambiar todo desde aquí*/
+/* ==========================================================================
+   CSS Variables
+   ========================================================================== */
 :root {
-    /* Colores de Fondo y Texto */
     --bg-principal: #0f172a;
-    /* fondo general */
     --bg-tarjetas: #1e293b;
-    /* encabezado y botones */
     --texto-blanco: #f8fafc;
-    /* títulos y textos principales */
     --texto-gris: #94a3b8;
-    /* textos secundarios o botones apagados */
-
-    /* Colores de Identidad */
     --rosa-marca: #e8427c;
     --rosa-claro: #f472b6;
-    /* logotipo */
     --celeste-tech: #38bdf8;
-    /* enfoques */
-
-    /* Fuentes y animaciones */
-    --tipografia: 'Segoe UI', Roboto, sans-serif;
-    --transicion: all 0.3s ease;
-    /* Transición fluida para efectos visuales */
     --naranja-merma: #f59e0b;
+    --tipografia: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    --transicion: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/*Evita margenes erroneas en el navagador*/
-
+/* ==========================================================================
+   Reset & Base
+   ========================================================================== */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
-    /* Mantiene el tamaño correcto de las cajas */
     margin: 0;
     padding: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 body {
@@ -47,155 +47,129 @@ body {
     align-items: center;
 }
 
-/* Encabezado */
-/* Encabezado compactado en una sola línea horizontal */
-/* Encabezado horizontal con mayor presencia y altura vertical */
+/* ==========================================================================
+   Header
+   ========================================================================== */
 header {
     width: 100%;
     max-width: 1000px;
     background-color: var(--bg-tarjetas);
-    padding: 2.2rem 2.5rem;
-    /* Incrementamos de 1.2rem a 2.2rem el espacio arriba y abajo */
+    padding: 1.6rem 2.2rem;
     border-radius: 16px;
     margin-bottom: 2.5rem;
-    /* Mayor separación hacia abajo con el menú de botones */
-
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
-
-    /* Sombra ligeramente más suave y expandida para acompañar el nuevo tamaño */
-    box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.6);
+    border-top: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--rosa-marca), var(--celeste-tech), var(--rosa-claro)) 1;
+    border-image-slice: 1;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 12px 40px -8px rgba(0,0,0,0.5);
 }
 
-/* --- Sección de logotipo compacta con logo maximizado --- */
 header .logo {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 0;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255,255,255,0.02);
     padding: 0.5rem 1.8rem;
-    /* Ajuste perfecto: marco esbelto a lo alto, amplio a lo ancho */
     border-radius: 50px;
-    border: 1px solid rgba(232, 66, 124, 0.18);
-
+    border: 1px solid rgba(232,66,124,0.18);
     animation: aparecerLogo 0.8s ease-out forwards;
 }
 
 header .logo img {
     height: 68px;
-    /* Incrementado para que se vea imponente y grande */
     width: auto;
     display: block;
-    /* Evita espacios fantasmas debajo de la imagen */
     object-fit: contain;
-    /* Regla de oro: garantiza que el logo jamás se deforme o se salga */
     transition: var(--transicion);
-
-    filter: drop-shadow(0 0 15px rgba(232, 66, 124, 0.4));
+    filter: drop-shadow(0 0 12px rgba(232,66,124,0.35));
 }
 
-/* Efecto al pasar el mouse sobre el logo */
 header .logo img:hover {
     transform: scale(1.03);
-    filter: drop-shadow(0 0 20px #e8427c60);
-    /* Resplandor unificado con tu --rosa-marca */
+    filter: drop-shadow(0 0 20px rgba(232,66,124,0.5));
 }
 
-/* Título principal */
-
 header h1 {
-    font-size: 1.4rem;
-    /* Subimos de 1.25rem a 1.4rem para equilibrar el diseño */
+    font-size: 1.35rem;
     font-weight: 700;
     color: var(--texto-blanco);
     opacity: 0.95;
     text-align: right;
-    letter-spacing: -0.01em;
-    /* Letras sutilmente más juntas para un estilo de tipografía premium */
+    letter-spacing: -0.02em;
+    line-height: 1.4;
 }
 
-/* Adorno de programación (Punto y coma final) */
 header h1::after {
     content: ';';
-    /* Añade el signo automáticamente al final */
     color: var(--rosa-marca);
-    /* Color rosa distintivo */
     font-family: monospace;
     font-size: 1.6rem;
     margin-left: 4px;
 }
 
-/* Menú de navegación (Cuadrícula de Botones)*/
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
 nav {
     width: 100%;
     max-width: 1000px;
-
-    /* Sistema Grid: Organiza los botones en columnas automáticas y ordenadas */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
-    /* Espaciado uniforme entre botones */
 }
 
-/* Diseño de botones */
 nav button {
     background-color: var(--bg-tarjetas);
     color: var(--texto-gris);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    /* Borde */
-    padding: 1.2rem 1rem;
-    font-size: 0.95rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 2px solid transparent;
+    padding: 1rem 0.9rem;
+    font-size: 0.92rem;
     font-weight: 600;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     text-align: center;
     transition: var(--transicion);
-    /* Suaviza el cambio de color y tamaño */
 }
 
-/* Efecto al pasar el mouse por los botones */
 nav button:hover {
     color: var(--texto-blanco);
-    background-color: #1e293b;
-    border-color: var(--rosa-marca);
-    /* El borde se ilumina con el rosa de la marca */
-    transform: translateY(-3px);
-    /* El botón se eleva sutilmente hacia arriba */
-    box-shadow: 0 10px 20px -8px rgba(225, 29, 72, 0.3);
-    /* Sombra rosa */
+    background-color: rgba(30,41,59,0.9);
+    border-bottom-color: var(--rosa-marca);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(225,29,72,0.15), 0 8px 24px -4px rgba(0,0,0,0.3);
 }
 
-/* Estado de accesibilidad (Cuando se hace clic o se usa el teclado) */
 nav button:focus {
     outline: 2px solid var(--celeste-tech);
-    /* Recuadro celeste de seguridad */
     outline-offset: 2px;
 }
 
-/* Animaciones (Efectos de movimiento) */
+/* ==========================================================================
+   Animations
+   ========================================================================== */
 @keyframes aparecerLogo {
-    from {
-        opacity: 0;
-        transform: translateY(-15px);
-        /* Comienza un poco más arriba y transparente */
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        /* Baja a su posición original con nitidez */
-    }
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Clases reutilizables */
+@keyframes suavizarEntrada {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Reusable Classes
+   ========================================================================== */
 .card {
     background-color: var(--bg-tarjetas);
-    border: 1px solid rgba(232, 66, 124, 0.18);
+    border: 1px solid rgba(232,66,124,0.15);
     border-radius: 18px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 20px 48px -12px rgba(0,0,0,0.2);
 }
 
 .flex-center {
@@ -204,24 +178,23 @@ nav button:focus {
     justify-content: center;
 }
 
-.text-center {
-    text-align: center;
-}
+.text-center { text-align: center !important; }
 
 .seccion-contenedor {
     width: 100%;
     max-width: 1000px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 2.5rem;
     padding: 2rem 1.5rem;
 }
 
 .titulo-seccion {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--texto-blanco);
     margin-bottom: 1.5rem;
     position: relative;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    padding-left: 1rem;
 }
 
 .titulo-seccion::before {
@@ -230,10 +203,10 @@ nav button:focus {
     left: 0;
     top: 15%;
     height: 70%;
-    width: 4px;
-    background-color: var(--celeste-tech);
-    border-radius: 4px;
-    box-shadow: 0 0 10px var(--celeste-tech);
+    width: 3px;
+    background: linear-gradient(180deg, var(--celeste-tech), var(--rosa-marca));
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(56,189,248,0.3);
 }
 
 .texto-destacado {
@@ -253,25 +226,25 @@ nav button:focus {
     justify-content: center;
     padding: 1.25rem 1.75rem;
     border-radius: 999px;
-    background: linear-gradient(135deg, var(--rosa-marca), rgba(232, 66, 124, 0.95));
+    background: linear-gradient(135deg, var(--rosa-marca), rgba(232,66,124,0.95));
     color: #ffffff;
     font-size: 1.05rem;
     font-weight: 700;
     text-decoration: none;
     transition: var(--transicion);
-    box-shadow: 0 18px 40px rgba(232, 66, 124, 0.28);
+    box-shadow: 0 12px 32px rgba(232,66,124,0.25);
 }
 
 .boton-principal:hover,
 .boton-principal:focus-visible {
     transform: translateY(-3px);
-    box-shadow: 0 24px 48px rgba(232, 66, 124, 0.38);
+    box-shadow: 0 8px 20px rgba(232,66,124,0.3), 0 20px 48px rgba(232,66,124,0.2);
 }
 
 .boton-secundario {
     background-color: var(--bg-tarjetas);
     color: var(--texto-gris);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255,255,255,0.08);
     padding: 1.2rem 1rem;
     font-size: 0.95rem;
     font-weight: 600;
@@ -289,8 +262,8 @@ nav button:focus {
     color: var(--texto-blanco);
     background-color: #1e293b;
     border-color: var(--rosa-marca);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px -8px rgba(225, 29, 72, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(225,29,72,0.2), 0 8px 24px -4px rgba(0,0,0,0.3);
 }
 
 .boton-secundario:focus {
@@ -298,10 +271,11 @@ nav button:focus {
     outline-offset: 2px;
 }
 
-.text-muted {
-    color: var(--texto-gris);
-}
+.text-muted { color: var(--texto-gris); }
 
+/* ==========================================================================
+   Caratula
+   ========================================================================== */
 .caratula-contenedor {
     width: 100%;
     max-width: 920px;
@@ -324,7 +298,7 @@ nav button:focus {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(circle at top right, rgba(232, 66, 124, 0.18), transparent 25%);
+    background: radial-gradient(circle at top right, rgba(232,66,124,0.18), transparent 25%);
     pointer-events: none;
 }
 
@@ -333,15 +307,12 @@ nav button:focus {
     z-index: 1;
 }
 
-.caratula-logo {
-    display: flex;
-    justify-content: center;
-}
+.caratula-logo { display: flex; justify-content: center; }
 
 .caratula-logo img {
     width: 140px;
     max-width: 100%;
-    filter: drop-shadow(0 0 20px rgba(232, 66, 124, 0.45));
+    filter: drop-shadow(0 0 20px rgba(232,66,124,0.45));
 }
 
 .caratula-tag {
@@ -382,185 +353,65 @@ nav button:focus {
 }
 
 .caratula-integrantes li {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255,255,255,0.04);
     padding: 0.95rem 1.15rem;
     border-radius: 14px;
     color: var(--texto-blanco);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
-@media (max-width: 680px) {
-    .caratula-card {
-        padding: 2rem 1.5rem;
-        border-radius: 24px;
-    }
+/* ==========================================================================
+   Sections / Main
+   ========================================================================== */
+main.simulador section { display: none; }
 
-    .caratula-logo img {
-        width: 120px;
-    }
-
-    .caratula-card h1 {
-        font-size: 2.4rem;
-    }
-
-    .caratula-contenedor {
-        min-height: calc(100vh - 2rem);
-    }
-}
-
-/* Responsive Desig */
-
-/* Cuando la pantalla sea más pequeña que 600px de ancho (Celulares) */
-@media (max-width: 600px) {
-
-    /* 1. Reducimos el espacio interno del cuerpo para ganar pantalla */
-    body {
-        padding: 1rem 0.8rem;
-    }
-
-    /* 2. Ajustamos el contenedor del encabezado */
-    /* 2. Ajustamos el contenedor del encabezado para móviles */
-    header {
-        flex-direction: column;
-        /* En celulares vuelve a ser vertical para que no se amontone */
-        gap: 0.8rem;
-        padding: 1.5rem 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    /* 3. Optimizamos el logo para que no ocupe toda la pantalla del móvil */
-    header .logo {
-        margin-bottom: 1.2rem;
-        padding: 0.8rem 1.5rem;
-        /* Cápsula un poco más pequeña */
-    }
-
-    header .logo img {
-        height: 70px;
-        /* Bajamos de 90px a 70px para que se vea estético en móvil */
-    }
-
-    /* 4. Achicamos un poco el título para que no se parta en tantas líneas */
-    header h1 {
-        font-size: 1.2rem;
-        /* Texto más cómodo para pantallas angostas */
-    }
-
-    /* 5. Ajustamos los botones del menú para que sean fáciles de tocar con el dedo */
-    nav {
-        /* Cambiamos el mínimo a 140px para que quepan dos botones por fila en el móvil */
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 0.8rem;
-        /* Espacio un poquito más cerrado entre ellos */
-    }
-
-    nav button {
-        padding: 1rem 0.8rem;
-        /* Botones ligeramente menos altos */
-        font-size: 0.85rem;
-        /* Letra sutilmente más pequeña para evitar que el texto se corte */
-    }
-}
-
-/* 1. Por defecto, ocultamos las secciones solo dentro del simulador */
-main.simulador section {
-    display: none;
-}
-
-/* 2. ¡La magia! Solo mostramos la sección que tenga la clase 'activa' dentro del simulador */
 main.simulador section.activa {
     display: block;
     animation: suavizarEntrada 0.4s ease forwards;
 }
 
-/* Animación para que aparezca suave y elegante */
-@keyframes suavizarEntrada {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ==========================================================================
-    ESTILOS PARA MATERIA PRIMA 
-   ========================================================================== */
-
-/* Contenedor general de la sección activa (para alinear con el header y nav) */
 main section.activa {
     width: 100%;
     max-width: 1000px;
     margin-top: 2.5rem;
-    /* Separación elegante respecto a los botones */
 }
 
-/* Estilo para los títulos principales de cada sección */
-.titulo-seccion {
-    font-size: 1.7rem;
-    font-weight: 700;
-    color: var(--texto-blanco);
-    margin-bottom: 1.5rem;
-    position: relative;
-    letter-spacing: -0.01em;
-    padding-left: 1rem;
-}
-
-/* Indicador visual al lado izquierdo del título */
-.titulo-seccion::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 15%;
-    height: 70%;
-    width: 4px;
-    background-color: var(--celeste-tech);
-    border-radius: 4px;
-    box-shadow: 0 0 10px var(--celeste-tech);
-}
-
-/* Bloque contenedor de la teoría */
+/* ==========================================================================
+   Bloque Teoria (Glass Effect)
+   ========================================================================== */
 .bloque-teoria {
-    background-color: var(--bg-tarjetas);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(30,41,59,0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 16px;
     padding: 2.2rem;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
-    line-height: 1.7;
-    /* Interlineado cómodo para leer conceptos */
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2), 0 16px 40px -12px rgba(0,0,0,0.4);
+    line-height: 1.75;
 }
 
-/* Estilo para el párrafo descriptivo */
 .bloque-teoria p {
     color: var(--texto-blanco);
-    font-size: 1.05rem;
+    font-size: 1.02rem;
     margin-bottom: 1rem;
     opacity: 0.95;
 }
 
-/* Resaltado general de textos importantes (strong) dentro del párrafo */
 .bloque-teoria p strong {
     color: var(--celeste-tech);
     font-weight: 600;
 }
 
-/* Remodelación completa de la lista (ul) */
 .bloque-teoria ul {
     list-style: none;
-    /* Quitamos los círculos aburridos por defecto */
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
-    /* Espaciado uniforme entre los ítems */
+    gap: 1rem;
 }
 
-/* Cada ítem de la lista (Materia Prima Directa e Indirecta) */
 .bloque-teoria ul li {
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.04);
     padding: 1.2rem 1.5rem 1.2rem 2.5rem;
     border-radius: 10px;
     color: var(--texto-gris);
@@ -569,7 +420,6 @@ main section.activa {
     transition: var(--transicion);
 }
 
-/* Viñeta personalizada simulando una flecha de consola o prompt (>) */
 .bloque-teoria ul li::before {
     content: '>';
     position: absolute;
@@ -582,7 +432,6 @@ main section.activa {
     transition: var(--transicion);
 }
 
-/* Títulos específicos dentro de las viñetas (MPD y MPI) */
 .bloque-teoria ul li strong {
     color: var(--rosa-marca);
     font-size: 1.05rem;
@@ -590,31 +439,25 @@ main section.activa {
     margin-right: 0.3rem;
 }
 
-/* Efecto Hover interactivo para la lista teórica */
 .bloque-teoria ul li:hover {
     color: var(--texto-blanco);
-    background: rgba(232, 66, 124, 0.03);
-    /* Un sutil destello rosa de fondo */
-    border-color: rgba(232, 66, 124, 0.2);
-    transform: translateX(5px);
-    /* Desplazamiento suave a la derecha */
-    box-shadow: -5px 0 0 var(--rosa-marca);
-    /* Línea sólida rosa a la izquierda */
+    background: rgba(232,66,124,0.03);
+    border-color: rgba(232,66,124,0.18);
+    transform: translateX(4px);
+    box-shadow: -4px 0 0 var(--rosa-marca);
 }
 
-/* Ajuste del ícono prompt en Hover */
 .bloque-teoria ul li:hover::before {
     transform: translateX(3px);
     color: var(--celeste-tech);
-    /* Cambia a celeste al apuntarlo */
 }
 
 /* ==========================================================================
-   CAJA RESALTADA PARA FÓRMULAS Y CÓDIGO
+   Formula Boxes
    ========================================================================== */
 .formula-tech {
     background-color: var(--bg-principal);
-    border: 0.5px solid rgba(56, 189, 248, 0.2);
+    border: 0.5px solid rgba(56,189,248,0.2);
     color: var(--celeste-tech);
     font-family: monospace;
     font-size: 1rem;
@@ -622,12 +465,12 @@ main section.activa {
     padding: 0.5rem;
     border-radius: 12px;
     margin-bottom: 1.8rem;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
 }
 
 .formula-tech-sm {
     background-color: var(--bg-principal);
-    border: 0.5px solid rgba(56, 189, 248, 0.2);
+    border: 0.5px solid rgba(56,189,248,0.2);
     color: var(--celeste-tech);
     font-family: monospace;
     font-size: 0.9rem;
@@ -635,7 +478,7 @@ main section.activa {
     padding: 0.35rem 1.2rem;
     border-radius: 8px;
     margin: 0.4rem 0;
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.2);
     display: inline-block;
 }
 
@@ -650,25 +493,27 @@ main section.activa {
 }
 
 /* ==========================================================================
-   ESTILOS PARA INPUTS DEL FORMULARIO (Mano de Obra)
+   Form Inputs
    ========================================================================== */
 .input-formulario {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.65rem 0.8rem;
     border-radius: 8px;
     background: var(--bg-principal);
     color: var(--texto-blanco);
-    border: 0.5px solid var(--celeste-tech);
+    border: 1px solid rgba(56,189,248,0.25);
     font-size: 0.95rem;
+    transition: var(--transicion);
 }
 
-.input-bold {
-    font-weight: 700;
+.input-formulario:focus {
+    border-color: var(--celeste-tech);
+    box-shadow: inset 0 1px 4px rgba(56,189,248,0.1), 0 0 8px rgba(56,189,248,0.15);
+    outline: none;
 }
 
-.input-italic {
-    font-style: italic;
-}
+.input-bold { font-weight: 700; }
+.input-italic { font-style: italic; }
 
 .td-footer-label {
     text-align: right;
@@ -681,12 +526,10 @@ main section.activa {
     font-size: 1.1rem;
 }
 
-.table-empty-cell {
-    padding: 2rem;
-}
+.table-empty-cell { padding: 2rem; }
 
 .fila-tabla {
-    border-bottom: 1px solid var(--texto-gris);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
     color: var(--texto-gris);
     transition: var(--transicion);
 }
@@ -699,10 +542,10 @@ main section.activa {
 }
 
 /* ==========================================================================
-   BOTÓN AGREGAR EMPLEADO
+   Buttons
    ========================================================================== */
 .boton-agregar {
-    background: var(--rosa-marca);
+    background: linear-gradient(135deg, var(--rosa-marca), rgba(232,66,124,0.9));
     color: var(--texto-blanco);
     border: none;
     padding: 0.9rem 2rem;
@@ -711,21 +554,25 @@ main section.activa {
     cursor: pointer;
     font-size: 1rem;
     margin-top: 0.5rem;
+    transition: var(--transicion);
+    box-shadow: 0 4px 16px rgba(232,66,124,0.2);
+}
+
+.boton-agregar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(232,66,124,0.3);
 }
 
 /* ==========================================================================
-   CELDAS DE LA TABLA (Mano de Obra)
+   Table Cells (Mano de Obra)
    ========================================================================== */
 .fila-tabla td {
     padding: 0.8rem;
     text-align: center;
     font-size: 0.85rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 
-/* ==============================================================================
-   Las dos primeras columnas (nombre y cargo) van alineadas a la izquierda
-   ============================================================================*/
 .fila-tabla td:first-child,
 .fila-tabla td:nth-child(2) {
     text-align: left;
@@ -733,90 +580,25 @@ main section.activa {
     color: var(--texto-blanco);
 }
 
-/* ==========================================================================
-   TABLA MANO DE OBRA — encabezados con colores diferenciados
-   ========================================================================== */
-.th-num {
-    width: 40px;
-    text-align: center !important;
-}
+.th-num { width: 40px; text-align: center !important; }
+.th-concepto { text-align: left !important; }
+.th-monto-celeste { color: var(--celeste-tech) !important; text-align: center !important; }
+.th-monto-rosa { color: var(--rosa-marca) !important; text-align: center !important; }
+.th-monto-verde { color: #10b981 !important; text-align: center !important; }
+.th-acciones { text-align: center !important; color: var(--texto-gris) !important; }
 
-.th-concepto {
-    text-align: left !important;
-}
-
-.th-monto-celeste {
-    color: var(--celeste-tech) !important;
-    text-align: center !important;
-}
-
-.th-monto-rosa {
-    color: var(--rosa-marca) !important;
-    text-align: center !important;
-}
-
-.th-monto-verde {
-    color: #10b981 !important;
-    text-align: center !important;
-}
-
-.th-acciones {
-    text-align: center !important;
-    color: var(--texto-gris) !important;
-}
-
-.fila-tabla .td-num {
-    text-align: center;
-    color: var(--texto-gris);
-    font-size: 0.85rem;
-}
-
-.fila-tabla .td-nombre {
-    text-align: left;
-    font-weight: 600;
-    color: var(--texto-blanco);
-    font-size: 0.9rem;
-}
-
-.fila-tabla .td-cargo {
-    text-align: left;
-    color: var(--texto-blanco);
-    font-weight: 500;
-    font-size: 0.85rem;
-}
-
-.fila-tabla .td-celeste {
-    color: var(--celeste-tech);
-    font-weight: 600;
-    text-align: center;
-    font-size: 0.88rem;
-}
-
-.fila-tabla .td-rosa {
-    color: var(--rosa-marca);
-    font-weight: 600;
-    text-align: center;
-    font-size: 0.88rem;
-}
-
-.fila-tabla .td-verde {
-    color: #10b981;
-    font-weight: 700;
-    text-align: center;
-    font-size: 0.88rem;
-}
-
-.fila-tabla .td-tipo {
-    color: var(--celeste-tech);
-    font-weight: 600;
-    text-align: center;
-    font-size: 0.88rem;
-}
+.fila-tabla .td-num { text-align: center; color: var(--texto-gris); font-size: 0.85rem; }
+.fila-tabla .td-nombre { text-align: left; font-weight: 600; color: var(--texto-blanco); font-size: 0.9rem; }
+.fila-tabla .td-cargo { text-align: left; color: var(--texto-blanco); font-weight: 500; font-size: 0.85rem; }
+.fila-tabla .td-celeste { color: var(--celeste-tech); font-weight: 600; text-align: center; font-size: 0.88rem; }
+.fila-tabla .td-rosa { color: var(--rosa-marca); font-weight: 600; text-align: center; font-size: 0.88rem; }
+.fila-tabla .td-verde { color: #10b981; font-weight: 700; text-align: center; font-size: 0.88rem; }
+.fila-tabla .td-tipo { color: var(--celeste-tech); font-weight: 600; text-align: center; font-size: 0.88rem; }
 
 .btn-eliminar-tabla {
-    background: rgba(232, 66, 124, 0.12);
+    background: rgba(232,66,124,0.1);
     color: var(--rosa-marca);
-    border: 1px solid rgba(232, 66, 124, 0.25);
+    border: 1px solid rgba(232,66,124,0.2);
     padding: 0.3rem 0.8rem;
     border-radius: 6px;
     cursor: pointer;
@@ -827,45 +609,40 @@ main section.activa {
 }
 
 .btn-eliminar-tabla:hover {
-    background: rgba(232, 66, 124, 0.28);
+    background: rgba(232,66,124,0.25);
+    box-shadow: 0 2px 8px rgba(232,66,124,0.15);
 }
 
 /* ==========================================================================
-   ELEMENTOS INTERACTIVOS DE MATERIA PRIMA (REPLICANDO TU ESTILO TECH)
+   Grid Totales & Tarjetas
    ========================================================================== */
-
-/* 1. Reciclaje para las Tarjetas de Totales (Hereda la sombra y fondo de tus bloques) */
 .grid-totales {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
-    /* Mismo gap que tu nav */
     margin: 2rem 0;
 }
 
 .tarjeta-total {
     background-color: var(--bg-tarjetas);
-    /* Recicla tu fondo */
     padding: 1.5rem;
     border-radius: 12px;
-    /* Mismo radio que tus botones */
     border-left: 4px solid var(--texto-gris);
-    box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.4);
-    /* Sombra suavizada de tu header */
+    border-top: 1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 12px 32px -8px rgba(0,0,0,0.35);
     transition: var(--transicion);
-    /* Tu animación global */
 }
 
 .tarjeta-total:hover {
-    transform: translateY(-3px);
-    /* Tu efecto de elevación */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 40px -8px rgba(0,0,0,0.4);
 }
 
 .tarjeta-total p {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--texto-gris);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     margin-bottom: 0.5rem;
 }
 
@@ -875,40 +652,28 @@ main section.activa {
     color: var(--texto-blanco);
 }
 
-/* Bordes personalizados usando tus colores de identidad */
-.tarjeta-total.mp-directa {
-    border-left-color: var(--celeste-tech);
-}
+.tarjeta-total.mp-directa { border-left-color: var(--celeste-tech); }
+.tarjeta-total.mp-indirecta { border-left-color: #a855f7; }
+.tarjeta-total.mp-general { border-left-color: var(--rosa-marca); }
+.tarjeta-total.mp-merma { border-left-color: var(--naranja-merma); }
 
-.tarjeta-total.mp-indirecta {
-    border-left-color: #a855f7;
-}
-
-/* Morado complementario */
-.tarjeta-total.mp-general {
-    border-left-color: var(--rosa-marca);
-}
-
-.tarjeta-total.mp-merma {
-    border-left-color: var(--naranja-merma);
-}
-
-/* 2. Reciclaje para el Formulario Operativo */
+/* ==========================================================================
+   Panel Formulario
+   ========================================================================== */
 .panel-formulario {
     background-color: var(--bg-tarjetas);
     padding: 2rem;
     border-radius: 16px;
-    /* Empata con tus bloques de teoría */
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.05);
     margin-bottom: 2.5rem;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2), 0 16px 40px -12px rgba(0,0,0,0.45);
 }
 
 .panel-formulario h3 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--celeste-tech);
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
     padding-bottom: 0.5rem;
 }
 
@@ -919,14 +684,12 @@ main section.activa {
     margin-bottom: 1.5rem;
 }
 
-/* Inputs y Selects adaptados a tu paleta de colores oscura */
 .campo-control {
     width: 100%;
     background-color: var(--bg-principal);
-    /* Fondo oscuro profundo */
     color: var(--texto-blanco);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 0.85rem 1.1rem;
     font-size: 0.95rem;
     border-radius: 8px;
     outline: none;
@@ -935,66 +698,101 @@ main section.activa {
 
 .campo-control:focus {
     border-color: var(--celeste-tech);
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    box-shadow: inset 0 1px 4px rgba(56,189,248,0.08), 0 0 10px rgba(56,189,248,0.18);
 }
 
-.input-mini {
-    width: 70px;
-    min-width: 50px;
-}
+.input-mini { width: 70px; min-width: 50px; }
+.input-45 { width: 45px; }
+.input-50 { width: 50px; }
+.input-80 { width: 80px; }
+.input-90 { width: 90px; }
+.input-center { text-align: center; }
 
-.input-45 {
-    width: 45px;
-}
-
-.input-50 {
-    width: 50px;
-}
-
-.input-80 {
-    width: 80px;
-}
-
-.input-90 {
-    width: 90px;
-}
-
-.input-center {
-    text-align: center;
-}
-
+/* ==========================================================================
+   Receta Cards & Accordion
+   ========================================================================== */
 .receta-card {
-    background: var(--bg-tarjetas);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    background: transparent;
+    border-radius: 10px;
+    padding: 0;
+    margin-bottom: 1.2rem;
+    box-shadow: none;
+    border: 1px solid rgba(232,66,124,0.15);
+    overflow: hidden;
 }
 
 .receta-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    padding: 0.9rem 1.5rem;
+    margin-bottom: 0;
+    background: linear-gradient(135deg, rgba(232,66,124,0.08), rgba(15,23,42,0.95));
+    border-left: 4px solid var(--rosa-marca);
     flex-wrap: wrap;
     gap: 0.5rem;
+    transition: var(--transicion);
+}
+
+.receta-card-header:hover {
+    background: linear-gradient(135deg, rgba(232,66,124,0.15), rgba(15,23,42,0.9));
 }
 
 .receta-card-title {
-    color: var(--rosa-marca);
-    font-size: 1.3rem;
+    color: var(--texto-blanco);
+    font-size: 1.05rem;
     text-transform: uppercase;
     margin: 0;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    transition: var(--transicion);
 }
+
+.receta-card-title:hover { color: var(--celeste-tech); }
 
 .receta-card-badge {
-    background: rgba(56, 189, 248, 0.1);
-    padding: 0.4rem 0.8rem;
+    background: rgba(56,189,248,0.06);
+    padding: 0.3rem 0.7rem;
     border-radius: 6px;
-    font-size: 0.85rem;
-    color: var(--celeste-tech);
+    font-size: 0.8rem;
+    color: var(--texto-gris);
+    border: 1px solid rgba(56,189,248,0.1);
 }
 
+.receta-card > .tabla-receta,
+.receta-card > .acciones-receta,
+.receta-card > .form-agregar-ing {
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+}
+
+.receta-card > .acciones-receta { padding-bottom: 1.2rem; }
+.receta-card > .form-agregar-ing { margin-bottom: 1.2rem; }
+
+.receta-acordeon-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-right: 0.6rem;
+    font-size: 0.65rem;
+    color: var(--rosa-marca);
+    background: rgba(232,66,124,0.1);
+    border-radius: 4px;
+    transition: var(--transicion);
+    flex-shrink: 0;
+}
+
+.receta-card-title:hover .receta-acordeon-icono {
+    background: rgba(232,66,124,0.22);
+}
+
+/* ==========================================================================
+   Tabla Receta
+   ========================================================================== */
 .tabla-receta {
     width: 100%;
     border-collapse: collapse;
@@ -1003,53 +801,31 @@ main section.activa {
 }
 
 .tabla-receta thead {
-    background: rgba(56, 189, 248, 0.1);
+    background: rgba(56,189,248,0.08);
     color: var(--celeste-tech);
 }
 
 .tabla-receta th,
 .tabla-receta td {
     padding: 0.75rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
 .tabla-receta th {
     font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
 }
 
-.tabla-receta .text-right {
-    text-align: right;
-}
+.tabla-receta .text-right { text-align: right; }
+.tabla-receta .text-center { text-align: center; }
+.tabla-receta .td-muted { color: var(--texto-gris); }
+.tabla-receta .td-strong { color: var(--texto-blanco); font-weight: 500; }
+.tabla-receta .td-highlight { color: var(--celeste-tech); font-weight: bold; }
 
-.tabla-receta .text-center {
-    text-align: center;
-}
-
-.tabla-receta .td-muted {
-    color: var(--texto-gris);
-}
-
-.tabla-receta .td-strong {
-    color: var(--texto-blanco);
-    font-weight: 500;
-}
-
-.tabla-receta .td-highlight {
-    color: var(--celeste-tech);
-    font-weight: bold;
-}
-
-.tabla-receta .row-total-receta {
-    background: rgba(16, 185, 129, 0.05);
-}
-
-.tabla-receta .row-mano-obra {
-    background: rgba(56, 189, 248, 0.05);
-}
-
-.tabla-receta .row-total-produccion {
-    background: rgba(232, 66, 124, 0.08);
-}
+.tabla-receta .row-total-receta { background: rgba(16,185,129,0.05); }
+.tabla-receta .row-mano-obra { background: rgba(56,189,248,0.05); }
+.tabla-receta .row-total-produccion { background: rgba(232,66,124,0.06); }
 
 .acciones-receta {
     margin-top: 1rem;
@@ -1096,7 +872,7 @@ main section.activa {
 .form-agregar-ing {
     display: none;
     margin-top: 1rem;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.025);
     border-radius: 8px;
     padding: 1rem;
 }
@@ -1136,70 +912,47 @@ main section.activa {
     font-weight: 700;
 }
 
-.tabla-receta tfoot td {
-    padding: 0.8rem;
-    font-weight: 700;
-}
+.tabla-receta tfoot td { padding: 0.8rem; font-weight: 700; }
 
 .tabla-receta .row-total-receta td {
-    background: rgba(16, 185, 129, 0.05);
+    background: rgba(16,185,129,0.05);
     color: #10b981;
     text-transform: uppercase;
 }
 
 .tabla-receta .row-mano-obra td {
-    background: rgba(56, 189, 248, 0.05);
+    background: rgba(56,189,248,0.05);
     color: var(--celeste-tech);
     text-transform: uppercase;
 }
 
 .tabla-receta .row-total-produccion td {
-    background: rgba(232, 66, 124, 0.08);
+    background: rgba(232,66,124,0.06);
     color: var(--rosa-marca);
     text-transform: uppercase;
 }
 
-.tabla-receta .td-footer-label {
-    text-align: right;
-}
+.tabla-receta .td-footer-label { text-align: right; }
+.tabla-receta .td-footer-value { padding-left: 1rem; font-size: 1.1rem; }
 
-.tabla-receta .td-footer-value {
-    padding-left: 1rem;
-    font-size: 1.1rem;
-}
+/* ==========================================================================
+   Utility / Layout Helpers
+   ========================================================================== */
+.table-responsive { overflow-x: auto; }
+.full-width-table { width: 100%; border-collapse: collapse; }
+.table-empty-state td { padding: 2rem; }
+.hidden { display: none !important; }
+.d-none { display: none; }
 
-.table-responsive {
-    overflow-x: auto;
-}
-
-.full-width-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table-empty-state td {
-    padding: 2rem;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.mt-1-2 {
-    margin-top: 1.2rem;
-}
-
-.mt-1-5 {
-    margin-top: 1.5rem;
-}
-
-.mt-2 {
-    margin-top: 2rem;
-}
-
-.mb-1-5 {
-    margin-bottom: 1.5rem;
-}
+.mt-1 { margin-top: 1rem; }
+.mt-1-2 { margin-top: 1.2rem; }
+.mt-1-5 { margin-top: 1.5rem; }
+.mt-1-8 { margin-top: 1.8rem; }
+.mt-2 { margin-top: 2rem; }
+.mb-0-8 { margin-bottom: 0.8rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-1-5 { margin-bottom: 1.5rem; }
+.overflow-auto { overflow-x: auto; }
 
 .section-heading {
     color: var(--celeste-tech);
@@ -1231,10 +984,13 @@ main section.activa {
     margin-bottom: 0.3rem;
 }
 
+/* ==========================================================================
+   Preview Boxes
+   ========================================================================== */
 .preview-box {
     display: none;
     background: var(--bg-principal);
-    border: 1px solid rgba(56,189,248,0.2);
+    border: 1px solid rgba(56,189,248,0.15);
     border-radius: 12px;
     padding: 1.2rem;
     margin-bottom: 1.2rem;
@@ -1254,10 +1010,7 @@ main section.activa {
     gap: 0.8rem;
 }
 
-.preview-label {
-    color: var(--texto-gris);
-    font-size: 0.8rem;
-}
+.preview-label { color: var(--texto-gris); font-size: 0.8rem; }
 
 .preview-legend {
     color: var(--texto-gris);
@@ -1273,30 +1026,50 @@ main section.activa {
     font-family: monospace;
 }
 
-.overflow-auto {
-    overflow-x: auto;
+.preview-value.celeste { color: var(--celeste-tech); }
+.preview-value.verde { color: #10b981; }
+.preview-value.rosa { color: var(--rosa-marca); }
+
+.preview-card {
+    display: none;
+    background: var(--bg-principal);
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1.2rem;
 }
 
-.mb-1 {
-    margin-bottom: 1rem;
+.preview-card-title {
+    color: var(--texto-gris);
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-.preview-value.celeste {
-    color: var(--celeste-tech);
-}
+/* ==========================================================================
+   Text Utility Classes
+   ========================================================================== */
+.text-blanco { color: var(--texto-blanco) !important; }
+.text-gris { color: var(--texto-gris) !important; }
+.text-celeste { color: var(--celeste-tech) !important; }
+.text-rosa { color: var(--rosa-marca) !important; }
+.text-verde { color: #10b981 !important; }
+.text-morado { color: #a855f7; }
+.text-violeta { color: #a855f7 !important; }
+.text-success { color: #10b981 !important; }
+.text-danger { color: var(--rosa-marca) !important; }
+.text-sm { font-size: 0.85rem; }
+.text-right { text-align: right !important; }
+.uppercase { text-transform: uppercase; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-bold { font-weight: 700; }
+.italic { font-style: italic; }
 
-.preview-value.verde {
-    color: #10b981;
-}
-
-.preview-value.rosa {
-    color: var(--rosa-marca);
-}
-
-.text-morado {
-    color: #a855f7;
-}
-
+/* ==========================================================================
+   Action Buttons & Forms
+   ========================================================================== */
 .btn-add {
     margin-top: 0.6rem;
     border: 1px dashed var(--celeste-tech);
@@ -1317,31 +1090,23 @@ main section.activa {
     gap: 0.5rem;
 }
 
-.button-group-inline {
-    margin-top: 1.5rem;
+.flex-between-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
-.table-full {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.th-center {
-    text-align: center;
-}
-
-.th-actions {
-    text-align: center;
-}
+.button-group-inline { margin-top: 1.5rem; }
+.table-full { width: 100%; border-collapse: collapse; }
+.th-center { text-align: center; }
+.th-actions { text-align: center; }
 
 .th-monto-celeste,
 .th-monto-rosa,
 .th-monto-verde {
     text-align: right;
-}
-
-.th-concepto {
-    text-align: left;
 }
 
 .btn-formulario {
@@ -1352,35 +1117,40 @@ main section.activa {
     cursor: pointer;
     border: none;
     transition: var(--transicion);
+    backdrop-filter: blur(4px);
 }
 
 .btn-formulario.guardar {
-    background-color: var(--rosa-marca);
+    background: linear-gradient(135deg, var(--rosa-marca), rgba(232,66,124,0.9));
     color: var(--texto-blanco);
+    box-shadow: 0 4px 12px rgba(232,66,124,0.2);
 }
 
 .btn-formulario.guardar:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px -8px rgba(225, 29, 72, 0.4);
+    box-shadow: 0 4px 12px rgba(225,29,72,0.25), 0 10px 24px -4px rgba(225,29,72,0.2);
 }
 
 .btn-formulario.cancelar {
     background-color: transparent;
     color: var(--texto-gris);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .btn-formulario.cancelar:hover {
     color: var(--texto-blanco);
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255,255,255,0.04);
 }
 
-/* 3. Estilos de la Tabla (Empata con las clases inyectadas por tu script.js) */
+/* ==========================================================================
+   Tabla Tech (Main Data Tables)
+   ========================================================================== */
 .contenedor-tabla {
     width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border-radius: 12px;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2), 0 16px 40px -12px rgba(0,0,0,0.45);
 }
 
 .tabla-tech {
@@ -1392,64 +1162,58 @@ main section.activa {
 }
 
 .tabla-tech th {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0,0,0,0.25);
     color: var(--celeste-tech);
-    /* Encabezados celestes */
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    padding: 1rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(56,189,248,0.12);
 }
 
 .tabla-tech td {
-    padding: 1rem;
+    padding: 0.9rem 1rem;
     color: var(--texto-blanco);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.tabla-tech tbody tr:nth-child(even) {
+    background-color: rgba(255,255,255,0.015);
 }
 
 .tabla-tech tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.01);
+    background-color: rgba(255,255,255,0.03);
 }
 
-/* Clases de celda inyectadas por tu script.js para cambiar el color del tipo */
-.tipo-directa {
-    color: var(--celeste-tech) !important;
-    font-weight: 600;
-}
+.tipo-directa { color: var(--celeste-tech) !important; font-weight: 600; }
+.tipo-indirecta { color: #c084fc !important; font-weight: 600; }
 
-.tipo-indirecta {
-    color: #c084fc !important;
-    /* Tono morado claro */
-    font-weight: 600;
-}
-
-/* Estilo del Botón "Editar" inyectado por tu JS (.btn-editar-tech) */
 .btn-editar-tech {
-    background-color: rgba(56, 189, 248, 0.1);
+    background-color: rgba(56,189,248,0.08);
     color: var(--celeste-tech);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(56,189,248,0.18);
     padding: 0.4rem 1rem;
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transicion);
+    backdrop-filter: blur(4px);
 }
 
 .btn-editar-tech:hover {
     background-color: var(--celeste-tech);
     color: var(--bg-principal);
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 0 12px rgba(56,189,248,0.25);
 }
 
 /* ==========================================================================
-   ESTILOS PARA SECCIÓN RECETAS — formulario-contenedor
+   Formulario Contenedor (Recetas)
    ========================================================================== */
 .formulario-contenedor {
     background: var(--bg-tarjetas);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(56,189,248,0.15);
     border-radius: 12px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
@@ -1460,7 +1224,7 @@ main section.activa {
     font-size: 1.1rem;
     margin-bottom: 1.2rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
 .formulario-contenedor label {
@@ -1471,109 +1235,15 @@ main section.activa {
 }
 
 /* ==========================================================================
-   NUEVOS ESTILOS REUTILIZABLES PARA LA SECCIÓN DE COSTOS FIJOS
+   Section Helpers
    ========================================================================== */
-
-/* Alineaciones y Helpers de Texto */
-.text-center {
-    text-align: center !important;
-}
-
-.text-blanco {
-    color: var(--texto-blanco);
-}
-
-.text-gris {
-    color: var(--texto-gris);
-}
-
-.text-celeste {
-    color: var(--celeste-tech);
-}
-
-.text-rosa {
-    color: var(--rosa-marca);
-}
-
-.text-verde {
-    color: #10b981;
-}
-
-.font-semibold {
-    font-weight: 600;
-}
-
-.font-medium {
-    font-weight: 500;
-}
-
-.font-bold {
-    font-weight: 700;
-}
-
-.italic {
-    font-style: italic;
-}
-
-.text-right {
-    text-align: right !important;
-}
-
-.uppercase {
-    text-transform: uppercase;
-}
-
-.text-success {
-    color: #10b981;
-}
-
-.text-danger {
-    color: var(--rosa-marca);
-}
-
-.text-violeta {
-    color: #a855f7;
-}
-
-.d-none {
-    display: none;
-}
-
-.mt-1-8 {
-    margin-top: 1.8rem;
-}
-
-.td-pad-1 {
-    padding: 1rem;
-}
-
-.input-small-center {
-    width: 80px;
-    text-align: center;
-    padding: 0.3rem;
-}
-
-.flex-between-wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
+.input-small-center { width: 80px; text-align: center; padding: 0.3rem; }
+.td-pad-1 { padding: 1rem; }
 
 .section-description {
     color: var(--texto-gris);
     font-size: 0.85rem;
     margin-bottom: 1rem;
-}
-
-.table-responsive {
-    overflow-x: auto;
-}
-
-.full-width-table {
-    width: 100%;
-    border-collapse: collapse;
 }
 
 .section-divider {
@@ -1590,85 +1260,76 @@ main section.activa {
     font-size: 0.95rem;
 }
 
-.table-full {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table-empty-cell {
+/* ==========================================================================
+   Costos Variables Section Overrides
+   ========================================================================== */
+#variables .panel-formulario {
+    background-color: var(--bg-tarjetas);
     padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2), 0 16px 40px -12px rgba(0,0,0,0.45);
 }
 
-.mt-1 {
-    margin-top: 1rem;
-}
-
-.mt-1-2 {
-    margin-top: 1.2rem;
-}
-
-.mt-1-5 {
-    margin-top: 1.5rem;
-}
-
-.mt-2 {
-    margin-top: 2rem;
-}
-
-.mb-0-8 {
-    margin-bottom: 0.8rem;
-}
-
-.text-sm {
-    font-size: 0.85rem;
-}
-
-.preview-card {
-    display: none;
-    background: var(--bg-principal);
-    border: 1px solid rgba(56,189,248,0.2);
-    border-radius: 12px;
-    padding: 1.2rem;
-    margin-bottom: 1.2rem;
-}
-
-.preview-card-title {
-    color: var(--texto-gris);
-    font-size: 0.85rem;
-    margin-bottom: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.preview-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 0.8rem;
-}
-
-.preview-value {
+#variables .panel-formulario h3 {
     font-size: 1.2rem;
-    font-weight: 700;
-    font-family: monospace;
+    color: var(--rosa-marca);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 0.5rem;
 }
 
-/* Fila de Totales en el tfoot */
-.bg-total-row {
-    background: rgba(16, 185, 129, 0.05);
+#variables .panel-formulario label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--texto-gris);
+    font-size: 0.9rem;
 }
 
-.bg-total-row td {
-    border-top: 2px solid rgba(16, 185, 129, 0.2) !important;
+.botonera-formulario {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 
-/* Caja de Resumen Inferior */
+#variables .tabla-tech th {
+    background: rgba(232,66,124,0.08);
+    border-bottom: 1px solid rgba(232,66,124,0.18);
+}
+
+#tabla_costos_variables .btn-editar-tech {
+    background-color: rgba(232,66,124,0.08);
+    color: var(--rosa-marca);
+    border: 1px solid rgba(232,66,124,0.2);
+    padding: 0.4rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicion);
+}
+
+#tabla_costos_variables .btn-editar-tech:hover {
+    background-color: var(--rosa-marca);
+    color: var(--texto-blanco);
+    box-shadow: 0 0 12px rgba(232,66,124,0.3);
+}
+
+/* ==========================================================================
+   Total Box
+   ========================================================================== */
+.bg-total-row { background: rgba(16,185,129,0.05); }
+.bg-total-row td { border-top: 2px solid rgba(16,185,129,0.2) !important; }
+
 .total-box-contenedor {
     margin-top: 1.5rem;
     text-align: right;
     padding: 1.2rem 1.5rem;
     background: var(--bg-tarjetas);
     border-radius: 12px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 8px 24px -4px rgba(0,0,0,0.25);
     border-right: 4px solid var(--rosa-marca);
 }
 
@@ -1683,294 +1344,76 @@ main section.activa {
     font-size: 1.6rem;
     margin-left: 0.6rem;
     font-family: monospace;
-    text-shadow: 0 0 10px rgba(232, 66, 124, 0.2);
+    text-shadow: 0 0 10px rgba(232,66,124,0.2);
 }
 
 /* ==========================================================================
-    ESTILOS ESPECÍFICOS PARA LA SECCIÓN DE COSTOS VARIABLES
+   Footer
    ========================================================================== */
-
-/* Ajuste del contenedor del formulario para Costos Variables */
-#variables .panel-formulario {
-    background-color: var(--bg-tarjetas);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    margin-bottom: 2.5rem;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
-}
-
-/* Encabezado interno del formulario de variables */
-#variables .panel-formulario h3 {
-    font-size: 1.2rem;
-    color: var(--rosa-marca);
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 0.5rem;
-}
-
-/* Etiquetas del formulario */
-#variables .panel-formulario label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--texto-gris);
-    font-size: 0.9rem;
-}
-
-/* Botonera para alinear los controles de acción */
-.botonera-formulario {
-    display: flex;
-    justify-content: flex-start;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-/* Encabezado de tabla personalizado para la sección Variables con fondo Rosa tenue */
-#variables .tabla-tech th {
-    background: rgba(232, 66, 124, 0.1);
-    border-bottom: 2px solid rgba(232, 66, 124, 0.2);
-}
-
-/* Adaptación del botón dinámico 'Editar' inyectado por JS dentro de esta tabla */
-#tabla_costos_variables .btn-editar-tech {
-    background-color: rgba(232, 66, 124, 0.1);
-    color: var(--rosa-marca);
-    border: 1px solid rgba(232, 66, 124, 0.25);
-    padding: 0.4rem 1.2rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transicion);
-}
-
-#tabla_costos_variables .btn-editar-tech:hover {
-    background-color: var(--rosa-marca);
-    color: var(--texto-blanco);
-    box-shadow: 0 0 12px rgba(232, 66, 124, 0.4);
-}
-
-/* Soporte responsive para la cuadrícula del formulario en móviles */
-@media (max-width: 600px) {
-    .botonera-formulario {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .botonera-formulario .btn-formulario {
-        width: 100%;
-        text-align: center;
-        margin-left: 0 !important;
-    }
-}
-
-/* Ajuste del contenedor del formulario para Costos Variables */
-#variables .panel-formulario {
-    background-color: var(--bg-tarjetas);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    margin-bottom: 2.5rem;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
-}
-
-/* Encabezado interno del formulario de variables */
-#variables .panel-formulario h3 {
-    font-size: 1.2rem;
-    color: var(--rosa-marca);
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 0.5rem;
-}
-
-/* Etiquetas del formulario */
-#variables .panel-formulario label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--texto-gris);
-    font-size: 0.9rem;
-}
-
-/* Botonera para alinear los controles de acción */
-.botonera-formulario {
-    display: flex;
-    justify-content: flex-start;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-/* Encabezado de tabla personalizado para la sección Variables con fondo Rosa tenue */
-#variables .tabla-tech th {
-    background: rgba(232, 66, 124, 0.1);
-    border-bottom: 2px solid rgba(232, 66, 124, 0.2);
-}
-
-/* Adaptación del botón dinámico 'Editar' inyectado por JS dentro de esta tabla */
-#tabla_costos_variables .btn-editar-tech {
-    background-color: rgba(232, 66, 124, 0.1);
-    color: var(--rosa-marca);
-    border: 1px solid rgba(232, 66, 124, 0.25);
-    padding: 0.4rem 1.2rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transicion);
-}
-
-#tabla_costos_variables .btn-editar-tech:hover {
-    background-color: var(--rosa-marca);
-    color: var(--texto-blanco);
-    box-shadow: 0 0 12px rgba(232, 66, 124, 0.4);
-}
-
-/* Soporte responsive para la cuadrícula del formulario en móviles */
-@media (max-width: 600px) {
-    .botonera-formulario {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .botonera-formulario .btn-formulario {
-        width: 100%;
-        text-align: center;
-        margin-left: 0 !important;
-    }
-}
-
-/* ── Footer ── */
 footer {
     width: 100%;
     max-width: 1000px;
     margin-top: 3rem;
     padding: 1.2rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-top: 2px solid transparent;
+    border-image: linear-gradient(90deg, transparent, rgba(232,66,124,0.3), rgba(56,189,248,0.3), transparent) 1;
     text-align: center;
     color: var(--texto-gris);
+    font-size: 0.82rem;
+    letter-spacing: 0.01em;
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+.paginacion-controles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    margin-top: 0.5rem;
+    background: rgba(255,255,255,0.02);
+    border-radius: 8px;
+}
+
+.paginacion-info {
+    color: var(--texto-gris);
     font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.paginacion-botones {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-paginacion {
+    background: rgba(56,189,248,0.08);
+    color: var(--celeste-tech);
+    border: 1px solid rgba(56,189,248,0.18);
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--tipografia);
+    transition: var(--transicion);
+}
+
+.btn-paginacion:hover:not(:disabled) {
+    background: var(--celeste-tech);
+    color: var(--bg-principal);
+    box-shadow: 0 0 12px rgba(56,189,248,0.25);
+}
+
+.btn-paginacion:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
 }
 
 /* ==========================================================================
-   RESPONSIVE — pantallas menores a 768px (tablets y celulares)
+   Scroll & Overflow Helpers (Global)
    ========================================================================== */
-@media (max-width: 768px) {
-
-    /* Tablas: permitir scroll horizontal en lugar de romper el layout */
-    .contenedor-tabla,
-    .bloque-teoria {
-        overflow-x: auto;
-    }
-
-    /* Tablas internas que genera el JS con estilos inline (recetas) */
-    .receta-card {
-        overflow-x: auto;
-    }
-
-    /* Grillas de formularios: una columna en móvil */
-    .grid-formulario {
-        grid-template-columns: 1fr;
-    }
-
-    /* Tarjetas de totales: una columna en móvil */
-    .grid-totales {
-        grid-template-columns: 1fr;
-    }
-
-    /* Botonera: apilar botones verticalmente */
-    .botonera-formulario {
-        flex-direction: column;
-    }
-
-    .botonera-formulario .btn-formulario {
-        width: 100%;
-        text-align: center;
-    }
-
-    /* Texto de los H2 de sección un poco más pequeño */
-    main section h2 {
-        font-size: 1.3rem;
-    }
-
-    /* Caja de total: centrar en móvil */
-    .total-box-contenedor {
-        text-align: center;
-        border-right: none;
-        border-bottom: 4px solid var(--rosa-marca);
-    }
-
-    /* Fórmulas: permitir scroll si son muy largas */
-    .formula-tech,
-    .formula-tech-sm {
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    /* Leyenda de fórmula: apilar verticalmente */
-    .formula-leyenda {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.4rem;
-    }
-
-    /* Panel de formulario con menos padding */
-    .panel-formulario,
-    .formulario-contenedor {
-        padding: 1.2rem;
-    }
-
-    /* Botón agregar: ancho completo en móvil */
-    .boton-agregar {
-        width: 100%;
-    }
-}
-
-/* ==========================================================================
-   RESPONSIVE — pantallas menores a 480px (celulares pequeños)
-   ========================================================================== */
-@media (max-width: 480px) {
-
-    /* Reducir padding general del body */
-    body {
-        padding: 0.8rem 0.6rem;
-    }
-
-    /* Texto del total más compacto */
-    .total-box-monto {
-        font-size: 1.2rem;
-    }
-
-    /* Tarjeta de total: número más pequeño */
-    .tarjeta-total h3 {
-        font-size: 1.4rem;
-    }
-
-    /* Botones de la tabla más compactos */
-    .btn-editar-tech,
-    .btn-eliminar-tabla {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.75rem;
-    }
-
-    /* Celdas de tabla con menos padding para que quepan */
-    .tabla-tech td,
-    .tabla-tech th {
-        padding: 0.6rem 0.5rem;
-        font-size: 0.8rem;
-    }
-}
-
-/* ==========================================================================
-   RESPONSIVE — Solo CSS, sin tocar HTML ni JS
-   ========================================================================== */
-
-/* Garantiza que nada se salga del ancho de pantalla */
-*,
-*::before,
-*::after {
-    max-width: 100%;
-}
-
-/* Todas las tablas permiten scroll horizontal sin romperse */
 .bloque-teoria table,
 .tabla-tech,
 .contenedor-tabla table {
@@ -1980,19 +1423,11 @@ footer {
     white-space: nowrap;
 }
 
-/* El contenedor de tabla también permite scroll */
-.contenedor-tabla {
+.bloque-teoria > div {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
-/* Cualquier div con overflow-x inline también respeta scroll en móvil */
-.bloque-teoria>div {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Fórmulas: scroll si son largas en pantallas pequeñas */
 .formula-tech,
 .formula-tech-sm {
     overflow-x: auto;
@@ -2000,12 +1435,11 @@ footer {
     white-space: nowrap;
 }
 
-/* ── 768px: tablets ── */
+/* ==========================================================================
+   Responsive: 768px (Tablets)
+   ========================================================================== */
 @media (max-width: 768px) {
-
-    body {
-        padding: 1rem 0.8rem;
-    }
+    body { padding: 1rem 0.8rem; }
 
     header {
         flex-direction: column;
@@ -2014,41 +1448,20 @@ footer {
         gap: 1rem;
     }
 
-    header h1 {
-        font-size: 1.1rem;
-        text-align: center;
-    }
+    header h1 { font-size: 1.1rem; text-align: center; }
 
-    nav {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.7rem;
-    }
+    nav { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+    nav button { font-size: 0.82rem; padding: 0.9rem 0.5rem; }
+    main section h2 { font-size: 1.2rem; }
 
-    nav button {
-        font-size: 0.82rem;
-        padding: 0.9rem 0.5rem;
-    }
+    .contenedor-tabla,
+    .bloque-teoria { overflow-x: auto; }
 
-    main section h2 {
-        font-size: 1.2rem;
-    }
-
-    .grid-formulario {
-        grid-template-columns: 1fr;
-    }
-
-    .grid-totales {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .botonera-formulario {
-        flex-direction: column;
-    }
-
-    .botonera-formulario .btn-formulario {
-        width: 100%;
-        text-align: center;
-    }
+    .receta-card { overflow-x: auto; }
+    .grid-formulario { grid-template-columns: 1fr; }
+    .grid-totales { grid-template-columns: repeat(2, 1fr); }
+    .botonera-formulario { flex-direction: column; }
+    .botonera-formulario .btn-formulario { width: 100%; text-align: center; }
 
     .total-box-contenedor {
         text-align: center;
@@ -2056,75 +1469,88 @@ footer {
         border-bottom: 4px solid var(--rosa-marca);
     }
 
+    .formula-tech,
+    .formula-tech-sm { overflow-x: auto; white-space: nowrap; }
+
+    .formula-leyenda {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
     .panel-formulario,
     .formulario-contenedor,
-    .bloque-teoria {
-        padding: 1.2rem;
+    .bloque-teoria { padding: 1.2rem; }
+
+    .boton-agregar { width: 100%; }
+    footer { font-size: 0.8rem; padding: 0.9rem 0; }
+}
+
+/* ==========================================================================
+   Responsive: 680px (Caratula)
+   ========================================================================== */
+@media (max-width: 680px) {
+    .caratula-card { padding: 2rem 1.5rem; border-radius: 24px; }
+    .caratula-logo img { width: 120px; }
+    .caratula-card h1 { font-size: 2.4rem; }
+    .caratula-contenedor { min-height: calc(100vh - 2rem); }
+}
+
+/* ==========================================================================
+   Responsive: 600px (Mobile)
+   ========================================================================== */
+@media (max-width: 600px) {
+    body { padding: 1rem 0.8rem; }
+
+    header {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1.5rem 1rem;
+        margin-bottom: 1.5rem;
     }
 
-    .boton-agregar {
+    header .logo { margin-bottom: 1.2rem; padding: 0.8rem 1.5rem; }
+    header .logo img { height: 70px; }
+    header h1 { font-size: 1.2rem; }
+
+    nav { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; }
+    nav button { padding: 1rem 0.8rem; font-size: 0.85rem; }
+
+    .botonera-formulario { flex-direction: column; width: 100%; }
+    .botonera-formulario .btn-formulario {
         width: 100%;
-    }
-
-    footer {
-        font-size: 0.8rem;
-        padding: 0.9rem 0;
+        text-align: center;
+        margin-left: 0 !important;
     }
 }
 
-/* ── 480px: celulares ── */
+/* ==========================================================================
+   Responsive: 480px (Small Mobile)
+   ========================================================================== */
 @media (max-width: 480px) {
+    body { padding: 0.6rem 0.4rem; }
+    header .logo img { height: 54px; }
+    header h1 { font-size: 1rem; }
 
-    body {
-        padding: 0.6rem 0.4rem;
-    }
+    nav { grid-template-columns: 1fr; }
+    nav button { font-size: 0.88rem; padding: 0.85rem 0.5rem; }
+    main section h2 { font-size: 1rem; }
 
-    header .logo img {
-        height: 54px;
-    }
-
-    header h1 {
-        font-size: 1rem;
-    }
-
-    nav {
-        grid-template-columns: 1fr;
-    }
-
-    nav button {
-        font-size: 0.88rem;
-        padding: 0.85rem 0.5rem;
-    }
-
-    .grid-totales {
-        grid-template-columns: 1fr;
-    }
-
-    .tarjeta-total h3 {
-        font-size: 1.4rem;
-    }
-
-    .total-box-monto {
-        font-size: 1.1rem;
-    }
+    .grid-totales { grid-template-columns: 1fr; }
+    .tarjeta-total h3 { font-size: 1.4rem; }
+    .total-box-monto { font-size: 1.1rem; }
 
     .tabla-tech td,
-    .tabla-tech th {
-        padding: 0.5rem 0.4rem;
-        font-size: 0.78rem;
-    }
+    .tabla-tech th { padding: 0.5rem 0.4rem; font-size: 0.78rem; }
 
     .btn-editar-tech,
-    .btn-eliminar-tabla {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.72rem;
-    }
+    .btn-eliminar-tabla { padding: 0.25rem 0.5rem; font-size: 0.72rem; }
 
-    .bloque-teoria {
-        padding: 1rem;
-    }
+    .bloque-teoria { padding: 1rem; }
 
-    main section h2 {
-        font-size: 1rem;
+    .paginacion-controles {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
     }
 }

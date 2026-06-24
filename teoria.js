@@ -1,3 +1,4 @@
+// Oculta todas las secciones quitando la clase activa de cada una
 function ocultarSecciones() {
     document.getElementById("fijos").classList.remove("activa");
     document.getElementById("variables").classList.remove("activa");
@@ -9,8 +10,10 @@ function ocultarSecciones() {
     document.getElementById("manoDeObra").classList.remove("activa");
 }
 
+// Muestra la seccion indicada y carga su contenido HTML y datos
 function mostrarSeccion(id) {
     ocultarSecciones();
+    if (typeof _sincronizarTodosDatos === "function") _sincronizarTodosDatos();
     document.getElementById(id).classList.add("activa");
 
     if (id === "fijos") {
@@ -45,12 +48,14 @@ function mostrarSeccion(id) {
     if (id === "equilibrio") {
         document.getElementById("bloque_explicacion_equilibrio").innerHTML = explicacionEquilibrioHTML;
         if (typeof actualizarSeccionEquilibrio === "function") actualizarSeccionEquilibrio();
-    }
+}
+    if (typeof _paginarSeccion === "function") _paginarSeccion(id);
 }
 
-/*=============================*/
-// COSTOS FIJOS
-/*=============================*/
+// ============================================================
+// SECCIÓN: COSTOS FIJOS
+// ============================================================
+// Plantilla HTML de la seccion Costos Fijos: formulario y tabla
 const explicacionCostosFijosHTML = `
     <p>
         <strong>¿Qué son los Costos Fijos?</strong> Son obligaciones económicas que la cafetería debe cubrir independientemente del volumen de ventas o producción del mes. No varían si se venden 10 o 500 tazas, y deben pagarse para que el negocio pueda operar.
@@ -103,9 +108,10 @@ const explicacionCostosFijosHTML = `
     </div>
 `;
 
-/*=============================*/
-// COSTOS VARIABLES
-/*=============================*/
+// ============================================================
+// SECCIÓN: COSTOS VARIABLES
+// ============================================================
+// Plantilla HTML de la seccion Costos Variables: formulario y tabla
 const explicacionCostosVariablesHTML = `
     <p>
         <strong>¿Qué son los Costos Variables?</strong> Son costos que cambian directamente según el volumen de producción o ventas de la cafetería. Si no se produce ni se vende nada, estos costos no se generan.
@@ -144,9 +150,10 @@ const explicacionCostosVariablesHTML = `
     </div>
 `;
 
-/*=============================*/
-// COSTOS DIRECTOS E INDIRECTOS
-/*=============================*/
+// ============================================================
+// SECCIÓN: COSTOS DIRECTOS E INDIRECTOS
+// ============================================================
+// Plantilla HTML de la seccion Costos Directos e Indirectos: tarjetas y tablas
 const explicacionDirectosHTML = `
     <p>
         <strong>¿Qué son los Costos Directos e Indirectos?</strong> Clasificación que permite identificar qué gastos se pueden asignar a un producto específico y cuáles corresponden al funcionamiento general del negocio.
@@ -210,9 +217,10 @@ const explicacionDirectosHTML = `
     </div>
 `;
 
-/*=============================*/
-// MATERIA PRIMA
-/*=============================*/
+// ============================================================
+// SECCIÓN: MATERIA PRIMA
+// ============================================================
+// Plantilla HTML de la seccion Materia Prima: formulario, tarjetas y tabla de insumos
 const explicacionMateriaPrimaHTML = `
     <p>
         <strong>¿Qué es la Materia Prima?</strong> Son todos los insumos que la cafetería adquiere para elaborar sus productos. Su correcto control es fundamental para determinar la rentabilidad real del negocio.
@@ -299,9 +307,10 @@ const explicacionMateriaPrimaHTML = `
     </div>
 `;
 
-/*=============================*/
-// RECETAS
-/*=============================*/
+// ============================================================
+// SECCIÓN: RECETAS Y COSTOS
+// ============================================================
+// Plantilla HTML de la seccion Recetas y Costos: recetas dinamicas y formulario de nueva receta
 const explicacionRecetasHTML = `
     <p>
         <strong>¿Qué es el Costeo de Recetas?</strong> Proceso que desglosa un producto del menú en sus ingredientes para calcular cuánto cuesta producir una sola unidad. Es la base para fijar precios de venta y evitar pérdidas.
@@ -348,9 +357,10 @@ const explicacionRecetasHTML = `
         </div>
     </div>
 `;
-//*=============================*/
-// MANO DE OBRA
-/*=============================*/
+// ============================================================
+// SECCIÓN: MANO DE OBRA
+// ============================================================
+// Plantilla HTML de la seccion Mano de Obra: registro de empleados y tabla de costos
 const explicacionManoDeObraHTML = `
     <p>
         <strong>¿Cómo se calcula el Costo de Mano de Obra con Horas Extras y Beneficios?</strong> Es el cálculo completo para conocer cuánto cuesta un empleado al mes en Ecuador, sumando su sueldo base, sus horas adicionales y todos los derechos de ley.
@@ -380,7 +390,7 @@ const explicacionManoDeObraHTML = `
             </div>
             <div>
                 <label>Tipo de mano de obra</label>
-                <input type="text" id="inputTipo" class="input-formulario" placeholder="Directo / Indirecto" readonly>
+                <select id="inputTipo" class="input-formulario"><option value="Directo">Directo</option><option value="Indirecto">Indirecto</option></select>
             </div>
             <div>
                 <label>Sueldo base ($)</label>
@@ -422,9 +432,10 @@ const explicacionManoDeObraHTML = `
     </div>
 `;
 
-/*=============================*/
-// PUNTO DE EQUILIBRIO
-/*=============================*/
+// ============================================================
+// SECCIÓN: EQUILIBRIO FINANCIERO
+// ============================================================
+// Plantilla HTML de la seccion Equilibrio Financiero: calculo de punto de equilibrio
 const explicacionEquilibrioHTML = `
     <p>
         <strong>¿Qué es el Punto de Equilibrio?</strong> Es el límite financiero donde los ingresos totales de tu cafetería igualan exactamente a tus costos totales. En este punto el negocio ni gana ni pierde, y sirve como métrica base para saber cuántas unidades se deben vender como mínimo para ser autosustentable.
@@ -524,9 +535,10 @@ const explicacionEquilibrioHTML = `
         </div>
     </div>
 `;
-/*=============================*/
-// GANANCIA
-/*=============================*/
+// ============================================================
+// SECCIÓN: GANANCIAS
+// ============================================================
+// Plantilla HTML de la seccion Ganancias: escenarios y precio sugerido por receta
 const explicacionGananciaHTML = `
     <p>
         <strong>¿Qué es la Ganancia y cómo se calcula?</strong> Es el beneficio económico real que obtiene el negocio una vez que se han restado todos los costos y gastos de los ingresos totales por ventas.
