@@ -1,4 +1,4 @@
-// ============================================================
+﻿1// ============================================================
 // SECCIÓN: COSTOS FIJOS
 // ============================================================
 
@@ -1012,26 +1012,8 @@ function actualizarPantallaRecetas() {
         tablaHTML += `
                     </tbody>
                     <tfoot>
-                        <tr class="row-total-receta">
-                            <td colspan="${colspanTotales}" class="td-footer-label">Total Costo Ingredientes:</td>
-                            <td class="td-footer-value">$${totalMateriaPrimaReceta.toFixed(4)}</td>
-                        </tr>
-                        <tr class="row-mano-obra">
-                            <td colspan="${colspanTotales}" class="td-footer-label">Costo Mano de Obra (${receta.tiempoPreparacion} min):</td>
-                            <td class="td-footer-value">$${costoManoObraReceta.toFixed(4)}</td>
-                        </tr>
-                        <tr class="row-total-produccion">
-                            <td colspan="${colspanTotales}" class="td-footer-label">Costo por Porcion (unitario):</td>
-                            <td class="td-footer-value">$${costoTotalProduccionReceta.toFixed(4)}</td>
-                        </tr>
-                        <tr class="row-total-produccion">
-                            <td colspan="${colspanTotales}" class="td-footer-label">Costo Total (x${receta.numeroPorciones} porciones):</td>
-                            <td class="td-footer-value">$${costoTotalPorciones.toFixed(4)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
 
-                <div class="acciones-receta">
+                    <div class="acciones-receta">
                     ${enEdicion
                         ? `<button onclick="guardarCambiosMasivosReceta(${rIndex})" class="btn-receta btn-receta-primary">
                                💾 Guardar Cambios
@@ -1077,6 +1059,26 @@ function actualizarPantallaRecetas() {
                         <button onclick="confirmarAgregarIngrediente(${rIndex})" class="btn-formulario guardar">Agregar a la Receta</button>
                     </div>
                 </div>
+                        <tr class="row-total-receta">
+                            <td colspan="${colspanTotales}" class="td-footer-label">Total Costo Ingredientes:</td>
+                            <td class="td-footer-value">$${totalMateriaPrimaReceta.toFixed(4)}</td>
+                        </tr>
+                        <tr class="row-mano-obra">
+                            <td colspan="${colspanTotales}" class="td-footer-label">Costo Mano de Obra (${receta.tiempoPreparacion} min):</td>
+                            <td class="td-footer-value">$${costoManoObraReceta.toFixed(4)}</td>
+                        </tr>
+                        <tr class="row-total-produccion">
+                            <td colspan="${colspanTotales}" class="td-footer-label">Costo por Porcion (unitario):</td>
+                            <td class="td-footer-value">$${costoTotalProduccionReceta.toFixed(4)}</td>
+                        </tr>
+                        <tr class="row-total-produccion">
+                            <td colspan="${colspanTotales}" class="td-footer-label">Costo Total (x${receta.numeroPorciones} porciones):</td>
+                            <td class="td-footer-value">$${costoTotalPorciones.toFixed(4)}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                
             </div>
         `;
 
